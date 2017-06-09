@@ -2,10 +2,16 @@
 <resources>
     <color name="colorPrimary">#3F51B5</color>
     <color name="colorPrimaryDark">#303F9F</color>
-    <color name="colorAccent">#FF4081</color>
+    <color name="colorAccent">#184794</color>
 
+    <color name="white">#FFFFFF</color>
 
-    <color name="splash_start">#DCEDC8</color>
-    <color name="splash_end">#F1F8E9</color>
+    <color name="splash_start">#e1ead6</color>
+    <color name="splash_end">#f3f7ef</color>
+
+    <color name="toolbar_fill_start">#2f7cc2</color>
+    <color name="toolbar_fill_end">#124aa1</color>
+
+    <color name="login_accent_color">#184794</color>
 
 </resources>

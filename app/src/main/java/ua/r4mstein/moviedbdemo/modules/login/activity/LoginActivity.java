@@ -1,4 +1,4 @@
-package ua.r4mstein.moviedbdemo.modules.login;
+package ua.r4mstein.moviedbdemo.modules.login.activity;
 
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;

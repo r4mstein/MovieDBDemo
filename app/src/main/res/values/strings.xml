@@ -1,3 +1,9 @@
 <resources>
     <string name="app_name">MovieDBDemo</string>
+
+    <string name="title_login">Login</string>
+
+    <string name="login_username">Username</string>
+    <string name="login_pass">Password</string>
+    <string name="login_btn_text">Login</string>
 </resources>

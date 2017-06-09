@@ -1,4 +1,4 @@
-package ua.r4mstein.moviedbdemo.modules.login;
+package ua.r4mstein.moviedbdemo.modules.login.activity;
 
 import ua.r4mstein.moviedbdemo.modules.base.BaseActivityPresenter;
 
