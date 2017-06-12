@@ -3,6 +3,8 @@ package ua.r4mstein.moviedbdemo.modules.base;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
+import android.support.annotation.DrawableRes;
+import android.support.annotation.StringRes;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
@@ -17,7 +19,7 @@ public class RouterImpl implements Router {
 
     private ActivityView mActivity;
     private LoadingDialog progressDialog;
-//    private BaseDialog mDialog;
+    private BaseDialog mDialog;
 
 
     @Override
@@ -193,29 +195,29 @@ public class RouterImpl implements Router {
 //
 //    }
 //
-//    @Override
-//    public void showDialog(BaseDialog _dialog, @StringRes int _title, String _message, View.OnClickListener _listener, View.OnClickListener _negativeListener) {
-//        if (progressDialog != null && progressDialog.isShowing()) progressDialog.dismiss();
-//        if (mDialog != null && mDialog.isVisible()) mDialog.dismiss();
-//        mDialog = _dialog;
-//        mDialog.setTitle(_title);
-//        mDialog.setMessage(_message);
-//        mDialog.setOnPositiveClickListener(_listener);
-//        mDialog.setOnNegativeClickListener(_negativeListener);
-//        mDialog.show(mActivity.asActivity().getSupportFragmentManager(), "");
-//    }
-//
-//    @Override
-//    public void showDialog(BaseDialog _dialog, @StringRes int _title, String _message, @DrawableRes int _icon, View.OnClickListener _listener) {
-//        if (progressDialog != null && progressDialog.isShowing()) progressDialog.dismiss();
-//        if (mDialog != null && mDialog.isVisible()) mDialog.dismiss();
-//        mDialog = _dialog;
-//        mDialog.setTitle(_title);
-//        mDialog.setMessage(_message);
-//        mDialog.setIcon(_icon);
-//        mDialog.setOnPositiveClickListener(_listener);
-//        mDialog.show(mActivity.asActivity().getSupportFragmentManager(), "");
-//    }
+    @Override
+    public void showDialog(BaseDialog _dialog, @StringRes int _title, String _message, View.OnClickListener _listener, View.OnClickListener _negativeListener) {
+        if (progressDialog != null && progressDialog.isShowing()) progressDialog.dismiss();
+        if (mDialog != null && mDialog.isVisible()) mDialog.dismiss();
+        mDialog = _dialog;
+        mDialog.setTitle(_title);
+        mDialog.setMessage(_message);
+        mDialog.setOnPositiveClickListener(_listener);
+        mDialog.setOnNegativeClickListener(_negativeListener);
+        mDialog.show(mActivity.asActivity().getSupportFragmentManager(), "");
+    }
+
+    @Override
+    public void showDialog(BaseDialog _dialog, @StringRes int _title, String _message, @DrawableRes int _icon, View.OnClickListener _listener) {
+        if (progressDialog != null && progressDialog.isShowing()) progressDialog.dismiss();
+        if (mDialog != null && mDialog.isVisible()) mDialog.dismiss();
+        mDialog = _dialog;
+        mDialog.setTitle(_title);
+        mDialog.setMessage(_message);
+        mDialog.setIcon(_icon);
+        mDialog.setOnPositiveClickListener(_listener);
+        mDialog.show(mActivity.asActivity().getSupportFragmentManager(), "");
+    }
 //
 //    @Override
 //    public void showDialog(BaseDialog _dialog) {

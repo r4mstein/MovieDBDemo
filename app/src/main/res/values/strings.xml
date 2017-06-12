@@ -6,4 +6,6 @@
     <string name="login_username">Username</string>
     <string name="login_pass">Password</string>
     <string name="login_btn_text">Login</string>
+
+    <string name="error_title">Error</string>
 </resources>

@@ -1,0 +1,58 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:background="#ffffff"
+    android:minWidth="300dp"
+    android:padding="@dimen/margin_16"
+    android:orientation="vertical">
+
+    <TextView
+        android:text="GPForum"
+        android:id="@+id/tvTitle"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="15dp"
+        android:textSize="@dimen/text_size_20"
+        android:fontFamily="sans-serif-medium"
+        android:textStyle="normal"
+        android:textColor="#de000000"
+        android:paddingEnd="24dp"
+        android:paddingStart="24dp" />
+
+
+    <TextView
+        android:id="@+id/tvMessage"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="24dp"
+        android:fontFamily="sans-serif"
+        android:textSize="@dimen/text_size_16"
+        android:textColor="#5a5a5a"
+        android:lineSpacingExtra="5sp"
+        android:paddingEnd="24dp"
+        android:paddingStart="24dp" />
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="end|center_vertical"
+        android:orientation="horizontal"
+        android:paddingEnd="4dp"
+        android:paddingStart="8dp">
+
+        <TextView
+            android:id="@+id/btnNegative"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:padding="@dimen/margin_16"
+            android:textAllCaps="true"
+            android:fontFamily="sans-serif-medium"
+            android:textStyle="normal"
+            android:textColor="#144ea6"
+            android:textSize="@dimen/text_size_16"
+            android:text="OK" />
+
+    </LinearLayout>
+
+</LinearLayout>

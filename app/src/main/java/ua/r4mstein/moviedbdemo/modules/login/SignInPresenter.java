@@ -1,5 +1,8 @@
 package ua.r4mstein.moviedbdemo.modules.login;
 
+import android.text.TextUtils;
+import android.util.Patterns;
+
 import io.reactivex.annotations.NonNull;
 import io.reactivex.functions.Consumer;
 import ua.r4mstein.moviedbdemo.data.api.api_interfaces.LoginApi;
@@ -16,15 +19,8 @@ public class SignInPresenter extends BaseFragmentPresenter<SignInPresenter.SignI
 
     private LoginApi mLoginApi = new LoginProvider();
 
-    @Override
-    public void onViewCreated() {
-        super.onViewCreated();
-
-
-    }
-
     void btnLoginClicked() {
-        getRequestToken();
+        if (isValidData(getView().getUserName(), getView().getPass())) getRequestToken();
     }
 
     private void getRequestToken() {
@@ -65,6 +61,23 @@ public class SignInPresenter extends BaseFragmentPresenter<SignInPresenter.SignI
                 });
     }
 
+    private boolean isValidData(String userName, String pass) {
+
+        getView().errorUserName(false, "");
+        if (TextUtils.isEmpty(userName)) {
+            getView().errorUserName(true, "User name is empty");
+            return false;
+        }
+
+        getView().errorPassword(false, "");
+        if (TextUtils.isEmpty(pass)) {
+            getView().errorPassword(true, "Password is empty");
+            return false;
+        }
+
+        return true;
+    }
+
     @Override
     public void onResume() {
         super.onResume();
@@ -76,5 +89,7 @@ public class SignInPresenter extends BaseFragmentPresenter<SignInPresenter.SignI
         void hideToolbar();
         String getUserName();
         String getPass();
+        void errorUserName(boolean errorState, String msg);
+        void errorPassword(boolean errorState, String msg);
     }
 }

@@ -2,6 +2,11 @@ package ua.r4mstein.moviedbdemo.modules.base;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.TextUtils;
+
+import com.google.gson.Gson;
+
+import java.io.IOException;
 
 import io.reactivex.Observable;
 import io.reactivex.android.schedulers.AndroidSchedulers;
@@ -10,6 +15,10 @@ import io.reactivex.disposables.Disposable;
 import io.reactivex.functions.Action;
 import io.reactivex.functions.Consumer;
 import io.reactivex.schedulers.Schedulers;
+import retrofit2.HttpException;
+import retrofit2.Response;
+import ua.r4mstein.moviedbdemo.R;
+import ua.r4mstein.moviedbdemo.data.models.response.ErrorModel;
 import ua.r4mstein.moviedbdemo.utills.RxUtils;
 
 
@@ -89,8 +98,10 @@ public abstract class BasePresenterImpl<V extends BaseView> implements BasePrese
                     .subscribe(
                             t -> onExecuteSuccess(t, onSuccess),
                             throwable -> {
-                                if (onError != null)
+                                if (onError != null) {
                                     onError.accept(throwable);
+                                    handleError(throwable);
+                                }
                             }, () -> {
                                 if (onComplete != null)
                                     onComplete.run();
@@ -116,21 +127,11 @@ public abstract class BasePresenterImpl<V extends BaseView> implements BasePrese
                             },
                             throwable -> {
                                 hideLoading();
-//                                if (throwable instanceof HttpException) {
-//                                    HttpException exception = (HttpException) throwable;
-//
-//                                    Response response = exception.response();
-//                                    String jsonString = response.errorBody().string();
-//
-//                                    LoginErrorModel error = new Gson().fromJson(jsonString, LoginErrorModel.class);
-//                                    LoginErrorModel.Data data = error.getData();
-//
-//                                    getRouter().showDialog(new InfoDialog(), R.string.error_title,
-//                                            data.getErrorMessage(), v -> {}, null);
-//
-//                                }
-                                if (onError != null)
+
+                                if (onError != null) {
                                     onError.accept(throwable);
+                                    handleError(throwable);
+                                }
                             }, () -> onExecutingComplete(onComplete)
 
                     );
@@ -138,6 +139,26 @@ public abstract class BasePresenterImpl<V extends BaseView> implements BasePrese
             return subscription;
         }
         return null;
+    }
+
+    private void handleError(Throwable throwable) throws IOException {
+        if (throwable instanceof HttpException) {
+            HttpException exception = (HttpException) throwable;
+
+            Response response = exception.response();
+            String msg = "Unknown error";
+
+                String jsonString = response.errorBody().string();
+
+                ErrorModel error = new Gson().fromJson(jsonString, ErrorModel.class);
+                if (error.getStatusMessage() != null)
+                    msg = error.getStatusMessage();
+
+            getRouter().showDialog(new InfoDialog(), R.string.error_title,
+                    msg, v -> {
+                    }, null);
+
+        }
     }
 
     private void hideLoading() {

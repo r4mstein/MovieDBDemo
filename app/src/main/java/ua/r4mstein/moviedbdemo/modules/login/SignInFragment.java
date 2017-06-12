@@ -46,12 +46,7 @@ public class SignInFragment extends BaseFragment<SignInPresenter>
 
     @Override
     protected void setupUI() {
-        btnLogin.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                getPresenter().btnLoginClicked();
-            }
-        });
+        btnLogin.setOnClickListener(v -> getPresenter().btnLoginClicked());
     }
 
     @Override
@@ -67,5 +62,25 @@ public class SignInFragment extends BaseFragment<SignInPresenter>
     @Override
     public String getPass() {
         return tetPass.getText().toString().trim();
+    }
+
+    @Override
+    public void errorUserName(boolean errorState, String msg) {
+        if (errorState) {
+            tilUsername.setErrorEnabled(true);
+            tilUsername.setError(msg);
+        } else {
+            tilUsername.setErrorEnabled(false);
+        }
+    }
+
+    @Override
+    public void errorPassword(boolean errorState, String msg) {
+        if (errorState) {
+            tilPass.setErrorEnabled(true);
+            tilPass.setError(msg);
+        } else {
+            tilPass.setErrorEnabled(false);
+        }
     }
 }
