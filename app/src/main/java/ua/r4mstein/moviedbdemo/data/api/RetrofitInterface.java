@@ -4,6 +4,7 @@ import io.reactivex.Observable;
 import retrofit2.http.GET;
 import retrofit2.http.Query;
 import ua.r4mstein.moviedbdemo.data.models.response.RequestTokenModel;
+import ua.r4mstein.moviedbdemo.data.models.response.SessionModel;
 
 public interface RetrofitInterface {
 
@@ -15,6 +16,9 @@ public interface RetrofitInterface {
     @GET("authentication/token/validate_with_login")
     Observable<RequestTokenModel> validateRequestToken(@Query("api_key") String apiKey, @Query("username") String username,
                                       @Query("password") String password, @Query("request_token") String requestToken);
+
+    @GET("authentication/session/new")
+    Observable<SessionModel> createSessionId(@Query("api_key") String apiKey, @Query("request_token") String requestToken);
 
 //    *****
 }

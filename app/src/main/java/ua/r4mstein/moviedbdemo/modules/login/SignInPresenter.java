@@ -4,43 +4,57 @@ import io.reactivex.annotations.NonNull;
 import io.reactivex.functions.Consumer;
 import ua.r4mstein.moviedbdemo.data.api.api_interfaces.LoginApi;
 import ua.r4mstein.moviedbdemo.data.models.response.RequestTokenModel;
+import ua.r4mstein.moviedbdemo.data.models.response.SessionModel;
 import ua.r4mstein.moviedbdemo.data.providers.LoginProvider;
 import ua.r4mstein.moviedbdemo.modules.base.BaseFragmentPresenter;
 import ua.r4mstein.moviedbdemo.modules.base.FragmentView;
-import ua.r4mstein.moviedbdemo.utills.Constants;
 import ua.r4mstein.moviedbdemo.utills.Logger;
 
 import static ua.r4mstein.moviedbdemo.utills.Constants.API_KEY;
 
 public class SignInPresenter extends BaseFragmentPresenter<SignInPresenter.SignInView> {
 
-    LoginApi mLoginApi = new LoginProvider();
-
-    private String mRequestToken;
+    private LoginApi mLoginApi = new LoginProvider();
 
     @Override
     public void onViewCreated() {
         super.onViewCreated();
 
+
+    }
+
+    void btnLoginClicked() {
         getRequestToken();
     }
 
     private void getRequestToken() {
         executeWithoutProgress(mLoginApi.getRequestToken(API_KEY),
                 requestTokenModel -> {
-                    mRequestToken = requestTokenModel.getRequestToken();
-                    Logger.d("RAM: RequestToken = " + mRequestToken);
+                    String requestToken = requestTokenModel.getRequestToken();
+                    validateRequestToken(requestToken);
+
+                    Logger.d("RAM: RequestToken = " + requestToken);
                 },
                 throwable -> Logger.d(throwable.getMessage()));
     }
 
-    public void btnLoginClicked() {
+    private void validateRequestToken(String requestToken) {
         execute(mLoginApi.validateRequestToken(API_KEY, getView().getUserName(), getView().getPass(),
-                mRequestToken),
-                new Consumer<RequestTokenModel>() {
+                requestToken),
+                requestTokenModel -> {
+                    getSessionId(requestTokenModel);
+
+                    Logger.d("RAM: RequestToken = " + requestTokenModel.getRequestToken());
+                },
+                throwable -> Logger.d(throwable.getMessage()));
+    }
+
+    private void getSessionId(@NonNull RequestTokenModel requestTokenModel) {
+        execute(mLoginApi.createSessionId(API_KEY, requestTokenModel.getRequestToken()),
+                new Consumer<SessionModel>() {
                     @Override
-                    public void accept(@NonNull RequestTokenModel requestTokenModel) throws Exception {
-                        Logger.d("RAM: RequestToken = " + requestTokenModel.getRequestToken());
+                    public void accept(@NonNull SessionModel sessionModel) throws Exception {
+                        Logger.d("RAM: SessionId = " + sessionModel.getSessionId());
                     }
                 },
                 new Consumer<Throwable>() {
