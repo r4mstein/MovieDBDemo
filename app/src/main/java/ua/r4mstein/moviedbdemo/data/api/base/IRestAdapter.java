@@ -1,4 +1,4 @@
-package ua.r4mstein.moviedbdemo.data.api;
+package ua.r4mstein.moviedbdemo.data.api.base;
 
 
 public interface IRestAdapter {

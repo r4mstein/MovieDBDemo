@@ -1,4 +1,4 @@
-package ua.r4mstein.moviedbdemo.data.api;
+package ua.r4mstein.moviedbdemo.data.api.base;
 
 import java.util.concurrent.TimeUnit;
 
@@ -7,6 +7,7 @@ import okhttp3.logging.HttpLoggingInterceptor;
 import retrofit2.Retrofit;
 import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory;
 import retrofit2.converter.gson.GsonConverterFactory;
+import ua.r4mstein.moviedbdemo.data.api.base.IRestAdapter;
 
 public class RetrofitAdapter implements IRestAdapter {
 

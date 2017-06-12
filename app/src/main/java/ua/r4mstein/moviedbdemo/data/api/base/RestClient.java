@@ -1,5 +1,6 @@
-package ua.r4mstein.moviedbdemo.data.api;
+package ua.r4mstein.moviedbdemo.data.api.base;
 
+import ua.r4mstein.moviedbdemo.data.api.RetrofitInterface;
 import ua.r4mstein.moviedbdemo.utills.Constants;
 
 public class RestClient {
@@ -27,7 +28,7 @@ public class RestClient {
 
     public void setupAdapter() {
         adapter = new RetrofitAdapter();
-        mApi = adapter.createApi(RetrofitInterface.class, Constants.BASE_URL);
+        mApi = adapter.createApi(RetrofitInterface.class, Constants.BASE_URL + Constants.API_VERSION);
     }
 
     public RetrofitInterface getApi() {
