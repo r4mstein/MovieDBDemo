@@ -1,12 +1,16 @@
 package ua.r4mstein.moviedbdemo.modules.login.activity;
 
 import android.os.Bundle;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v7.widget.Toolbar;
+import android.widget.FrameLayout;
 
 import ua.r4mstein.moviedbdemo.R;
 import ua.r4mstein.moviedbdemo.modules.base.BaseActivity;
+import ua.r4mstein.moviedbdemo.modules.login.SignInFragment;
 
-public class LoginActivity extends BaseActivity<LoginPresenter> {
+public class LoginActivity extends BaseActivity<LoginPresenter> implements LoginPresenter.LoginView {
 
     private Toolbar mToolbar;
 
@@ -18,7 +22,6 @@ public class LoginActivity extends BaseActivity<LoginPresenter> {
         getSupportFragmentManager().addOnBackStackChangedListener(() ->
                 getSupportActionBar().setDisplayHomeAsUpEnabled(getSupportFragmentManager().getBackStackEntryCount() > 0)
         );
-
     }
 
     @Override
@@ -39,5 +42,15 @@ public class LoginActivity extends BaseActivity<LoginPresenter> {
     @Override
     protected void setupUI() {
         setSupportActionBar(mToolbar);
+    }
+
+    @Override
+    public FragmentManager getAppFragmentManager() {
+        return getSupportFragmentManager();
+    }
+
+    @Override
+    public int getFragmentContainer() {
+        return R.id.fl_container_AL;
     }
 }
