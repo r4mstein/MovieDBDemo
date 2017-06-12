@@ -21,7 +21,7 @@ public class MainActivity extends BaseActivity<MainPresenter> {
 
     @Override
     public int getFragmentContainer() {
-        return 0;
+        return R.id.flFrameCont_AM;
     }
 
     @Override
