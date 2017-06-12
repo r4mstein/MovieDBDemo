@@ -12,7 +12,9 @@ public interface RetrofitInterface {
     @GET("authentication/token/new")
     Observable<RequestTokenModel> getRequestToken(@Query("api_key") String apiKey);
 
-
+    @GET("authentication/token/validate_with_login")
+    Observable<RequestTokenModel> validateRequestToken(@Query("api_key") String apiKey, @Query("username") String username,
+                                      @Query("password") String password, @Query("request_token") String requestToken);
 
 //    *****
 }

@@ -10,4 +10,9 @@ public class LoginProvider extends BaseProvider implements LoginApi {
     public Observable<RequestTokenModel> getRequestToken(String apiKey) {
         return api.getRequestToken(apiKey);
     }
+
+    @Override
+    public Observable<RequestTokenModel> validateRequestToken(String apiKey, String username, String password, String requestToken) {
+        return api.validateRequestToken(apiKey, username, password, requestToken);
+    }
 }
