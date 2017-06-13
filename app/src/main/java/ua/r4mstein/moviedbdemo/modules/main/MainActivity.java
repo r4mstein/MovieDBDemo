@@ -1,9 +1,18 @@
 package ua.r4mstein.moviedbdemo.modules.main;
 
+import android.support.annotation.NonNull;
 import android.support.v7.widget.Toolbar;
+import android.view.View;
+
+import com.mikepenz.materialdrawer.Drawer;
+import com.mikepenz.materialdrawer.DrawerBuilder;
+import com.mikepenz.materialdrawer.holder.DimenHolder;
+import com.mikepenz.materialdrawer.model.PrimaryDrawerItem;
+import com.mikepenz.materialdrawer.model.interfaces.IDrawerItem;
 
 import ua.r4mstein.moviedbdemo.R;
 import ua.r4mstein.moviedbdemo.modules.base.BaseActivity;
+import ua.r4mstein.moviedbdemo.utills.Logger;
 
 public class MainActivity extends BaseActivity<MainPresenter> {
 
@@ -32,9 +41,50 @@ public class MainActivity extends BaseActivity<MainPresenter> {
     @Override
     protected void setupUI() {
         setSupportActionBar(mToolbar);
-        getSupportActionBar().setHomeButtonEnabled(false);
+        getSupportActionBar().setHomeButtonEnabled(true);
         getSupportFragmentManager().addOnBackStackChangedListener(() ->
                 getSupportActionBar().setDisplayHomeAsUpEnabled(getSupportFragmentManager().getBackStackEntryCount() > 0)
         );
+
+        Drawer drawer = new DrawerBuilder()
+                .withActivity(this)
+                .withToolbar(mToolbar)
+                .withHeader(R.layout.main_header)
+                .withHeaderHeight(DimenHolder.fromDp(175))
+                .addDrawerItems(
+                        new PrimaryDrawerItem().withIdentifier(1).withName("Item 1").withIcon(R.drawable.ic_one)
+                                .withSelectedIcon(R.drawable.ic_one_select),
+                        new PrimaryDrawerItem().withIdentifier(2).withName("Item 2").withIcon(R.drawable.ic_two)
+                                .withSelectedIcon(R.drawable.ic_two_select),
+                        new PrimaryDrawerItem().withIdentifier(3).withName("Item 3").withIcon(R.drawable.ic_three)
+                                .withSelectedIcon(R.drawable.ic_three_select)
+                )
+                .withActionBarDrawerToggleAnimated(true)
+                .withOnDrawerItemClickListener(getOnDrawerItemClickListener())
+                .build();
+
+        drawer.openDrawer();
+
+    }
+
+    @NonNull
+    private Drawer.OnDrawerItemClickListener getOnDrawerItemClickListener() {
+        return new Drawer.OnDrawerItemClickListener() {
+            @Override
+            public boolean onItemClick(View view, int position, IDrawerItem drawerItem) {
+                switch ((int) drawerItem.getIdentifier()) {
+                    case 1:
+                        Logger.d("Item 1 clicked");
+                        break;
+                    case 2:
+                        Logger.d("Item 2 clicked");
+                        break;
+                    case 3:
+                        Logger.d("Item 3 clicked");
+                        break;
+                }
+                return true;
+            }
+        };
     }
 }
