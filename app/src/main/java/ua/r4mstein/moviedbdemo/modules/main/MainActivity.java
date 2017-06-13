@@ -18,6 +18,8 @@ public class MainActivity extends BaseActivity<MainPresenter> {
 
     private Toolbar mToolbar;
 
+    private Drawer mDrawer;
+
     @Override
     protected MainPresenter initPresenter() {
         return new MainPresenter();
@@ -46,13 +48,13 @@ public class MainActivity extends BaseActivity<MainPresenter> {
                 getSupportActionBar().setDisplayHomeAsUpEnabled(getSupportFragmentManager().getBackStackEntryCount() > 0)
         );
 
-        Drawer drawer = new DrawerBuilder()
+        mDrawer = new DrawerBuilder()
                 .withActivity(this)
                 .withToolbar(mToolbar)
                 .withHeader(R.layout.main_header)
                 .withHeaderHeight(DimenHolder.fromDp(175))
                 .addDrawerItems(
-                        new PrimaryDrawerItem().withIdentifier(1).withName("Item 1").withIcon(R.drawable.ic_one)
+                        new PrimaryDrawerItem().withIdentifier(1).withName(R.string.drawer_item_genres).withIcon(R.drawable.ic_one)
                                 .withSelectedIcon(R.drawable.ic_one_select),
                         new PrimaryDrawerItem().withIdentifier(2).withName("Item 2").withIcon(R.drawable.ic_two)
                                 .withSelectedIcon(R.drawable.ic_two_select),
@@ -63,7 +65,7 @@ public class MainActivity extends BaseActivity<MainPresenter> {
                 .withOnDrawerItemClickListener(getOnDrawerItemClickListener())
                 .build();
 
-        drawer.openDrawer();
+        mDrawer.openDrawer();
 
     }
 
@@ -74,7 +76,8 @@ public class MainActivity extends BaseActivity<MainPresenter> {
             public boolean onItemClick(View view, int position, IDrawerItem drawerItem) {
                 switch ((int) drawerItem.getIdentifier()) {
                     case 1:
-                        Logger.d("Item 1 clicked");
+                        getPresenter().addGenresFragment();
+                        mDrawer.closeDrawer();
                         break;
                     case 2:
                         Logger.d("Item 2 clicked");
