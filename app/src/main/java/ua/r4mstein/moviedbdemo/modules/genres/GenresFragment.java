@@ -10,11 +10,13 @@ import java.util.List;
 import ua.r4mstein.moviedbdemo.R;
 import ua.r4mstein.moviedbdemo.data.models.response.GenreMovieModel;
 import ua.r4mstein.moviedbdemo.modules.base.BaseFragment;
+import ua.r4mstein.moviedbdemo.utills.Logger;
 
 public class GenresFragment extends BaseFragment<GenresPresenter>
         implements GenresPresenter.GenresView {
 
     private RecyclerView mRecyclerView;
+    private GenresAdapter mAdapter;
 
     @Override
     protected int getTitle() {
@@ -43,13 +45,14 @@ public class GenresFragment extends BaseFragment<GenresPresenter>
 
     @Override
     public void showResult(GenreMovieModel genreMovieModel) {
-        List<String> result = new ArrayList<>();
+        List<GenreMovieModel.Genre> result = new ArrayList<>();
 
         for (int i = 0; i < genreMovieModel.getGenres().size(); i++) {
-            result.add(genreMovieModel.getGenres().get(i).getName());
+            result.add(genreMovieModel.getGenres().get(i));
         }
 
-        GenresAdapter adapter = new GenresAdapter(result);
-        mRecyclerView.setAdapter(adapter);
+        mAdapter = new GenresAdapter(result);
+        mAdapter.setActionListener(getPresenter().getGenresActionListener());
+        mRecyclerView.setAdapter(mAdapter);
     }
 }

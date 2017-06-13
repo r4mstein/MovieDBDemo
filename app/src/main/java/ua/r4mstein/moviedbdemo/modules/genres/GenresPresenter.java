@@ -25,6 +25,15 @@ public class GenresPresenter extends BaseFragmentPresenter<GenresPresenter.Genre
                 throwable -> Logger.d(throwable.getMessage()));
     }
 
+    public GenresActionListener getGenresActionListener() {
+        return new GenresActionListener() {
+            @Override
+            public void genresItemClicked(long id) {
+                Logger.d("id = " + id);
+            }
+        };
+    }
+
     interface GenresView extends FragmentView {
 
         void showResult(GenreMovieModel genreMovieModel);
