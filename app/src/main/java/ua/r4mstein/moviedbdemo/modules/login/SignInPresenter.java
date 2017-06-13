@@ -38,6 +38,7 @@ public class SignInPresenter extends BaseFragmentPresenter<SignInPresenter.SignI
         execute(mLoginApi.validateRequestToken(API_KEY, getView().getUserName(), getView().getPass(),
                 requestToken),
                 requestTokenModel -> {
+                    SharedPrefManager.getInstance().saveRequestToken(requestTokenModel.getRequestToken());
                     getSessionId(requestTokenModel);
 
                     Logger.d("RAM: RequestToken = " + requestTokenModel.getRequestToken());

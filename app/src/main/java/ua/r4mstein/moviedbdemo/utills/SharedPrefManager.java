@@ -10,6 +10,7 @@ import ua.r4mstein.moviedbdemo.App;
 public class SharedPrefManager {
 
     private static final String SESSION_ID = "session_id";
+    private static final String REQUEST_TOKEN = "request_token";
 
     private static SharedPrefManager instance;
     private SharedPreferences sharedPreferences;
@@ -71,12 +72,12 @@ public class SharedPrefManager {
         return sharedPreferences.getLong(_s, -1);
     }
 
-    public void saveToken(String token) {
-        saveString("_t_o_k_e_n", token);
+    public void saveRequestToken(String token) {
+        saveString(REQUEST_TOKEN, token);
     }
 
-    public String retrieveToken() {
-        return retrieveString("_t_o_k_e_n");
+    public String retrieveRequestToken() {
+        return retrieveString(REQUEST_TOKEN);
     }
 
     public void saveSessionId(String sessionId) {
