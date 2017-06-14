@@ -31,7 +31,7 @@ public interface RetrofitInterface {
     Observable<GenreMovieModel> getGenreMovieList(@Query("api_key") String apiKey);
 
     @GET("genre/{genre_id}/movies")
-    Observable<MoviesByGenreModel> getMoviesByGenre(@Path("genre_id") long genreId, @Query("api_key") String apiKey);
+    Observable<MoviesByGenreModel> getMoviesByGenre(@Path("genre_id") long genreId, @Query("api_key") String apiKey, @Query("page") long page);
 
 //    *****
 }

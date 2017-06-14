@@ -27,7 +27,7 @@ public class GenresPresenter extends BaseFragmentPresenter<GenresPresenter.Genre
     }
 
     public GenresActionListener getGenresActionListener() {
-        return id -> getRouter().replaceFragment(MoviesByGenreFragment.newInstance(id), false);
+        return id -> GenresPresenter.this.getRouter().replaceFragment(MoviesByGenreFragment.newInstance(id), false);
     }
 
     interface GenresView extends FragmentView {

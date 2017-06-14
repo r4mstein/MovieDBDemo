@@ -8,5 +8,5 @@ public interface GenreApi {
 
     Observable<GenreMovieModel> getGenreMovieList(String apiKey);
 
-    Observable<MoviesByGenreModel> getMoviesByGenre(long genreId, String apiKey);
+    Observable<MoviesByGenreModel> getMoviesByGenre(long genreId, String apiKey, long page);
 }

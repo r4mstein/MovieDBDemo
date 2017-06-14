@@ -13,7 +13,7 @@ public class GenreProvider extends BaseProvider implements GenreApi {
     }
 
     @Override
-    public Observable<MoviesByGenreModel> getMoviesByGenre(long genreId, String apiKey) {
-        return api.getMoviesByGenre(genreId, apiKey);
+    public Observable<MoviesByGenreModel> getMoviesByGenre(long genreId, String apiKey, long page) {
+        return api.getMoviesByGenre(genreId, apiKey, page);
     }
 }

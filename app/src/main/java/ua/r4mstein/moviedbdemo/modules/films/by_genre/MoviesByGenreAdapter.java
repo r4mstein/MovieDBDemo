@@ -22,8 +22,7 @@ public class MoviesByGenreAdapter extends RecyclerView.Adapter<MoviesByGenreAdap
     private List<Movie> mMovieList = new ArrayList<>();
     private Context mContext;
 
-    public MoviesByGenreAdapter(List<Movie> movieList, Context context) {
-        mMovieList = movieList;
+    public MoviesByGenreAdapter(Context context) {
         mContext = context;
     }
 
@@ -53,6 +52,18 @@ public class MoviesByGenreAdapter extends RecyclerView.Adapter<MoviesByGenreAdap
     @Override
     public int getItemCount() {
         return mMovieList.size();
+    }
+
+    public void setData(List<Movie> list) {
+        mMovieList = list;
+        notifyDataSetChanged();
+    }
+
+    public void addData(List<Movie> movies) {
+        if (movies != null) {
+            mMovieList.addAll(movies);
+            notifyDataSetChanged();
+        }
     }
 
     public class MoviesByGenreViewHolder extends RecyclerView.ViewHolder {

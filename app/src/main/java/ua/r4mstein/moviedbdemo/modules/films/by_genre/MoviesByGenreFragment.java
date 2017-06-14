@@ -9,8 +9,9 @@ import java.util.List;
 
 import ua.r4mstein.moviedbdemo.R;
 import ua.r4mstein.moviedbdemo.data.models.response.Movie;
-import ua.r4mstein.moviedbdemo.data.models.response.MoviesByGenreModel;
 import ua.r4mstein.moviedbdemo.modules.base.BaseFragment;
+import ua.r4mstein.moviedbdemo.utills.EndlessScrollListener;
+import ua.r4mstein.moviedbdemo.utills.OnNextPageListener;
 
 public class MoviesByGenreFragment extends BaseFragment<MoviesByGenrePresenter>
         implements MoviesByGenrePresenter.MoviesByGenreView {
@@ -18,6 +19,7 @@ public class MoviesByGenreFragment extends BaseFragment<MoviesByGenrePresenter>
     public static final String GENRE_ID = "genre_id";
 
     private RecyclerView mRecyclerView;
+    private MoviesByGenreAdapter adapter;
 
     @Override
     protected int getTitle() {
@@ -41,7 +43,17 @@ public class MoviesByGenreFragment extends BaseFragment<MoviesByGenrePresenter>
 
     @Override
     protected void setupUI() {
-        mRecyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
+        LinearLayoutManager layoutManager = new LinearLayoutManager(getContext());
+        mRecyclerView.setLayoutManager(layoutManager);
+
+        adapter = new MoviesByGenreAdapter(getViewContext());
+        mRecyclerView.setAdapter(adapter);
+
+        mRecyclerView.addOnScrollListener(new EndlessScrollListener(layoutManager,
+                () -> {
+                    getPresenter().getNextPage();
+                    return true;
+                }));
     }
 
     public static MoviesByGenreFragment newInstance(long genreId) {
@@ -55,10 +67,12 @@ public class MoviesByGenreFragment extends BaseFragment<MoviesByGenrePresenter>
     }
 
     @Override
-    public void showResult(MoviesByGenreModel model) {
-        List<Movie> movieList = model.getMovies();
+    public void setList(List<Movie> list) {
+        adapter.setData(list);
+    }
 
-        MoviesByGenreAdapter adapter = new MoviesByGenreAdapter(movieList, getViewContext());
-        mRecyclerView.setAdapter(adapter);
+    @Override
+    public void addList(List<Movie> list) {
+        adapter.addData(list);
     }
 }
