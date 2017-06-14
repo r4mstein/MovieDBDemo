@@ -10,7 +10,6 @@ import java.util.List;
 import ua.r4mstein.moviedbdemo.R;
 import ua.r4mstein.moviedbdemo.data.models.response.GenreMovieModel;
 import ua.r4mstein.moviedbdemo.modules.base.BaseFragment;
-import ua.r4mstein.moviedbdemo.utills.Logger;
 
 public class GenresFragment extends BaseFragment<GenresPresenter>
         implements GenresPresenter.GenresView {

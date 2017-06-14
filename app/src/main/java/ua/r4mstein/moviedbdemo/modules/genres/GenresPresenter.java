@@ -4,6 +4,7 @@ import ua.r4mstein.moviedbdemo.data.models.response.GenreMovieModel;
 import ua.r4mstein.moviedbdemo.data.providers.GenreProvider;
 import ua.r4mstein.moviedbdemo.modules.base.BaseFragmentPresenter;
 import ua.r4mstein.moviedbdemo.modules.base.FragmentView;
+import ua.r4mstein.moviedbdemo.modules.films.by_genre.MoviesByGenreFragment;
 import ua.r4mstein.moviedbdemo.utills.Logger;
 
 import static ua.r4mstein.moviedbdemo.utills.Constants.API_KEY;
@@ -26,12 +27,7 @@ public class GenresPresenter extends BaseFragmentPresenter<GenresPresenter.Genre
     }
 
     public GenresActionListener getGenresActionListener() {
-        return new GenresActionListener() {
-            @Override
-            public void genresItemClicked(long id) {
-                Logger.d("id = " + id);
-            }
-        };
+        return id -> getRouter().replaceFragment(MoviesByGenreFragment.newInstance(id), false);
     }
 
     interface GenresView extends FragmentView {

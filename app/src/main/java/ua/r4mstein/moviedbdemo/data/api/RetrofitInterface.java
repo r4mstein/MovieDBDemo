@@ -2,8 +2,10 @@ package ua.r4mstein.moviedbdemo.data.api;
 
 import io.reactivex.Observable;
 import retrofit2.http.GET;
+import retrofit2.http.Path;
 import retrofit2.http.Query;
 import ua.r4mstein.moviedbdemo.data.models.response.GenreMovieModel;
+import ua.r4mstein.moviedbdemo.data.models.response.MoviesByGenreModel;
 import ua.r4mstein.moviedbdemo.data.models.response.RequestTokenModel;
 import ua.r4mstein.moviedbdemo.data.models.response.SessionModel;
 
@@ -27,6 +29,9 @@ public interface RetrofitInterface {
 
     @GET("genre/movie/list")
     Observable<GenreMovieModel> getGenreMovieList(@Query("api_key") String apiKey);
+
+    @GET("genre/{genre_id}/movies")
+    Observable<MoviesByGenreModel> getMoviesByGenre(@Path("genre_id") long genreId, @Query("api_key") String apiKey);
 
 //    *****
 }
