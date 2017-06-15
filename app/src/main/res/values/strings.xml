@@ -4,6 +4,7 @@
     <string name="title_login">Login</string>
     <string name="title_genres">Genres</string>
     <string name="title_movies_by_genre">Movies By Genre</string>
+    <string name="title_get_lists">Created Lists</string>
 
     <string name="login_username">Username</string>
     <string name="login_pass">Password</string>
@@ -15,4 +16,5 @@
     <string name="tv_fragment_genres">Genres</string>
 
     <string name="drawer_item_genres">Movie Genres</string>
+    <string name="drawer_item_lists">Created Lists</string>
 </resources>

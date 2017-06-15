@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.v7.widget.CardView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:id="@+id/cv_container_IGL"
+    android:layout_marginBottom="@dimen/margin_4"
+    android:layout_marginEnd="@dimen/margin_16"
+    android:layout_marginStart="@dimen/margin_16"
+    android:layout_marginTop="@dimen/margin_4"
+    app:cardCornerRadius="@dimen/margin_3">
+
+    <RelativeLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:padding="6dp">
+
+        <ImageView
+            android:id="@+id/iv_poster_IGL"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/ic_list"/>
+
+        <TextView
+            android:id="@+id/tv_name_IGL"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentTop="true"
+            android:layout_marginStart="@dimen/margin_16"
+            android:layout_toEndOf="@+id/iv_poster_IGL"
+            android:textColor="@color/colorAccent"
+            android:textSize="@dimen/text_size_18"
+            android:textStyle="bold"
+            android:maxLines="1"
+            android:ellipsize="end"
+            tools:text="Awesome List"
+            />
+
+        <TextView
+            android:id="@+id/tv_count_IGL"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignEnd="@+id/tv_name_IGL"
+            android:layout_below="@+id/tv_name_IGL"
+            android:textColor="@color/colorAccent"
+            android:textSize="@dimen/text_size_14"
+            android:textStyle="italic"
+            tools:text="Items count: 22"
+            />
+
+    </RelativeLayout>
+
+</android.support.v7.widget.CardView>

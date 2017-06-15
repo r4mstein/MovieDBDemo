@@ -11,7 +11,6 @@ import ua.r4mstein.moviedbdemo.R;
 import ua.r4mstein.moviedbdemo.data.models.response.Movie;
 import ua.r4mstein.moviedbdemo.modules.base.BaseFragment;
 import ua.r4mstein.moviedbdemo.utills.EndlessScrollListener;
-import ua.r4mstein.moviedbdemo.utills.OnNextPageListener;
 
 public class MoviesByGenreFragment extends BaseFragment<MoviesByGenrePresenter>
         implements MoviesByGenrePresenter.MoviesByGenreView {

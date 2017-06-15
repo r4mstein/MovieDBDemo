@@ -18,8 +18,8 @@
 
         <ImageView
             android:id="@+id/iv_poster_IMBG"
-            android:layout_width="100dp"
-            android:layout_height="150dp"
+            android:layout_width="@dimen/poster_width"
+            android:layout_height="@dimen/poster_height"
             tools:src="@drawable/ic_acc_logo"/>
 
         <TextView

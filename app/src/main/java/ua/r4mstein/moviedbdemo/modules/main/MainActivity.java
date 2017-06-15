@@ -56,7 +56,7 @@ public class MainActivity extends BaseActivity<MainPresenter> {
                 .addDrawerItems(
                         new PrimaryDrawerItem().withIdentifier(1).withName(R.string.drawer_item_genres).withIcon(R.drawable.ic_one)
                                 .withSelectedIcon(R.drawable.ic_one_select),
-                        new PrimaryDrawerItem().withIdentifier(2).withName("Item 2").withIcon(R.drawable.ic_two)
+                        new PrimaryDrawerItem().withIdentifier(2).withName(R.string.drawer_item_lists).withIcon(R.drawable.ic_two)
                                 .withSelectedIcon(R.drawable.ic_two_select),
                         new PrimaryDrawerItem().withIdentifier(3).withName("Item 3").withIcon(R.drawable.ic_three)
                                 .withSelectedIcon(R.drawable.ic_three_select)
@@ -80,7 +80,8 @@ public class MainActivity extends BaseActivity<MainPresenter> {
                         mDrawer.closeDrawer();
                         break;
                     case 2:
-                        Logger.d("Item 2 clicked");
+                        getPresenter().addListsFragment();
+                        mDrawer.closeDrawer();
                         break;
                     case 3:
                         Logger.d("Item 3 clicked");
