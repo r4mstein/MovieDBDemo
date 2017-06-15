@@ -1,4 +1,4 @@
-package ua.r4mstein.moviedbdemo.modules.lists;
+package ua.r4mstein.moviedbdemo.modules.lists.get_lists;
 
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;

@@ -1,4 +1,4 @@
-package ua.r4mstein.moviedbdemo.modules.lists;
+package ua.r4mstein.moviedbdemo.modules.lists.get_lists;
 
 public interface GetListsActionListener {
 

@@ -6,6 +6,7 @@ import retrofit2.http.Path;
 import retrofit2.http.Query;
 import ua.r4mstein.moviedbdemo.data.models.response.GenreMovieModel;
 import ua.r4mstein.moviedbdemo.data.models.response.GetListsModel;
+import ua.r4mstein.moviedbdemo.data.models.response.ListDetailsModel;
 import ua.r4mstein.moviedbdemo.data.models.response.MoviesByGenreModel;
 import ua.r4mstein.moviedbdemo.data.models.response.RequestTokenModel;
 import ua.r4mstein.moviedbdemo.data.models.response.SessionModel;
@@ -47,6 +48,14 @@ public interface RetrofitInterface {
     Observable<GetListsModel> getCreatedLists(@Query("api_key") String apiKey,
                                               @Query("session_id") String sessionId,
                                               @Query("page") long page);
+
+//    *****
+
+//    LISTS
+
+    @GET("list/{list_id}")
+    Observable<ListDetailsModel> getListDetails(@Path("list_id") long listId,
+                                                @Query("api_key") String apiKey);
 
 //    *****
 }

@@ -5,6 +5,7 @@
     <string name="title_genres">Genres</string>
     <string name="title_movies_by_genre">Movies By Genre</string>
     <string name="title_get_lists">Created Lists</string>
+    <string name="title_list_details">List Details</string>
 
     <string name="login_username">Username</string>
     <string name="login_pass">Password</string>

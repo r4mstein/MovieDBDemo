@@ -2,7 +2,7 @@ package ua.r4mstein.moviedbdemo.modules.main;
 
 import ua.r4mstein.moviedbdemo.modules.base.BaseActivityPresenter;
 import ua.r4mstein.moviedbdemo.modules.genres.GenresFragment;
-import ua.r4mstein.moviedbdemo.modules.lists.GetListsFragment;
+import ua.r4mstein.moviedbdemo.modules.lists.get_lists.GetListsFragment;
 
 public class MainPresenter extends BaseActivityPresenter {
 

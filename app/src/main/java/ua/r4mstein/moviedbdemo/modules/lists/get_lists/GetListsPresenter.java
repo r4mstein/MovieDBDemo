@@ -1,4 +1,4 @@
-package ua.r4mstein.moviedbdemo.modules.lists;
+package ua.r4mstein.moviedbdemo.modules.lists.get_lists;
 
 import java.util.List;
 
@@ -6,6 +6,7 @@ import ua.r4mstein.moviedbdemo.data.models.response.GetListsModel;
 import ua.r4mstein.moviedbdemo.data.providers.AccountProvider;
 import ua.r4mstein.moviedbdemo.modules.base.BaseFragmentPresenter;
 import ua.r4mstein.moviedbdemo.modules.base.FragmentView;
+import ua.r4mstein.moviedbdemo.modules.lists.list_details.ListsDetailsFragment;
 import ua.r4mstein.moviedbdemo.utills.Constants;
 import ua.r4mstein.moviedbdemo.utills.Logger;
 import ua.r4mstein.moviedbdemo.utills.SharedPrefManager;
@@ -45,12 +46,7 @@ public class GetListsPresenter extends BaseFragmentPresenter<GetListsPresenter.G
     }
 
     public GetListsActionListener getListsActionListener() {
-        return new GetListsActionListener() {
-            @Override
-            public void getListsItemClicked(long listId) {
-                Logger.d("getListsItemClicked: id: " + listId);
-            }
-        };
+        return listId -> getRouter().replaceFragment(ListsDetailsFragment.newInstance(listId), false);
     }
 
     interface GetListsView extends FragmentView {
