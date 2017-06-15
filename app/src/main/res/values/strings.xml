@@ -12,10 +12,16 @@
     <string name="login_btn_text">Login</string>
 
     <string name="error_title">Error</string>
+    <string name="create_list_title">Create List</string>
     <string name="main_header_text">Movie DB</string>
 
     <string name="tv_fragment_genres">Genres</string>
 
     <string name="drawer_item_genres">Movie Genres</string>
     <string name="drawer_item_lists">Created Lists</string>
+
+    <string name="button_ok">OK</string>
+    <string name="button_cancel">Cancel</string>
+    <string name="dialog_name">Name</string>
+    <string name="dialog_description">Description</string>
 </resources>

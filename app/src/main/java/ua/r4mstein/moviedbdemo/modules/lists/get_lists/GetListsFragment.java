@@ -1,5 +1,7 @@
 package ua.r4mstein.moviedbdemo.modules.lists.get_lists;
 
+import android.support.design.widget.FloatingActionButton;
+import android.support.v4.app.FragmentManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
@@ -9,12 +11,14 @@ import java.util.List;
 import ua.r4mstein.moviedbdemo.R;
 import ua.r4mstein.moviedbdemo.data.models.response.GetListsModel;
 import ua.r4mstein.moviedbdemo.modules.base.BaseFragment;
+import ua.r4mstein.moviedbdemo.modules.dialog.CreateDialog;
 import ua.r4mstein.moviedbdemo.utills.EndlessScrollListener;
 
 public class GetListsFragment extends BaseFragment<GetListsPresenter>
         implements GetListsPresenter.GetListsView {
 
     private RecyclerView mRecyclerView;
+    private FloatingActionButton mFAB;
     private GetListsAdapter mAdapter;
 
     @Override
@@ -35,6 +39,7 @@ public class GetListsFragment extends BaseFragment<GetListsPresenter>
     @Override
     protected void findUI(View rootView) {
         mRecyclerView = (RecyclerView) rootView.findViewById(R.id.rv_FGL);
+        mFAB = (FloatingActionButton) rootView.findViewById(R.id.fab_FGL);
     }
 
     @Override
@@ -51,6 +56,15 @@ public class GetListsFragment extends BaseFragment<GetListsPresenter>
                     getPresenter().getNextPage();
                     return true;
                 }));
+
+        mFAB.setOnClickListener(v -> {
+            FragmentManager manager = getFragmentManager();
+
+            CreateDialog dialog = CreateDialog.newInstance("Create List");
+            dialog.setClickListener((name, description) -> getPresenter().createList(name, description));
+
+            dialog.show(manager, "dialog");
+        });
     }
 
     @Override

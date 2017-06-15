@@ -2,7 +2,6 @@ package ua.r4mstein.moviedbdemo.modules.base;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.text.TextUtils;
 
 import com.google.gson.Gson;
 
@@ -19,6 +18,7 @@ import retrofit2.HttpException;
 import retrofit2.Response;
 import ua.r4mstein.moviedbdemo.R;
 import ua.r4mstein.moviedbdemo.data.models.response.ErrorModel;
+import ua.r4mstein.moviedbdemo.modules.dialog.InfoDialog;
 import ua.r4mstein.moviedbdemo.utills.RxUtils;
 
 

@@ -1,4 +1,4 @@
-package ua.r4mstein.moviedbdemo.modules.base;
+package ua.r4mstein.moviedbdemo.modules.dialog;
 
 import android.support.annotation.DrawableRes;
 import android.support.annotation.StringRes;
@@ -7,7 +7,10 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import io.reactivex.annotations.NonNull;
+import io.reactivex.functions.Consumer;
 import ua.r4mstein.moviedbdemo.R;
+import ua.r4mstein.moviedbdemo.modules.base.BaseDialog;
 import ua.r4mstein.moviedbdemo.utills.RxUtils;
 
 public class InfoDialog extends BaseDialog {
@@ -40,7 +43,12 @@ public class InfoDialog extends BaseDialog {
         btnClose = (TextView) _rootView.findViewById(R.id.btnNegative);
 
 
-        RxUtils.click(btnClose, o -> onClick());
+        RxUtils.click(btnClose, new Consumer() {
+            @Override
+            public void accept(@NonNull Object o) throws Exception {
+                InfoDialog.this.onClick();
+            }
+        });
 
         if (mMessageRes != 0) tvMessage.setText(getString(mMessageRes));
         else if (!TextUtils.isEmpty(mMessage)) tvMessage.setText(mMessage);

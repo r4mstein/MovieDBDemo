@@ -1,9 +1,14 @@
 package ua.r4mstein.moviedbdemo.data.api;
 
 import io.reactivex.Observable;
+import retrofit2.http.Body;
 import retrofit2.http.GET;
+import retrofit2.http.Headers;
+import retrofit2.http.POST;
 import retrofit2.http.Path;
 import retrofit2.http.Query;
+import ua.r4mstein.moviedbdemo.data.models.request.CreateListSendModel;
+import ua.r4mstein.moviedbdemo.data.models.response.CreateListModel;
 import ua.r4mstein.moviedbdemo.data.models.response.GenreMovieModel;
 import ua.r4mstein.moviedbdemo.data.models.response.GetListsModel;
 import ua.r4mstein.moviedbdemo.data.models.response.ListDetailsModel;
@@ -56,6 +61,11 @@ public interface RetrofitInterface {
     @GET("list/{list_id}")
     Observable<ListDetailsModel> getListDetails(@Path("list_id") long listId,
                                                 @Query("api_key") String apiKey);
+
+    @POST("list")
+    Observable<CreateListModel> createList(@Query("api_key") String apiKey,
+                                           @Query("session_id") String sessionId,
+                                           @Body CreateListSendModel sendModel);
 
 //    *****
 }
