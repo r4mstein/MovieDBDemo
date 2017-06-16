@@ -21,6 +21,7 @@ public class MoviesByGenreAdapter extends RecyclerView.Adapter<MoviesByGenreAdap
 
     private List<Movie> mMovieList = new ArrayList<>();
     private Context mContext;
+    private MoviesClickListener mMoviesClickListener;
 
     public MoviesByGenreAdapter(Context context) {
         mContext = context;
@@ -36,6 +37,28 @@ public class MoviesByGenreAdapter extends RecyclerView.Adapter<MoviesByGenreAdap
     public void onBindViewHolder(MoviesByGenreViewHolder holder, int position) {
         Movie movie = mMovieList.get(position);
 
+        fillData(holder, movie);
+
+        fillPoster(holder, movie);
+
+        int clickedPosition = position;
+        holder.itemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                mMoviesClickListener.moviesItemClicked(clickedPosition);
+            }
+        });
+    }
+
+    private void fillPoster(MoviesByGenreViewHolder holder, Movie movie) {
+        Picasso.with(mContext)
+                .load(Constants.IMAGE_BASE_URL + movie.getPosterPath())
+                .placeholder(R.drawable.main_logo)
+                .error(R.drawable.main_logo)
+                .into(holder.ivPoster);
+    }
+
+    private void fillData(MoviesByGenreViewHolder holder, Movie movie) {
         holder.tvTitle.setText(movie.getOriginalTitle());
 
         if (movie.getOverview() != null && !movie.getOverview().isEmpty())
@@ -52,12 +75,6 @@ public class MoviesByGenreAdapter extends RecyclerView.Adapter<MoviesByGenreAdap
 
         if (movie.getVoteCount() != null) holder.tvVoteCount.setText(String.valueOf(movie.getVoteCount()));
         else holder.tvVoteCount.setText("0");
-
-        Picasso.with(mContext)
-                .load(Constants.IMAGE_BASE_URL + movie.getPosterPath())
-                .placeholder(R.drawable.main_logo)
-                .error(R.drawable.main_logo)
-                .into(holder.ivPoster);
     }
 
     @Override
@@ -75,6 +92,10 @@ public class MoviesByGenreAdapter extends RecyclerView.Adapter<MoviesByGenreAdap
             mMovieList.addAll(movies);
             notifyDataSetChanged();
         }
+    }
+
+    public void setMoviesClickListener(MoviesClickListener moviesClickListener) {
+        mMoviesClickListener = moviesClickListener;
     }
 
     public class MoviesByGenreViewHolder extends RecyclerView.ViewHolder {
