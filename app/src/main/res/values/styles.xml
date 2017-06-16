@@ -13,4 +13,26 @@
         <item name="android:windowFullscreen">true</item>
     </style>
 
+    <style name="DialogTextInputLayout" parent="Widget.Design.TextInputLayout">
+        <item name="colorControlNormal">@color/white</item>
+        <item name="colorControlActivated">@color/white</item>
+        <item name="colorControlHighlight">@color/white</item>
+        <item name="android:textColorPrimary">@color/white</item>
+        <item name="colorAccent">@color/white</item>
+        <item name="android:textColorHint">@color/white</item>
+    </style>
+
+    <style name="DialogTextInputEditText" parent="AppTheme">
+        <item name="colorControlNormal">@color/white</item>
+        <item name="colorControlActivated">@color/white</item>
+        <item name="colorControlHighlight">@color/white</item>
+        <item name="android:textColorPrimary">@color/white</item>
+        <item name="android:textSize">@dimen/text_size_18</item>
+    </style>
+
+    <style name="ErrorDialogTextInputLayout" parent="@android:style/TextAppearance">
+        <item name="android:textColor">@color/dialog_error</item>
+        <item name="android:textSize">@dimen/text_size_14</item>
+    </style>
+
 </resources>

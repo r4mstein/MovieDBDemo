@@ -1,6 +1,7 @@
 package ua.r4mstein.moviedbdemo.modules.lists.list_details;
 
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.FragmentManager;
 import android.support.v7.widget.LinearLayoutManager;
@@ -13,9 +14,10 @@ import java.util.List;
 import ua.r4mstein.moviedbdemo.R;
 import ua.r4mstein.moviedbdemo.data.models.response.Movie;
 import ua.r4mstein.moviedbdemo.modules.base.BaseFragment;
+import ua.r4mstein.moviedbdemo.modules.films.by_genre.MoviesByGenreAdapter;
 import ua.r4mstein.moviedbdemo.modules.films.search_film.OnSearchClickListener;
 import ua.r4mstein.moviedbdemo.modules.films.search_film.SearchFilmDialog;
-import ua.r4mstein.moviedbdemo.utills.Logger;
+import ua.r4mstein.moviedbdemo.utills.EndlessScrollListener;
 
 public class ListsDetailsFragment extends BaseFragment<ListDetailsPresenter>
         implements ListDetailsPresenter.ListDetailsView {
@@ -26,6 +28,9 @@ public class ListsDetailsFragment extends BaseFragment<ListDetailsPresenter>
     private RecyclerView mRecyclerView;
     private FloatingActionButton mFAB;
     private ListDetailsAdapter mAdapter;
+    private MoviesByGenreAdapter adapter;
+
+    private int startSearchPage = 1;
 
     @Override
     protected int getTitle() {
@@ -57,22 +62,38 @@ public class ListsDetailsFragment extends BaseFragment<ListDetailsPresenter>
         mAdapter = new ListDetailsAdapter(getViewContext());
         mRecyclerView.setAdapter(mAdapter);
 
-        mFAB.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                FragmentManager manager = getFragmentManager();
+        mFAB.setOnClickListener(getFABClickListener());
+    }
 
-                SearchFilmDialog filmDialog = SearchFilmDialog.newInstance("Search Movie");
-                filmDialog.setClickListener(new OnSearchClickListener() {
-                    @Override
-                    public void onPositiveClicked(String name, RecyclerView recyclerView) {
-                        Logger.d("positive clicked");
-                    }
-                });
+    @NonNull
+    private View.OnClickListener getFABClickListener() {
+        return v -> {
+            FragmentManager manager = getFragmentManager();
 
-                filmDialog.show(manager, "filmDialog");
-            }
-        });
+            SearchFilmDialog filmDialog = SearchFilmDialog.newInstance("Search Movie");
+            filmDialog.setClickListener(getOnSearchClickListener());
+
+            filmDialog.show(manager, "filmDialog");
+        };
+    }
+
+    @NonNull
+    private OnSearchClickListener getOnSearchClickListener() {
+        return (searchRequest, recyclerView) -> {
+            LinearLayoutManager layoutManager = new LinearLayoutManager(getContext());
+            recyclerView.setLayoutManager(layoutManager);
+
+            adapter = new MoviesByGenreAdapter(getViewContext());
+            recyclerView.setAdapter(adapter);
+
+            recyclerView.addOnScrollListener(new EndlessScrollListener(layoutManager,
+                    () -> {
+                        getPresenter().getNextSearchPage(searchRequest);
+                        return true;
+                    }));
+
+            getPresenter().getSearchMovies(searchRequest, startSearchPage);
+        };
     }
 
     public static ListsDetailsFragment newInstance(long listId) {
@@ -88,6 +109,16 @@ public class ListsDetailsFragment extends BaseFragment<ListDetailsPresenter>
     @Override
     public void setList(List<Movie> list) {
         mAdapter.setData(list);
+    }
+
+    @Override
+    public void setSearchList(List<Movie> list) {
+        adapter.setData(list);
+    }
+
+    @Override
+    public void addSearchList(List<Movie> list) {
+        adapter.addData(list);
     }
 
     @Override

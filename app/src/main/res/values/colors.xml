@@ -5,6 +5,8 @@
     <color name="colorAccent">#184794</color>
 
     <color name="white">#FFFFFF</color>
+    <color name="black">#000000</color>
+    <color name="dialog_error">#E0E0E0</color>
 
     <color name="splash_start">#2f7cc2</color>
     <color name="splash_end">#124aa1</color>
