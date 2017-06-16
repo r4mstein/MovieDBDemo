@@ -2,7 +2,8 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                xmlns:tools="http://schemas.android.com/tools">
+                xmlns:tools="http://schemas.android.com/tools"
+                xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <TextView
         android:id="@+id/tv_count_FLD"
@@ -22,5 +23,18 @@
         android:layout_height="match_parent"
         android:layout_below="@id/tv_count_FLD"
         android:layout_marginTop="@dimen/margin_4"/>
+
+    <android.support.design.widget.FloatingActionButton
+        android:id="@+id/fab_FLD"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentEnd="true"
+        android:layout_margin="@dimen/margin_16"
+        android:src="@drawable/ic_plus"
+        app:backgroundTint="@color/colorPrimary"
+        app:elevation="8dp"
+        app:pressedTranslationZ="12dp"
+        />
 
 </RelativeLayout>

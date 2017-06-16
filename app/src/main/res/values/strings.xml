@@ -24,4 +24,5 @@
     <string name="button_cancel">Cancel</string>
     <string name="dialog_name">Name</string>
     <string name="dialog_description">Description</string>
+    <string name="dialog_search">Search Request</string>
 </resources>
