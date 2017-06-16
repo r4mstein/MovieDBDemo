@@ -25,4 +25,7 @@
     <string name="dialog_name">Name</string>
     <string name="dialog_description">Description</string>
     <string name="dialog_search">Search Request</string>
+
+    <string name="error_movie_overview">Can not find a description of the movie</string>
+    <string name="error_movie_release_date">Not found</string>
 </resources>
