@@ -15,11 +15,9 @@ import ua.r4mstein.moviedbdemo.R;
 import ua.r4mstein.moviedbdemo.data.models.response.Movie;
 import ua.r4mstein.moviedbdemo.modules.base.BaseFragment;
 import ua.r4mstein.moviedbdemo.modules.films.by_genre.MoviesByGenreAdapter;
-import ua.r4mstein.moviedbdemo.modules.films.by_genre.MoviesClickListener;
 import ua.r4mstein.moviedbdemo.modules.films.search_film.OnSearchClickListener;
 import ua.r4mstein.moviedbdemo.modules.films.search_film.SearchFilmDialog;
 import ua.r4mstein.moviedbdemo.utills.EndlessScrollListener;
-import ua.r4mstein.moviedbdemo.utills.Logger;
 
 public class ListsDetailsFragment extends BaseFragment<ListDetailsPresenter>
         implements ListDetailsPresenter.ListDetailsView {
@@ -31,6 +29,7 @@ public class ListsDetailsFragment extends BaseFragment<ListDetailsPresenter>
     private FloatingActionButton mFAB;
     private ListDetailsAdapter mAdapter;
     private MoviesByGenreAdapter adapter;
+    private SearchFilmDialog filmDialog;
 
     private int startSearchPage = 1;
 
@@ -72,7 +71,7 @@ public class ListsDetailsFragment extends BaseFragment<ListDetailsPresenter>
         return v -> {
             FragmentManager manager = getFragmentManager();
 
-            SearchFilmDialog filmDialog = SearchFilmDialog.newInstance("Search Movie");
+            filmDialog = SearchFilmDialog.newInstance("Search Movie");
             filmDialog.setClickListener(getOnSearchClickListener());
 
             filmDialog.show(manager, "filmDialog");
@@ -86,12 +85,7 @@ public class ListsDetailsFragment extends BaseFragment<ListDetailsPresenter>
             recyclerView.setLayoutManager(layoutManager);
 
             adapter = new MoviesByGenreAdapter(getViewContext());
-            adapter.setMoviesClickListener(new MoviesClickListener() {
-                @Override
-                public void moviesItemClicked(int position) {
-                    Logger.d("moviesItemClicked: position = " + position);
-                }
-            });
+            adapter.setMoviesClickListener(movieId -> getPresenter().addMovieToList(movieId));
             recyclerView.setAdapter(adapter);
 
             recyclerView.addOnScrollListener(new EndlessScrollListener(layoutManager,
@@ -132,5 +126,10 @@ public class ListsDetailsFragment extends BaseFragment<ListDetailsPresenter>
     @Override
     public TextView getTVCount() {
         return tvCount;
+    }
+
+    @Override
+    public SearchFilmDialog getSearchFilmDialog() {
+        return filmDialog;
     }
 }

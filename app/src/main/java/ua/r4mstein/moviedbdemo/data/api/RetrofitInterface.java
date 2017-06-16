@@ -7,7 +7,9 @@ import retrofit2.http.Headers;
 import retrofit2.http.POST;
 import retrofit2.http.Path;
 import retrofit2.http.Query;
+import ua.r4mstein.moviedbdemo.data.models.request.AddMovieToListSendModel;
 import ua.r4mstein.moviedbdemo.data.models.request.CreateListSendModel;
+import ua.r4mstein.moviedbdemo.data.models.response.AddMovieToListModel;
 import ua.r4mstein.moviedbdemo.data.models.response.CreateListModel;
 import ua.r4mstein.moviedbdemo.data.models.response.GenreMovieModel;
 import ua.r4mstein.moviedbdemo.data.models.response.GetListsModel;
@@ -67,6 +69,12 @@ public interface RetrofitInterface {
     Observable<CreateListModel> createList(@Query("api_key") String apiKey,
                                            @Query("session_id") String sessionId,
                                            @Body CreateListSendModel sendModel);
+
+    @POST("list/{list_id}/add_item")
+    Observable<AddMovieToListModel> addMovieToList(@Path("list_id") long listId,
+                                                   @Query("api_key") String apiKey,
+                                                   @Query("session_id") String sessionId,
+                                                   @Body AddMovieToListSendModel sendModel);
 
 //    *****
 

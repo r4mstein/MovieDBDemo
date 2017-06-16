@@ -38,16 +38,9 @@ public class MoviesByGenreAdapter extends RecyclerView.Adapter<MoviesByGenreAdap
         Movie movie = mMovieList.get(position);
 
         fillData(holder, movie);
-
         fillPoster(holder, movie);
 
-        int clickedPosition = position;
-        holder.itemView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                mMoviesClickListener.moviesItemClicked(clickedPosition);
-            }
-        });
+        holder.itemView.setOnClickListener(v -> mMoviesClickListener.moviesItemClicked(movie.getId()));
     }
 
     private void fillPoster(MoviesByGenreViewHolder holder, Movie movie) {

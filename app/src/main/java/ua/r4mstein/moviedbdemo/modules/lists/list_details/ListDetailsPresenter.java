@@ -4,15 +4,17 @@ import android.widget.TextView;
 
 import java.util.List;
 
-import io.reactivex.annotations.NonNull;
-import io.reactivex.functions.Consumer;
+import ua.r4mstein.moviedbdemo.R;
+import ua.r4mstein.moviedbdemo.data.models.request.AddMovieToListSendModel;
 import ua.r4mstein.moviedbdemo.data.models.response.Movie;
-import ua.r4mstein.moviedbdemo.data.models.response.SearchMoviesModel;
 import ua.r4mstein.moviedbdemo.data.providers.ListsProvider;
 import ua.r4mstein.moviedbdemo.data.providers.SearchProvider;
 import ua.r4mstein.moviedbdemo.modules.base.BaseFragmentPresenter;
 import ua.r4mstein.moviedbdemo.modules.base.FragmentView;
+import ua.r4mstein.moviedbdemo.modules.dialog.InfoDialog;
+import ua.r4mstein.moviedbdemo.modules.films.search_film.SearchFilmDialog;
 import ua.r4mstein.moviedbdemo.utills.Logger;
+import ua.r4mstein.moviedbdemo.utills.SharedPrefManager;
 
 import static ua.r4mstein.moviedbdemo.utills.Constants.API_KEY;
 
@@ -23,13 +25,15 @@ public class ListDetailsPresenter extends BaseFragmentPresenter<ListDetailsPrese
 
     private long current_page;
     private long total_pages;
+    private long listId;
 
     @Override
     public void onViewCreated() {
         super.onViewCreated();
 
         current_page = 1;
-        getDetailsFragment(getArguments().getLong(ListsDetailsFragment.LIST_ID));
+        listId = getArguments().getLong(ListsDetailsFragment.LIST_ID);
+        getDetailsFragment(listId);
     }
 
     private void getDetailsFragment(long listId) {
@@ -59,11 +63,29 @@ public class ListDetailsPresenter extends BaseFragmentPresenter<ListDetailsPrese
         if (current_page < total_pages) getSearchMovies(searchRequest, current_page + 1);
     }
 
+    public void addMovieToList(long movieId) {
+        AddMovieToListSendModel sendModel = new AddMovieToListSendModel();
+        sendModel.setMediaId(movieId);
+
+        execute(mListsProvider.addMovieToList(listId, API_KEY, SharedPrefManager.getInstance().retrieveSessionId(), sendModel),
+                addMovieToListModel -> getRouter().showDialog(new InfoDialog(), R.string.app_name, addMovieToListModel.getStatusMessage(),
+                        v -> {
+                            getView().getSearchFilmDialog().dismiss();
+                            getDetailsFragment(listId);
+                        }, null),
+                throwable -> Logger.d(throwable.getMessage()));
+    }
+
     interface ListDetailsView extends FragmentView {
 
         void setList(List<Movie> list);
+
         void setSearchList(List<Movie> list);
+
         void addSearchList(List<Movie> list);
+
         TextView getTVCount();
+
+        SearchFilmDialog getSearchFilmDialog();
     }
 }
