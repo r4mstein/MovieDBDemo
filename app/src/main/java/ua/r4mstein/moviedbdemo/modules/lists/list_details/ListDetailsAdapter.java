@@ -37,23 +37,41 @@ public class ListDetailsAdapter extends RecyclerView.Adapter<ListDetailsAdapter.
     public void onBindViewHolder(ListDetailsViewHolder holder, int position) {
         Movie movie = mMovieList.get(position);
 
-        holder.tvTitle.setText(movie.getOriginalTitle());
-        holder.tvOverview.setText(movie.getOverview());
-        holder.tvReleaseDate.setText(String.format("%s %s", "Release date: ", movie.getReleaseDate()));
-        holder.tvVote.setText(String.valueOf(movie.getVoteAverage()));
-        holder.tvVoteCount.setText(String.valueOf(movie.getVoteCount()));
-
-        Picasso.with(mContext)
-                .load(Constants.IMAGE_BASE_URL + movie.getPosterPath())
-                .placeholder(R.drawable.main_logo)
-                .error(R.drawable.main_logo)
-                .into(holder.ivPoster);
+        fillData(holder, movie);
+        fillPoster(holder, movie);
 
         holder.itemView.setOnClickListener(v -> mListDetailsClickListener.itemClicked(movie.getId()));
         holder.itemView.setOnLongClickListener(v -> {
             mListDetailsClickListener.itemLongClicked(movie.getId());
             return true;
         });
+    }
+
+    private void fillPoster(ListDetailsViewHolder holder, Movie movie) {
+        Picasso.with(mContext)
+                .load(Constants.IMAGE_BASE_URL + movie.getPosterPath())
+                .placeholder(R.drawable.main_logo)
+                .error(R.drawable.main_logo)
+                .into(holder.ivPoster);
+    }
+
+    private void fillData(ListDetailsViewHolder holder, Movie movie) {
+        holder.tvTitle.setText(movie.getOriginalTitle());
+
+        if (movie.getOverview() != null && !movie.getOverview().isEmpty())
+        holder.tvOverview.setText(movie.getOverview());
+        else holder.tvOverview.setText(mContext.getResources().getText(R.string.error_movie_overview));
+
+        if (movie.getReleaseDate() != null && !movie.getReleaseDate().isEmpty())
+        holder.tvReleaseDate.setText(String.format("%s %s", "Release date: ", movie.getReleaseDate()));
+        else holder.tvReleaseDate.setText(String.format("%s %s", "Release date: ",
+                mContext.getResources().getText(R.string.error_movie_release_date)));
+
+        if (movie.getVoteAverage() != null) holder.tvVote.setText(String.valueOf(movie.getVoteAverage()));
+        else holder.tvVote.setText("0");
+
+        if (movie.getVoteCount() != null) holder.tvVoteCount.setText(String.valueOf(movie.getVoteCount()));
+        else holder.tvVoteCount.setText("0");
     }
 
     @Override
