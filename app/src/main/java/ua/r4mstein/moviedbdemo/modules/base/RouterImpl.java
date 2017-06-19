@@ -12,6 +12,7 @@ import android.view.View;
 
 import java.util.List;
 
+import ua.r4mstein.moviedbdemo.modules.dialog.QuestionDialog;
 import ua.r4mstein.moviedbdemo.utills.KeyboardManager;
 import ua.r4mstein.moviedbdemo.utills.Logger;
 
@@ -218,7 +219,20 @@ public class RouterImpl implements Router {
         mDialog.setOnPositiveClickListener(_listener);
         mDialog.show(mActivity.asActivity().getSupportFragmentManager(), "");
     }
-//
+
+    @Override
+    public void showQuestionDialog(QuestionDialog _dialog, @StringRes int _title, String _message, View.OnClickListener _positiveListener, View.OnClickListener _negativeListener) {
+        if (progressDialog != null && progressDialog.isShowing()) progressDialog.dismiss();
+        if (mDialog != null && mDialog.isVisible()) mDialog.dismiss();
+        mDialog = _dialog;
+        mDialog.setTitle(_title);
+        mDialog.setMessage(_message);
+        mDialog.setOnPositiveClickListener(_positiveListener);
+        mDialog.setOnNegativeClickListener(_negativeListener);
+        mDialog.show(mActivity.asActivity().getSupportFragmentManager(), "");
+    }
+
+    //
 //    @Override
 //    public void showDialog(BaseDialog _dialog) {
 //        if (mDialog != null && mDialog.isVisible()) mDialog.dismiss();

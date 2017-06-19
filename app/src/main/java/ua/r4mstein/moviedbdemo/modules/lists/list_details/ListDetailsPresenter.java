@@ -12,6 +12,7 @@ import ua.r4mstein.moviedbdemo.data.providers.SearchProvider;
 import ua.r4mstein.moviedbdemo.modules.base.BaseFragmentPresenter;
 import ua.r4mstein.moviedbdemo.modules.base.FragmentView;
 import ua.r4mstein.moviedbdemo.modules.dialog.InfoDialog;
+import ua.r4mstein.moviedbdemo.modules.dialog.QuestionDialog;
 import ua.r4mstein.moviedbdemo.modules.films.search_film.SearchFilmDialog;
 import ua.r4mstein.moviedbdemo.utills.Logger;
 import ua.r4mstein.moviedbdemo.utills.SharedPrefManager;
@@ -74,6 +75,25 @@ public class ListDetailsPresenter extends BaseFragmentPresenter<ListDetailsPrese
                             getDetailsFragment(listId);
                         }, null),
                 throwable -> Logger.d(throwable.getMessage()));
+    }
+
+    private void removeMovieFromList(long movieId) {
+        AddMovieToListSendModel sendModel = new AddMovieToListSendModel();
+        sendModel.setMediaId(movieId);
+
+        execute(mListsProvider.removeMovieFromList(listId, API_KEY, SharedPrefManager.getInstance().retrieveSessionId(), sendModel),
+                addMovieToListModel -> getRouter().showDialog(new InfoDialog(), R.string.app_name, addMovieToListModel.getStatusMessage(),
+                        v -> getDetailsFragment(listId), null),
+                throwable -> Logger.d(throwable.getMessage()));
+    }
+
+    public void showRemoveItemDialog(String title, long movieId) {
+        getRouter().showQuestionDialog(new QuestionDialog(), R.string.app_name, "Do you really want to delete: " + title + "?",
+                v -> {
+                    Logger.d("positive clicked");
+                    removeMovieFromList(movieId);
+                },
+                v -> Logger.d("negative clicked"));
     }
 
     interface ListDetailsView extends FragmentView {

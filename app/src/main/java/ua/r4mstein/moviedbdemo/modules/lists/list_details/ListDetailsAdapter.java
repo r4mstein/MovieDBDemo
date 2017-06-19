@@ -42,7 +42,7 @@ public class ListDetailsAdapter extends RecyclerView.Adapter<ListDetailsAdapter.
 
         holder.itemView.setOnClickListener(v -> mListDetailsClickListener.itemClicked(movie.getId()));
         holder.itemView.setOnLongClickListener(v -> {
-            mListDetailsClickListener.itemLongClicked(movie.getId());
+            mListDetailsClickListener.itemLongClicked(movie.getTitle(), movie.getId());
             return true;
         });
     }

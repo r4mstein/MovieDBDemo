@@ -7,6 +7,8 @@ import android.support.annotation.StringRes;
 import android.support.v4.app.Fragment;
 import android.view.View;
 
+import ua.r4mstein.moviedbdemo.modules.dialog.QuestionDialog;
+
 public interface Router {
 
     void init(ActivityView activity, BaseActivityPresenter activityPresenter);
@@ -36,6 +38,8 @@ public interface Router {
     void showDialog(BaseDialog _dialog, @StringRes int _title, String _message, @DrawableRes int _icon, View.OnClickListener _listener);
 //
 //    void showDialog(BaseDialog _dialog);
+
+    void showQuestionDialog(QuestionDialog _dialog, @StringRes int _title, String _message, View.OnClickListener _positiveListener, View.OnClickListener _negativeListener);
 
     void showLoadingDialog();
 

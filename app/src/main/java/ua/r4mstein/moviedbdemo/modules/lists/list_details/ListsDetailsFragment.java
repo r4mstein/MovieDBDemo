@@ -63,20 +63,25 @@ public class ListsDetailsFragment extends BaseFragment<ListDetailsPresenter>
         mRecyclerView.setLayoutManager(layoutManager);
 
         mAdapter = new ListDetailsAdapter(getViewContext());
-        mAdapter.setListDetailsClickListener(new ListDetailsClickListener() {
+        mAdapter.setListDetailsClickListener(getListDetailsClickListener());
+        mRecyclerView.setAdapter(mAdapter);
+
+        mFAB.setOnClickListener(getFABClickListener());
+    }
+
+    @NonNull
+    private ListDetailsClickListener getListDetailsClickListener() {
+        return new ListDetailsClickListener() {
             @Override
             public void itemClicked(long movieId) {
                 Logger.d("itemClicked: movieId = " + movieId);
             }
 
             @Override
-            public void itemLongClicked(long movieId) {
-                Logger.d("itemClicked: movieId = " + movieId);
+            public void itemLongClicked(String title, long movieId) {
+                getPresenter().showRemoveItemDialog(title, movieId);
             }
-        });
-        mRecyclerView.setAdapter(mAdapter);
-
-        mFAB.setOnClickListener(getFABClickListener());
+        };
     }
 
     @NonNull
