@@ -82,6 +82,12 @@ public interface RetrofitInterface {
                                                         @Query("session_id") String sessionId,
                                                         @Body AddMovieToListSendModel sendModel);
 
+    @POST("list/{list_id}/clear")
+    Observable<AddMovieToListModel> clearList(@Path("list_id") long listId,
+                                                        @Query("api_key") String apiKey,
+                                                        @Query("session_id") String sessionId,
+                                                        @Query("confirm") boolean confirm);
+
 //    *****
 
 //        SEARCH

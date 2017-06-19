@@ -29,4 +29,9 @@ public class ListsProvider extends BaseProvider implements ListsApi {
     public Observable<AddMovieToListModel> removeMovieFromList(long listId, String apiKey, String sessionId, AddMovieToListSendModel sendModel) {
         return api.removeMovieFromList(listId, apiKey, sessionId, sendModel);
     }
+
+    @Override
+    public Observable<AddMovieToListModel> clearList(long listId, String apiKey, String sessionId, boolean confirm) {
+        return api.clearList(listId, apiKey, sessionId, confirm);
+    }
 }

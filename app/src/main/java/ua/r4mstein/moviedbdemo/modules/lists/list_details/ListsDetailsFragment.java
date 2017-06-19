@@ -158,7 +158,7 @@ public class ListsDetailsFragment extends BaseFragment<ListDetailsPresenter>
     public boolean onMenuItemClick(MenuItem item) {
         switch (item.getItemId()) {
             case R.id.action_clear_list:
-                Logger.d("action_clear_list clicked");
+                getPresenter().showClearListDialog();
                 return true;
             case R.id.action_delete_list:
                 Logger.d("action_delete_list clicked");

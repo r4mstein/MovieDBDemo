@@ -1,11 +1,15 @@
 package ua.r4mstein.moviedbdemo.modules.lists.list_details;
 
+import android.view.View;
 import android.widget.TextView;
 
 import java.util.List;
 
+import io.reactivex.annotations.NonNull;
+import io.reactivex.functions.Consumer;
 import ua.r4mstein.moviedbdemo.R;
 import ua.r4mstein.moviedbdemo.data.models.request.AddMovieToListSendModel;
+import ua.r4mstein.moviedbdemo.data.models.response.AddMovieToListModel;
 import ua.r4mstein.moviedbdemo.data.models.response.Movie;
 import ua.r4mstein.moviedbdemo.data.providers.ListsProvider;
 import ua.r4mstein.moviedbdemo.data.providers.SearchProvider;
@@ -27,6 +31,7 @@ public class ListDetailsPresenter extends BaseFragmentPresenter<ListDetailsPrese
     private long current_page;
     private long total_pages;
     private long listId;
+    private long itemCount;
 
     @Override
     public void onViewCreated() {
@@ -40,7 +45,8 @@ public class ListDetailsPresenter extends BaseFragmentPresenter<ListDetailsPrese
     private void getDetailsFragment(long listId) {
         execute(mListsProvider.getListDetails(listId, API_KEY),
                 listDetailsModel -> {
-                    getView().getTVCount().setText(String.format("%s %s", "Items count:", listDetailsModel.getItemCount()));
+                    itemCount = listDetailsModel.getItemCount();
+                    getView().getTVCount().setText(String.format("%s %s", "Items count:", itemCount));
                     getView().setList(listDetailsModel.getMovies());
                 },
                 throwable -> Logger.d(throwable.getMessage()));
@@ -94,6 +100,26 @@ public class ListDetailsPresenter extends BaseFragmentPresenter<ListDetailsPrese
                     removeMovieFromList(movieId);
                 },
                 v -> Logger.d("negative clicked"));
+    }
+
+    public void clearList() {
+        execute(mListsProvider.clearList(listId, API_KEY, SharedPrefManager.getInstance().retrieveSessionId(), true),
+                addMovieToListModel -> getRouter().showDialog(new InfoDialog(), R.string.app_name, addMovieToListModel.getStatusMessage(),
+                        v -> getDetailsFragment(listId), null),
+                throwable -> Logger.d(throwable.getMessage()));
+    }
+
+    public void showClearListDialog() {
+        if (itemCount == 0) {
+            getRouter().showDialog(new InfoDialog(), R.string.app_name, "This list is already empty", null, null);
+        } else {
+            getRouter().showQuestionDialog(new QuestionDialog(), R.string.app_name, "Do you really want to clear list?",
+                    v -> {
+                        Logger.d("positive clicked");
+                        clearList();
+                    },
+                    v -> Logger.d("negative clicked"));
+        }
     }
 
     interface ListDetailsView extends FragmentView {
