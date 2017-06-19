@@ -28,4 +28,8 @@
 
     <string name="error_movie_overview">Can not find a description of the movie</string>
     <string name="error_movie_release_date">Not found</string>
+
+    <string name="text_delete">Delete</string>
+    <string name="item_clear_list">Clear List</string>
+    <string name="item_delete_list">Delete List</string>
 </resources>

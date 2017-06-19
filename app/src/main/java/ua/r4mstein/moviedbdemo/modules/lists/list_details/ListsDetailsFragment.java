@@ -1,12 +1,16 @@
 package ua.r4mstein.moviedbdemo.modules.lists.list_details;
 
+import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.FragmentManager;
+import android.support.v7.view.ContextThemeWrapper;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.view.MenuItem;
 import android.view.View;
+import android.widget.PopupMenu;
 import android.widget.TextView;
 
 import java.util.List;
@@ -22,16 +26,17 @@ import ua.r4mstein.moviedbdemo.utills.EndlessScrollListener;
 import ua.r4mstein.moviedbdemo.utills.Logger;
 
 public class ListsDetailsFragment extends BaseFragment<ListDetailsPresenter>
-        implements ListDetailsPresenter.ListDetailsView {
+        implements ListDetailsPresenter.ListDetailsView, PopupMenu.OnMenuItemClickListener {
 
     public static final String LIST_ID = "list_id";
 
-    private TextView tvCount;
+    private TextView tvCount, tvDelete;
     private RecyclerView mRecyclerView;
     private FloatingActionButton mFAB;
     private ListDetailsAdapter mAdapter;
     private MoviesByGenreAdapter adapter;
     private SearchFilmDialog filmDialog;
+    private PopupMenu mDeletePopup;
 
     private int startSearchPage = 1;
 
@@ -53,6 +58,7 @@ public class ListsDetailsFragment extends BaseFragment<ListDetailsPresenter>
     @Override
     protected void findUI(View rootView) {
         tvCount = (TextView) rootView.findViewById(R.id.tv_count_FLD);
+        tvDelete = (TextView) rootView.findViewById(R.id.tv_delete_FLD);
         mRecyclerView = (RecyclerView) rootView.findViewById(R.id.rv_FLD);
         mFAB = (FloatingActionButton) rootView.findViewById(R.id.fab_FLD);
     }
@@ -67,6 +73,8 @@ public class ListsDetailsFragment extends BaseFragment<ListDetailsPresenter>
         mRecyclerView.setAdapter(mAdapter);
 
         mFAB.setOnClickListener(getFABClickListener());
+
+        tvDelete.setOnClickListener(v -> showDeletePopup());
     }
 
     @NonNull
@@ -134,6 +142,29 @@ public class ListsDetailsFragment extends BaseFragment<ListDetailsPresenter>
         fragment.setArguments(bundle);
 
         return fragment;
+    }
+
+    private void showDeletePopup() {
+        if (mDeletePopup == null) {
+            Context wrapper = new ContextThemeWrapper(getContext(), R.style.PopupDeleteStyle);
+            mDeletePopup = new PopupMenu(wrapper, tvDelete);
+            mDeletePopup.setOnMenuItemClickListener(this);
+            mDeletePopup.inflate(R.menu.menu_delete);
+        }
+        mDeletePopup.show();
+    }
+
+    @Override
+    public boolean onMenuItemClick(MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.action_clear_list:
+                Logger.d("action_clear_list clicked");
+                return true;
+            case R.id.action_delete_list:
+                Logger.d("action_delete_list clicked");
+                return true;
+        }
+        return false;
     }
 
     @Override
