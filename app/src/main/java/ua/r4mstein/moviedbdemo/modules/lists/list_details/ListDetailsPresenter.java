@@ -1,7 +1,6 @@
 package ua.r4mstein.moviedbdemo.modules.lists.list_details;
 
 import android.content.res.Resources;
-import android.view.View;
 import android.widget.TextView;
 
 import java.util.List;
@@ -19,6 +18,7 @@ import ua.r4mstein.moviedbdemo.modules.base.FragmentView;
 import ua.r4mstein.moviedbdemo.modules.dialog.InfoDialog;
 import ua.r4mstein.moviedbdemo.modules.dialog.QuestionDialog;
 import ua.r4mstein.moviedbdemo.modules.films.search_film.SearchFilmDialog;
+import ua.r4mstein.moviedbdemo.modules.lists.get_lists.GetListsFragment;
 import ua.r4mstein.moviedbdemo.utills.Logger;
 import ua.r4mstein.moviedbdemo.utills.SharedPrefManager;
 
@@ -104,7 +104,7 @@ public class ListDetailsPresenter extends BaseFragmentPresenter<ListDetailsPrese
                 v -> Logger.d("negative clicked"));
     }
 
-    public void clearList() {
+    private void clearList() {
         execute(mListsProvider.clearList(listId, API_KEY, SharedPrefManager.getInstance().retrieveSessionId(), true),
                 addMovieToListModel -> getRouter().showDialog(new InfoDialog(), R.string.app_name, addMovieToListModel.getStatusMessage(),
                         v -> getDetailsFragment(listId), null),
@@ -117,13 +117,30 @@ public class ListDetailsPresenter extends BaseFragmentPresenter<ListDetailsPrese
                     getView().getAppResources().getString(R.string.dialog_empty_message), null, null);
         } else {
             getRouter().showQuestionDialog(new QuestionDialog(), R.string.app_name,
-                    getView().getAppResources().getString(R.string.dialog_clear_message),
+                    getView().getAppResources().getString(R.string.dialog_clear_list_message),
                     v -> {
                         Logger.d("positive clicked");
                         clearList();
                     },
                     v -> Logger.d("negative clicked"));
         }
+    }
+
+    private void deleteList() {
+        execute(mListsProvider.deleteList(listId, API_KEY, SharedPrefManager.getInstance().retrieveSessionId()),
+                addMovieToListModel -> getRouter().showDialog(new InfoDialog(), R.string.app_name, addMovieToListModel.getStatusMessage(),
+                        v -> getRouter().replaceFragment(new GetListsFragment(), false), null),
+                throwable -> Logger.d(throwable.getMessage()));
+    }
+
+    public void showDeleteListDialog() {
+        getRouter().showQuestionDialog(new QuestionDialog(), R.string.app_name,
+                getView().getAppResources().getString(R.string.dialog_delete_list_message),
+                v -> {
+                    Logger.d("positive clicked");
+                    deleteList();
+                },
+                v -> Logger.d("negative clicked"));
     }
 
     interface ListDetailsView extends FragmentView {

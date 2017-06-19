@@ -34,6 +34,7 @@
     <string name="item_delete_list">Delete List</string>
 
     <string name="dialog_empty_message">This list is already empty</string>
-    <string name="dialog_clear_message">Do you really want to clear list?</string>
+    <string name="dialog_clear_list_message">Do you really want to clear this list?</string>
+    <string name="dialog_delete_list_message">Do you really want to delete this list?</string>
     <string name="dialog_delete_message">Do you really want to delete:\u0020</string>
 </resources>

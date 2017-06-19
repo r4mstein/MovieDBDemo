@@ -36,6 +36,10 @@ public class GetListsAdapter extends RecyclerView.Adapter<GetListsAdapter.GetLis
         holder.tvCount.setText(String.format("%s %s", "Items count: ", String.valueOf(model.getItemCount())));
 
         holder.cvContainer.setOnClickListener(v -> mActionListener.getListsItemClicked(model.getId()));
+        holder.cvContainer.setOnLongClickListener(v -> {
+            mActionListener.getListsItemLongClicked(model.getId());
+            return false;
+        });
     }
 
     @Override

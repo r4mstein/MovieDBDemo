@@ -164,7 +164,7 @@ public class ListsDetailsFragment extends BaseFragment<ListDetailsPresenter>
                 getPresenter().showClearListDialog();
                 return true;
             case R.id.action_delete_list:
-                Logger.d("action_delete_list clicked");
+                getPresenter().showDeleteListDialog();
                 return true;
         }
         return false;

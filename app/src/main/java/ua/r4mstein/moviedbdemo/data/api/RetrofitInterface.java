@@ -2,6 +2,7 @@ package ua.r4mstein.moviedbdemo.data.api;
 
 import io.reactivex.Observable;
 import retrofit2.http.Body;
+import retrofit2.http.DELETE;
 import retrofit2.http.GET;
 import retrofit2.http.Headers;
 import retrofit2.http.POST;
@@ -87,6 +88,11 @@ public interface RetrofitInterface {
                                                         @Query("api_key") String apiKey,
                                                         @Query("session_id") String sessionId,
                                                         @Query("confirm") boolean confirm);
+
+    @DELETE("list/{list_id}")
+    Observable<AddMovieToListModel> deleteList(@Path("list_id") long listId,
+                                               @Query("api_key") String apiKey,
+                                               @Query("session_id") String sessionId);
 
 //    *****
 

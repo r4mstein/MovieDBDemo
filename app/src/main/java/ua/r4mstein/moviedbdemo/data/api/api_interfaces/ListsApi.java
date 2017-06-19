@@ -22,4 +22,6 @@ public interface ListsApi {
                                                    AddMovieToListSendModel sendModel);
 
     Observable<AddMovieToListModel> clearList(long listId, String apiKey, String sessionId, boolean confirm);
+
+    Observable<AddMovieToListModel> deleteList(long listId, String apiKey, String sessionId);
 }

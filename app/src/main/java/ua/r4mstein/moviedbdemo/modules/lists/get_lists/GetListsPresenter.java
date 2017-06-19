@@ -1,15 +1,21 @@
 package ua.r4mstein.moviedbdemo.modules.lists.get_lists;
 
+import android.content.res.Resources;
+
 import java.util.List;
 
+import io.reactivex.annotations.NonNull;
+import io.reactivex.functions.Consumer;
 import ua.r4mstein.moviedbdemo.R;
 import ua.r4mstein.moviedbdemo.data.models.request.CreateListSendModel;
+import ua.r4mstein.moviedbdemo.data.models.response.AddMovieToListModel;
 import ua.r4mstein.moviedbdemo.data.models.response.GetListsModel;
 import ua.r4mstein.moviedbdemo.data.providers.AccountProvider;
 import ua.r4mstein.moviedbdemo.data.providers.ListsProvider;
 import ua.r4mstein.moviedbdemo.modules.base.BaseFragmentPresenter;
 import ua.r4mstein.moviedbdemo.modules.base.FragmentView;
 import ua.r4mstein.moviedbdemo.modules.dialog.InfoDialog;
+import ua.r4mstein.moviedbdemo.modules.dialog.QuestionDialog;
 import ua.r4mstein.moviedbdemo.modules.lists.list_details.ListsDetailsFragment;
 import ua.r4mstein.moviedbdemo.utills.Logger;
 import ua.r4mstein.moviedbdemo.utills.SharedPrefManager;
@@ -69,7 +75,34 @@ public class GetListsPresenter extends BaseFragmentPresenter<GetListsPresenter.G
     }
 
     public GetListsActionListener getListsActionListener() {
-        return listId -> getRouter().replaceFragment(ListsDetailsFragment.newInstance(listId), false);
+        return new GetListsActionListener() {
+            @Override
+            public void getListsItemClicked(long listId) {
+                GetListsPresenter.this.getRouter().replaceFragment(ListsDetailsFragment.newInstance(listId), false);
+            }
+
+            @Override
+            public void getListsItemLongClicked(long listId) {
+                showDeleteListDialog(listId);
+            }
+        };
+    }
+
+    private void showDeleteListDialog(long listId) {
+        getRouter().showQuestionDialog(new QuestionDialog(), R.string.app_name,
+                getView().getAppResources().getString(R.string.dialog_delete_list_message),
+                v -> {
+                    Logger.d("positive clicked");
+                    deleteList(listId);
+                },
+                v -> Logger.d("negative clicked"));
+    }
+
+    private void deleteList(long listId) {
+        execute(mListsProvider.deleteList(listId, API_KEY, SharedPrefManager.getInstance().retrieveSessionId()),
+                addMovieToListModel -> getRouter().showDialog(new InfoDialog(), R.string.app_name, addMovieToListModel.getStatusMessage(),
+                        v -> getInitialLists(), null),
+                Throwable::getMessage);
     }
 
     interface GetListsView extends FragmentView {
@@ -77,5 +110,7 @@ public class GetListsPresenter extends BaseFragmentPresenter<GetListsPresenter.G
         void setList(List<GetListsModel.Result> list);
 
         void addList(List<GetListsModel.Result> list);
+
+        Resources getAppResources();
     }
 }
