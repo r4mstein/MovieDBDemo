@@ -15,9 +15,11 @@ import ua.r4mstein.moviedbdemo.R;
 import ua.r4mstein.moviedbdemo.data.models.response.Movie;
 import ua.r4mstein.moviedbdemo.modules.base.BaseFragment;
 import ua.r4mstein.moviedbdemo.modules.films.by_genre.MoviesByGenreAdapter;
+import ua.r4mstein.moviedbdemo.modules.films.by_genre.MoviesClickListener;
 import ua.r4mstein.moviedbdemo.modules.films.search_film.OnSearchClickListener;
 import ua.r4mstein.moviedbdemo.modules.films.search_film.SearchFilmDialog;
 import ua.r4mstein.moviedbdemo.utills.EndlessScrollListener;
+import ua.r4mstein.moviedbdemo.utills.Logger;
 
 public class ListsDetailsFragment extends BaseFragment<ListDetailsPresenter>
         implements ListDetailsPresenter.ListDetailsView {
@@ -61,6 +63,17 @@ public class ListsDetailsFragment extends BaseFragment<ListDetailsPresenter>
         mRecyclerView.setLayoutManager(layoutManager);
 
         mAdapter = new ListDetailsAdapter(getViewContext());
+        mAdapter.setListDetailsClickListener(new ListDetailsClickListener() {
+            @Override
+            public void itemClicked(long movieId) {
+                Logger.d("itemClicked: movieId = " + movieId);
+            }
+
+            @Override
+            public void itemLongClicked(long movieId) {
+                Logger.d("itemClicked: movieId = " + movieId);
+            }
+        });
         mRecyclerView.setAdapter(mAdapter);
 
         mFAB.setOnClickListener(getFABClickListener());
@@ -85,7 +98,17 @@ public class ListsDetailsFragment extends BaseFragment<ListDetailsPresenter>
             recyclerView.setLayoutManager(layoutManager);
 
             adapter = new MoviesByGenreAdapter(getViewContext());
-            adapter.setMoviesClickListener(movieId -> getPresenter().addMovieToList(movieId));
+            adapter.setMoviesClickListener(new MoviesClickListener() {
+                @Override
+                public void moviesItemClicked(long movieId) {
+                    getPresenter().addMovieToList(movieId);
+                }
+
+                @Override
+                public void moviesItemLongClicked(long movieId) {
+
+                }
+            });
             recyclerView.setAdapter(adapter);
 
             recyclerView.addOnScrollListener(new EndlessScrollListener(layoutManager,

@@ -21,6 +21,7 @@ public class ListDetailsAdapter extends RecyclerView.Adapter<ListDetailsAdapter.
 
     private List<Movie> mMovieList = new ArrayList<>();
     private Context mContext;
+    private ListDetailsClickListener mListDetailsClickListener;
 
     public ListDetailsAdapter(Context context) {
         mContext = context;
@@ -47,6 +48,12 @@ public class ListDetailsAdapter extends RecyclerView.Adapter<ListDetailsAdapter.
                 .placeholder(R.drawable.main_logo)
                 .error(R.drawable.main_logo)
                 .into(holder.ivPoster);
+
+        holder.itemView.setOnClickListener(v -> mListDetailsClickListener.itemClicked(movie.getId()));
+        holder.itemView.setOnLongClickListener(v -> {
+            mListDetailsClickListener.itemLongClicked(movie.getId());
+            return true;
+        });
     }
 
     @Override
@@ -57,6 +64,10 @@ public class ListDetailsAdapter extends RecyclerView.Adapter<ListDetailsAdapter.
     public void setData(List<Movie> list) {
         mMovieList = list;
         notifyDataSetChanged();
+    }
+
+    public void setListDetailsClickListener(ListDetailsClickListener listDetailsClickListener) {
+        mListDetailsClickListener = listDetailsClickListener;
     }
 
     public class ListDetailsViewHolder extends RecyclerView.ViewHolder {
