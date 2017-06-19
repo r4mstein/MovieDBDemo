@@ -1,5 +1,6 @@
 package ua.r4mstein.moviedbdemo.modules.lists.list_details;
 
+import android.content.res.Resources;
 import android.view.View;
 import android.widget.TextView;
 
@@ -94,7 +95,8 @@ public class ListDetailsPresenter extends BaseFragmentPresenter<ListDetailsPrese
     }
 
     public void showRemoveItemDialog(String title, long movieId) {
-        getRouter().showQuestionDialog(new QuestionDialog(), R.string.app_name, "Do you really want to delete: " + title + "?",
+        getRouter().showQuestionDialog(new QuestionDialog(), R.string.app_name,
+                getView().getAppResources().getString(R.string.dialog_delete_message) + title + "?",
                 v -> {
                     Logger.d("positive clicked");
                     removeMovieFromList(movieId);
@@ -111,9 +113,11 @@ public class ListDetailsPresenter extends BaseFragmentPresenter<ListDetailsPrese
 
     public void showClearListDialog() {
         if (itemCount == 0) {
-            getRouter().showDialog(new InfoDialog(), R.string.app_name, "This list is already empty", null, null);
+            getRouter().showDialog(new InfoDialog(), R.string.app_name,
+                    getView().getAppResources().getString(R.string.dialog_empty_message), null, null);
         } else {
-            getRouter().showQuestionDialog(new QuestionDialog(), R.string.app_name, "Do you really want to clear list?",
+            getRouter().showQuestionDialog(new QuestionDialog(), R.string.app_name,
+                    getView().getAppResources().getString(R.string.dialog_clear_message),
                     v -> {
                         Logger.d("positive clicked");
                         clearList();
@@ -133,5 +137,7 @@ public class ListDetailsPresenter extends BaseFragmentPresenter<ListDetailsPrese
         TextView getTVCount();
 
         SearchFilmDialog getSearchFilmDialog();
+
+        Resources getAppResources();
     }
 }

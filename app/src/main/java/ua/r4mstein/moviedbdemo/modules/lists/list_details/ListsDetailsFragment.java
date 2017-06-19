@@ -1,6 +1,7 @@
 package ua.r4mstein.moviedbdemo.modules.lists.list_details;
 
 import android.content.Context;
+import android.content.res.Resources;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.FloatingActionButton;
@@ -37,6 +38,7 @@ public class ListsDetailsFragment extends BaseFragment<ListDetailsPresenter>
     private MoviesByGenreAdapter adapter;
     private SearchFilmDialog filmDialog;
     private PopupMenu mDeletePopup;
+    private Resources mResources;
 
     private int startSearchPage = 1;
 
@@ -75,6 +77,7 @@ public class ListsDetailsFragment extends BaseFragment<ListDetailsPresenter>
         mFAB.setOnClickListener(getFABClickListener());
 
         tvDelete.setOnClickListener(v -> showDeletePopup());
+        mResources = getResources();
     }
 
     @NonNull
@@ -190,5 +193,10 @@ public class ListsDetailsFragment extends BaseFragment<ListDetailsPresenter>
     @Override
     public SearchFilmDialog getSearchFilmDialog() {
         return filmDialog;
+    }
+
+    @Override
+    public Resources getAppResources() {
+        return mResources;
     }
 }
