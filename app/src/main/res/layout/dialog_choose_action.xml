@@ -71,4 +71,30 @@
 
     </LinearLayout>
 
+    <LinearLayout
+        android:id="@+id/ll_remove_favorite_container_DCA"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/ll_watchlist_container_DCA"
+        android:orientation="horizontal"
+        android:visibility="gone">
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/ic_record"/>
+
+        <TextView
+            android:id="@+id/tv_remove_favorite_DCA"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:fontFamily="sans-serif-medium"
+            android:text="@string/remove_favorite_DCA"
+            android:textColor="@color/colorAccent"
+            android:textSize="@dimen/text_size_16"
+            android:textStyle="normal"/>
+
+    </LinearLayout>
+
 </RelativeLayout>

@@ -1,5 +1,6 @@
 package ua.r4mstein.moviedbdemo.modules.lists.favorite_movies;
 
+import android.support.annotation.NonNull;
 import android.support.v4.app.FragmentManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -57,24 +58,11 @@ public class FavoriteMoviesFragment extends BaseFragment<FavoriteMoviesPresenter
 
             @Override
             public void moviesItemLongClicked(long movieId, int position) {
-//                FragmentManager manager = getFragmentManager();
-//
-//                ChooseActionDialog dialog = new ChooseActionDialog();
-//                dialog.setChooseActionClickListener(new ChooseActionClickListener() {
-//                    @Override
-//                    public void favoriteClicked() {
-//                        Logger.d("favoriteClicked");
-//
-//                    }
-//
-//                    @Override
-//                    public void watchlistClicked() {
-//                        Logger.d("watchlistClicked");
-//                        dialog.dismiss();
-//                    }
-//                });
-//
-//                dialog.show(manager, "ChooseActionDialog");
+                FragmentManager manager = getFragmentManager();
+
+                ChooseActionDialog dialog = ChooseActionDialog.newInstance(View.GONE, View.GONE, View.VISIBLE);
+                dialog.setChooseActionClickListener(getChooseActionClickListener(movieId, dialog));
+                dialog.show(manager, "ChooseActionDialog");
             }
         });
         mRecyclerView.setAdapter(adapter);
@@ -84,6 +72,28 @@ public class FavoriteMoviesFragment extends BaseFragment<FavoriteMoviesPresenter
                     getPresenter().getNextPage();
                     return true;
                 }));
+    }
+
+    @NonNull
+    private ChooseActionClickListener getChooseActionClickListener(long movieId, ChooseActionDialog dialog) {
+        return new ChooseActionClickListener() {
+            @Override
+            public void favoriteClicked() {
+                Logger.d("favoriteClicked");
+
+            }
+
+            @Override
+            public void watchlistClicked() {
+                Logger.d("watchlistClicked");
+            }
+
+            @Override
+            public void removeFromFavoriteClicked() {
+                Logger.d("removeFromFavoriteClicked");
+                getPresenter().removeFromFavorite(movieId, dialog);
+            }
+        };
     }
 
     @Override

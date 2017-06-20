@@ -73,6 +73,11 @@ public class MoviesByGenreFragment extends BaseFragment<MoviesByGenrePresenter>
                         Logger.d("watchlistClicked");
                         dialog.dismiss();
                     }
+
+                    @Override
+                    public void removeFromFavoriteClicked() {
+
+                    }
                 });
 
                 dialog.show(manager, "ChooseActionDialog");
