@@ -37,4 +37,7 @@
     <string name="dialog_clear_list_message">Do you really want to clear this list?</string>
     <string name="dialog_delete_list_message">Do you really want to delete this list?</string>
     <string name="dialog_delete_message">Do you really want to delete:\u0020</string>
+    <string name="title_DCA">Choose the action, please:</string>
+    <string name="favorite_DCA">Mark as Favorite</string>
+    <string name="watchlist_DCA">Add to Watchlist</string>
 </resources>

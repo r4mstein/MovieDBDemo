@@ -14,6 +14,7 @@ import android.view.WindowManager;
 import android.widget.TextView;
 
 import ua.r4mstein.moviedbdemo.R;
+import ua.r4mstein.moviedbdemo.modules.dialog.listeners.OnDialogButtonClickListener;
 
 public class CreateDialog extends DialogFragment {
 

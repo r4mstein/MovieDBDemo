@@ -42,7 +42,7 @@ public class MoviesByGenreAdapter extends RecyclerView.Adapter<MoviesByGenreAdap
 
         holder.itemView.setOnClickListener(v -> mMoviesClickListener.moviesItemClicked(movie.getId()));
         holder.itemView.setOnLongClickListener(v -> {
-            mMoviesClickListener.moviesItemLongClicked(movie.getId());
+            mMoviesClickListener.moviesItemLongClicked(movie.getId(), position);
             return true;
         });
     }

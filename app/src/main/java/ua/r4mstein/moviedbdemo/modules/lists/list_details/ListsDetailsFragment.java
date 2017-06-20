@@ -121,7 +121,7 @@ public class ListsDetailsFragment extends BaseFragment<ListDetailsPresenter>
                 }
 
                 @Override
-                public void moviesItemLongClicked(long movieId) {
+                public void moviesItemLongClicked(long movieId, int position) {
 
                 }
             });

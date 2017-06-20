@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                xmlns:tools="http://schemas.android.com/tools"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@color/white"
+                android:minWidth="@dimen/margin_300"
+                android:padding="@dimen/margin_16">
+
+    <TextView
+        android:id="@+id/tvTitle_DCA"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="@dimen/margin_15"
+        android:fontFamily="sans-serif-medium"
+        android:paddingEnd="@dimen/margin_24"
+        android:paddingStart="@dimen/margin_24"
+        android:text="@string/title_DCA"
+        android:textColor="@color/colorAccent"
+        android:textSize="@dimen/text_size_20"
+        android:textStyle="normal"/>
+
+    <LinearLayout
+        android:id="@+id/ll_favorite_container_DCA"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/tvTitle_DCA"
+        android:orientation="horizontal">
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/ic_record"/>
+
+        <TextView
+            android:id="@+id/tv_favorite_DCA"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:fontFamily="sans-serif-medium"
+            android:text="@string/favorite_DCA"
+            android:textColor="@color/colorAccent"
+            android:textSize="@dimen/text_size_16"
+            android:textStyle="normal"
+            />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/ll_watchlist_container_DCA"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/ll_favorite_container_DCA"
+        android:orientation="horizontal">
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/ic_record"/>
+
+        <TextView
+            android:id="@+id/tv_watchlist_DCA"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:fontFamily="sans-serif-medium"
+            android:text="@string/watchlist_DCA"
+            android:textColor="@color/colorAccent"
+            android:textSize="@dimen/text_size_16"
+            android:textStyle="normal"/>
+
+    </LinearLayout>
+
+</RelativeLayout>

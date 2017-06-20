@@ -1,6 +1,7 @@
 package ua.r4mstein.moviedbdemo.modules.films.by_genre;
 
 import android.os.Bundle;
+import android.support.v4.app.FragmentManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
@@ -10,7 +11,10 @@ import java.util.List;
 import ua.r4mstein.moviedbdemo.R;
 import ua.r4mstein.moviedbdemo.data.models.response.Movie;
 import ua.r4mstein.moviedbdemo.modules.base.BaseFragment;
+import ua.r4mstein.moviedbdemo.modules.dialog.listeners.ChooseActionClickListener;
+import ua.r4mstein.moviedbdemo.modules.dialog.ChooseActionDialog;
 import ua.r4mstein.moviedbdemo.utills.EndlessScrollListener;
+import ua.r4mstein.moviedbdemo.utills.Logger;
 
 public class MoviesByGenreFragment extends BaseFragment<MoviesByGenrePresenter>
         implements MoviesByGenrePresenter.MoviesByGenreView {
@@ -46,6 +50,34 @@ public class MoviesByGenreFragment extends BaseFragment<MoviesByGenrePresenter>
         mRecyclerView.setLayoutManager(layoutManager);
 
         adapter = new MoviesByGenreAdapter(getViewContext());
+        adapter.setMoviesClickListener(new MoviesClickListener() {
+            @Override
+            public void moviesItemClicked(long movieId) {
+
+            }
+
+            @Override
+            public void moviesItemLongClicked(long movieId, int position) {
+                FragmentManager manager = getFragmentManager();
+
+                ChooseActionDialog dialog = new ChooseActionDialog();
+                dialog.setChooseActionClickListener(new ChooseActionClickListener() {
+                    @Override
+                    public void favoriteClicked() {
+                        Logger.d("favoriteClicked");
+                        dialog.dismiss();
+                    }
+
+                    @Override
+                    public void watchlistClicked() {
+                        Logger.d("watchlistClicked");
+                        dialog.dismiss();
+                    }
+                });
+
+                dialog.show(manager, "ChooseActionDialog");
+            }
+        });
         mRecyclerView.setAdapter(adapter);
 
         mRecyclerView.addOnScrollListener(new EndlessScrollListener(layoutManager,

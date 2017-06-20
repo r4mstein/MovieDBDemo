@@ -1,4 +1,4 @@
-package ua.r4mstein.moviedbdemo.modules.dialog;
+package ua.r4mstein.moviedbdemo.modules.dialog.listeners;
 
 public interface OnDialogButtonClickListener {
 
