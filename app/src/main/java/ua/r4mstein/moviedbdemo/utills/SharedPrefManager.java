@@ -3,14 +3,19 @@ package ua.r4mstein.moviedbdemo.utills;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
+import android.text.TextUtils;
+
+import com.google.gson.Gson;
 
 import ua.r4mstein.moviedbdemo.App;
+import ua.r4mstein.moviedbdemo.data.models.response.UserModel;
 
 
 public class SharedPrefManager {
 
     private static final String SESSION_ID = "session_id";
     private static final String REQUEST_TOKEN = "request_token";
+    private static final String KEY_USER = "user_data";
 
     private static SharedPrefManager instance;
     private SharedPreferences sharedPreferences;
@@ -88,4 +93,16 @@ public class SharedPrefManager {
         return retrieveString(SESSION_ID);
     }
 
+    public void saveUser(UserModel model) {
+        saveString(KEY_USER, new Gson().toJson(model));
+    }
+
+    public UserModel getUser() {
+        String model = retrieveString(KEY_USER);
+        return TextUtils.isEmpty(model) ? null : new Gson().fromJson(model, UserModel.class);
+    }
+
+    public void clearUser() {
+        saveString(KEY_USER, null);
+    }
 }

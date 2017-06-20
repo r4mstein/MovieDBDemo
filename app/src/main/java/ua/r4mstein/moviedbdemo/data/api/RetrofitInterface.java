@@ -19,6 +19,7 @@ import ua.r4mstein.moviedbdemo.data.models.response.MoviesByGenreModel;
 import ua.r4mstein.moviedbdemo.data.models.response.RequestTokenModel;
 import ua.r4mstein.moviedbdemo.data.models.response.SearchMoviesModel;
 import ua.r4mstein.moviedbdemo.data.models.response.SessionModel;
+import ua.r4mstein.moviedbdemo.data.models.response.UserModel;
 
 public interface RetrofitInterface {
 
@@ -57,6 +58,11 @@ public interface RetrofitInterface {
     Observable<GetListsModel> getCreatedLists(@Query("api_key") String apiKey,
                                               @Query("session_id") String sessionId,
                                               @Query("page") long page);
+
+    @GET("account")
+    Observable<UserModel> getAccountDetails(@Query("api_key") String apiKey,
+                                            @Query("session_id") String sessionId);
+
 
 //    *****
 

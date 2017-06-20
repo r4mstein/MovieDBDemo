@@ -17,15 +17,6 @@ public class LoginPresenter extends BaseActivityPresenter<LoginPresenter.LoginVi
         getRouter().replaceFragment(new SignInFragment(), false);
     }
 
-    private void startFragment() {
-        FragmentManager fragmentManager = getView().getAppFragmentManager();
-        FragmentTransaction transaction = fragmentManager.beginTransaction();
-
-        SignInFragment signInFragment = new SignInFragment();
-        transaction.replace(R.id.fl_container_AL, signInFragment);
-        transaction.commit();
-    }
-
     interface LoginView extends ActivityView {
         FragmentManager getAppFragmentManager();
     }

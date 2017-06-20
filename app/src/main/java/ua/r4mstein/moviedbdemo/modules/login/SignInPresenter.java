@@ -6,6 +6,7 @@ import android.text.TextUtils;
 import io.reactivex.annotations.NonNull;
 import ua.r4mstein.moviedbdemo.data.api.api_interfaces.LoginApi;
 import ua.r4mstein.moviedbdemo.data.models.response.RequestTokenModel;
+import ua.r4mstein.moviedbdemo.data.providers.AccountProvider;
 import ua.r4mstein.moviedbdemo.data.providers.LoginProvider;
 import ua.r4mstein.moviedbdemo.modules.base.BaseFragmentPresenter;
 import ua.r4mstein.moviedbdemo.modules.base.FragmentView;
@@ -18,6 +19,7 @@ import static ua.r4mstein.moviedbdemo.utills.Constants.API_KEY;
 public class SignInPresenter extends BaseFragmentPresenter<SignInPresenter.SignInView> {
 
     private LoginApi mLoginApi = new LoginProvider();
+    private AccountProvider mAccountProvider = new AccountProvider();
 
     void btnLoginClicked() {
         if (isValidData(getView().getUserName(), getView().getPass())) getRequestToken();
@@ -52,6 +54,7 @@ public class SignInPresenter extends BaseFragmentPresenter<SignInPresenter.SignI
                     SharedPrefManager.getInstance().saveSessionId(sessionModel.getSessionId());
                     Logger.d("RAM: SessionId = " + sessionModel.getSessionId());
 
+                    getAccountDetails();
                     goToMainScreen();
                 },
                 throwable -> Logger.d(throwable.getMessage()));
@@ -61,6 +64,16 @@ public class SignInPresenter extends BaseFragmentPresenter<SignInPresenter.SignI
         int flags = Intent.FLAG_ACTIVITY_CLEAR_TOP;
         getRouter().startActivity(MainActivity.class, flags, null);
         getRouter().finishActivity();
+    }
+
+    private void getAccountDetails() {
+        executeWithoutProgress(mAccountProvider.getAccountDetails(API_KEY, SharedPrefManager.getInstance().retrieveSessionId()),
+                userModel -> {
+                    if (SharedPrefManager.getInstance().getUser() == null) SharedPrefManager.getInstance().saveUser(userModel);
+                },
+                throwable -> {
+                    Logger.d(throwable.getMessage());
+                });
     }
 
     private boolean isValidData(String userName, String pass) {
