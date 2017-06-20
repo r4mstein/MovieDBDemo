@@ -92,7 +92,7 @@ public class MoviesByGenreFragment extends BaseFragment<MoviesByGenrePresenter>
             @Override
             public void watchlistClicked() {
                 Logger.d("watchlistClicked");
-                dialog.dismiss();
+                getPresenter().addToWatchlist(movieId, dialog);
             }
 
             @Override

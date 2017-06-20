@@ -5,6 +5,7 @@ import java.util.List;
 import io.reactivex.annotations.NonNull;
 import io.reactivex.functions.Consumer;
 import ua.r4mstein.moviedbdemo.R;
+import ua.r4mstein.moviedbdemo.data.models.request.AddToWatchlistSendModel;
 import ua.r4mstein.moviedbdemo.data.models.request.MarkFavoriteSendModel;
 import ua.r4mstein.moviedbdemo.data.models.response.AddMovieToListModel;
 import ua.r4mstein.moviedbdemo.data.models.response.Movie;
@@ -59,6 +60,19 @@ public class MoviesByGenrePresenter extends BaseFragmentPresenter<MoviesByGenreP
         sendModel.setMediaType("movie");
 
         execute(mAccountProvider.markAsFavorite(SharedPrefManager.getInstance().getUser().getId(),
+                API_KEY, SharedPrefManager.getInstance().retrieveSessionId(), sendModel),
+                addMovieToListModel -> getRouter().showDialog(new InfoDialog(), R.string.app_name, addMovieToListModel.getStatusMessage(),
+                        v -> dialog.dismiss(), null),
+                throwable -> Logger.d(throwable.getMessage()));
+    }
+
+    public void addToWatchlist(long movieId, ChooseActionDialog dialog) {
+        AddToWatchlistSendModel sendModel = new AddToWatchlistSendModel();
+        sendModel.setMediaType("movie");
+        sendModel.setMediaId(movieId);
+        sendModel.setWatchlist(true);
+
+        execute(mAccountProvider.addToWatchList(SharedPrefManager.getInstance().getUser().getId(),
                 API_KEY, SharedPrefManager.getInstance().retrieveSessionId(), sendModel),
                 addMovieToListModel -> getRouter().showDialog(new InfoDialog(), R.string.app_name, addMovieToListModel.getStatusMessage(),
                         v -> dialog.dismiss(), null),

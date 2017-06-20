@@ -9,6 +9,7 @@ import retrofit2.http.POST;
 import retrofit2.http.Path;
 import retrofit2.http.Query;
 import ua.r4mstein.moviedbdemo.data.models.request.AddMovieToListSendModel;
+import ua.r4mstein.moviedbdemo.data.models.request.AddToWatchlistSendModel;
 import ua.r4mstein.moviedbdemo.data.models.request.CreateListSendModel;
 import ua.r4mstein.moviedbdemo.data.models.request.MarkFavoriteSendModel;
 import ua.r4mstein.moviedbdemo.data.models.response.AddMovieToListModel;
@@ -76,6 +77,12 @@ public interface RetrofitInterface {
                                                       @Query("api_key") String apiKey,
                                                       @Query("session_id") String sessionId,
                                                       @Query("page") long page);
+
+    @POST("account/{account_id}/watchlist")
+    Observable<AddMovieToListModel> addToWatchList(@Path("account_id") long accountId,
+                                                   @Query("api_key") String apiKey,
+                                                   @Query("session_id") String sessionId,
+                                                   @Body AddToWatchlistSendModel sendModel);
 
 
 //    *****

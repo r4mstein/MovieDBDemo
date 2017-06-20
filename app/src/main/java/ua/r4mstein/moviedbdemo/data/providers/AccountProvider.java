@@ -2,6 +2,7 @@ package ua.r4mstein.moviedbdemo.data.providers;
 
 import io.reactivex.Observable;
 import ua.r4mstein.moviedbdemo.data.api.api_interfaces.AccountApi;
+import ua.r4mstein.moviedbdemo.data.models.request.AddToWatchlistSendModel;
 import ua.r4mstein.moviedbdemo.data.models.request.MarkFavoriteSendModel;
 import ua.r4mstein.moviedbdemo.data.models.response.AddMovieToListModel;
 import ua.r4mstein.moviedbdemo.data.models.response.FavoriteMoviesModel;
@@ -29,5 +30,10 @@ public class AccountProvider extends BaseProvider implements AccountApi {
     @Override
     public Observable<FavoriteMoviesModel> getFavoriteMovies(long accountId, String apiKey, String sessionId, long page) {
         return api.getFavoriteMovies(accountId, apiKey, sessionId, page);
+    }
+
+    @Override
+    public Observable<AddMovieToListModel> addToWatchList(long accountId, String apiKey, String sessionId, AddToWatchlistSendModel sendModel) {
+        return api.addToWatchList(accountId, apiKey, sessionId, sendModel);
     }
 }

@@ -1,6 +1,10 @@
 package ua.r4mstein.moviedbdemo.data.api.api_interfaces;
 
 import io.reactivex.Observable;
+import retrofit2.http.Body;
+import retrofit2.http.Path;
+import retrofit2.http.Query;
+import ua.r4mstein.moviedbdemo.data.models.request.AddToWatchlistSendModel;
 import ua.r4mstein.moviedbdemo.data.models.request.MarkFavoriteSendModel;
 import ua.r4mstein.moviedbdemo.data.models.response.AddMovieToListModel;
 import ua.r4mstein.moviedbdemo.data.models.response.FavoriteMoviesModel;
@@ -17,4 +21,7 @@ public interface AccountApi {
                                                    MarkFavoriteSendModel sendModel);
 
     Observable<FavoriteMoviesModel> getFavoriteMovies(long accountId, String apiKey, String sessionId, long page);
+
+    Observable<AddMovieToListModel> addToWatchList(long accountId, String apiKey, String sessionId,
+                                                   AddToWatchlistSendModel sendModel);
 }
