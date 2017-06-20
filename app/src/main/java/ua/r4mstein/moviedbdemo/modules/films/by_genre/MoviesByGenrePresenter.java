@@ -1,7 +1,5 @@
 package ua.r4mstein.moviedbdemo.modules.films.by_genre;
 
-import android.view.View;
-
 import java.util.List;
 
 import io.reactivex.annotations.NonNull;
@@ -62,13 +60,8 @@ public class MoviesByGenrePresenter extends BaseFragmentPresenter<MoviesByGenreP
 
         execute(mAccountProvider.markAsFavorite(SharedPrefManager.getInstance().getUser().getId(),
                 API_KEY, SharedPrefManager.getInstance().retrieveSessionId(), sendModel),
-                new Consumer<AddMovieToListModel>() {
-                    @Override
-                    public void accept(@NonNull AddMovieToListModel addMovieToListModel) throws Exception {
-                        getRouter().showDialog(new InfoDialog(), R.string.app_name, addMovieToListModel.getStatusMessage(),
-                                v -> dialog.dismiss(), null);
-                    }
-                },
+                addMovieToListModel -> getRouter().showDialog(new InfoDialog(), R.string.app_name, addMovieToListModel.getStatusMessage(),
+                        v -> dialog.dismiss(), null),
                 throwable -> Logger.d(throwable.getMessage()));
     }
 

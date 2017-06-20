@@ -58,7 +58,7 @@ public class MainActivity extends BaseActivity<MainPresenter> {
                                 .withSelectedIcon(R.drawable.ic_one_select),
                         new PrimaryDrawerItem().withIdentifier(2).withName(R.string.drawer_item_lists).withIcon(R.drawable.ic_two)
                                 .withSelectedIcon(R.drawable.ic_two_select),
-                        new PrimaryDrawerItem().withIdentifier(3).withName("Item 3").withIcon(R.drawable.ic_three)
+                        new PrimaryDrawerItem().withIdentifier(3).withName(R.string.drawer_item_favorite).withIcon(R.drawable.ic_three)
                                 .withSelectedIcon(R.drawable.ic_three_select)
                 )
                 .withActionBarDrawerToggleAnimated(true)
@@ -71,24 +71,22 @@ public class MainActivity extends BaseActivity<MainPresenter> {
 
     @NonNull
     private Drawer.OnDrawerItemClickListener getOnDrawerItemClickListener() {
-        return new Drawer.OnDrawerItemClickListener() {
-            @Override
-            public boolean onItemClick(View view, int position, IDrawerItem drawerItem) {
-                switch ((int) drawerItem.getIdentifier()) {
-                    case 1:
-                        getPresenter().addGenresFragment();
-                        mDrawer.closeDrawer();
-                        break;
-                    case 2:
-                        getPresenter().addListsFragment();
-                        mDrawer.closeDrawer();
-                        break;
-                    case 3:
-                        Logger.d("Item 3 clicked");
-                        break;
-                }
-                return true;
+        return (view, position, drawerItem) -> {
+            switch ((int) drawerItem.getIdentifier()) {
+                case 1:
+                    getPresenter().addGenresFragment();
+                    mDrawer.closeDrawer();
+                    break;
+                case 2:
+                    getPresenter().addListsFragment();
+                    mDrawer.closeDrawer();
+                    break;
+                case 3:
+                    getPresenter().addFavoriteMoviesFragment();
+                    mDrawer.closeDrawer();
+                    break;
             }
+            return true;
         };
     }
 }
