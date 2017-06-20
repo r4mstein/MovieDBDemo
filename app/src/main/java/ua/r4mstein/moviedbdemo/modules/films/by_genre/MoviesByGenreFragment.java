@@ -1,6 +1,7 @@
 package ua.r4mstein.moviedbdemo.modules.films.by_genre;
 
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.v4.app.FragmentManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -50,7 +51,19 @@ public class MoviesByGenreFragment extends BaseFragment<MoviesByGenrePresenter>
         mRecyclerView.setLayoutManager(layoutManager);
 
         adapter = new MoviesByGenreAdapter(getViewContext());
-        adapter.setMoviesClickListener(new MoviesClickListener() {
+        adapter.setMoviesClickListener(getMoviesClickListener());
+        mRecyclerView.setAdapter(adapter);
+
+        mRecyclerView.addOnScrollListener(new EndlessScrollListener(layoutManager,
+                () -> {
+                    getPresenter().getNextPage();
+                    return true;
+                }));
+    }
+
+    @NonNull
+    private MoviesClickListener getMoviesClickListener() {
+        return new MoviesClickListener() {
             @Override
             public void moviesItemClicked(long movieId) {
 
@@ -60,36 +73,33 @@ public class MoviesByGenreFragment extends BaseFragment<MoviesByGenrePresenter>
             public void moviesItemLongClicked(long movieId, int position) {
                 FragmentManager manager = getFragmentManager();
 
-                ChooseActionDialog dialog = new ChooseActionDialog();
-                dialog.setChooseActionClickListener(new ChooseActionClickListener() {
-                    @Override
-                    public void favoriteClicked() {
-                        Logger.d("favoriteClicked");
-                        getPresenter().markAsFavorite(movieId, dialog);
-                    }
-
-                    @Override
-                    public void watchlistClicked() {
-                        Logger.d("watchlistClicked");
-                        dialog.dismiss();
-                    }
-
-                    @Override
-                    public void removeFromFavoriteClicked() {
-
-                    }
-                });
-
+                ChooseActionDialog dialog = ChooseActionDialog.newInstance(View.VISIBLE, View.VISIBLE, View.GONE);
+                dialog.setChooseActionClickListener(getChooseActionClickListener(movieId, dialog));
                 dialog.show(manager, "ChooseActionDialog");
             }
-        });
-        mRecyclerView.setAdapter(adapter);
+        };
+    }
 
-        mRecyclerView.addOnScrollListener(new EndlessScrollListener(layoutManager,
-                () -> {
-                    getPresenter().getNextPage();
-                    return true;
-                }));
+    @NonNull
+    private ChooseActionClickListener getChooseActionClickListener(final long movieId, final ChooseActionDialog dialog) {
+        return new ChooseActionClickListener() {
+            @Override
+            public void favoriteClicked() {
+                Logger.d("favoriteClicked");
+                getPresenter().markAsFavorite(movieId, dialog);
+            }
+
+            @Override
+            public void watchlistClicked() {
+                Logger.d("watchlistClicked");
+                dialog.dismiss();
+            }
+
+            @Override
+            public void removeFromFavoriteClicked() {
+
+            }
+        };
     }
 
     public static MoviesByGenreFragment newInstance(long genreId) {
