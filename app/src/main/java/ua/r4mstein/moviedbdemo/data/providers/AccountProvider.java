@@ -8,6 +8,7 @@ import ua.r4mstein.moviedbdemo.data.models.response.AddMovieToListModel;
 import ua.r4mstein.moviedbdemo.data.models.response.FavoriteMoviesModel;
 import ua.r4mstein.moviedbdemo.data.models.response.GetListsModel;
 import ua.r4mstein.moviedbdemo.data.models.response.UserModel;
+import ua.r4mstein.moviedbdemo.data.models.response.WatchlistModel;
 
 public class AccountProvider extends BaseProvider implements AccountApi {
 
@@ -35,5 +36,10 @@ public class AccountProvider extends BaseProvider implements AccountApi {
     @Override
     public Observable<AddMovieToListModel> addToWatchList(long accountId, String apiKey, String sessionId, AddToWatchlistSendModel sendModel) {
         return api.addToWatchList(accountId, apiKey, sessionId, sendModel);
+    }
+
+    @Override
+    public Observable<WatchlistModel> getWatchlist(long accountId, String apiKey, String sessionId, long page) {
+        return api.getWatchlist(accountId, apiKey, sessionId, page);
     }
 }

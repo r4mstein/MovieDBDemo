@@ -7,6 +7,7 @@
     <string name="title_get_lists">Created Lists</string>
     <string name="title_list_details">List Details</string>
     <string name="title_favorite_movies">Favorite Movies</string>
+    <string name="title_watchlist">Watchlist</string>
 
     <string name="login_username">Username</string>
     <string name="login_pass">Password</string>
@@ -21,6 +22,7 @@
     <string name="drawer_item_genres">Movie Genres</string>
     <string name="drawer_item_lists">Created Lists</string>
     <string name="drawer_item_favorite">Favorite Movies</string>
+    <string name="drawer_item_watchlist">Movies Watchlist</string>
 
     <string name="button_ok">OK</string>
     <string name="button_cancel">Cancel</string>

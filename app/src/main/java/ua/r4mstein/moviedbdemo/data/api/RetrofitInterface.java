@@ -23,6 +23,7 @@ import ua.r4mstein.moviedbdemo.data.models.response.RequestTokenModel;
 import ua.r4mstein.moviedbdemo.data.models.response.SearchMoviesModel;
 import ua.r4mstein.moviedbdemo.data.models.response.SessionModel;
 import ua.r4mstein.moviedbdemo.data.models.response.UserModel;
+import ua.r4mstein.moviedbdemo.data.models.response.WatchlistModel;
 
 public interface RetrofitInterface {
 
@@ -83,6 +84,12 @@ public interface RetrofitInterface {
                                                    @Query("api_key") String apiKey,
                                                    @Query("session_id") String sessionId,
                                                    @Body AddToWatchlistSendModel sendModel);
+
+    @GET("account/{account_id}/watchlist/movies")
+    Observable<WatchlistModel> getWatchlist(@Path("account_id") long accountId,
+                                            @Query("api_key") String apiKey,
+                                            @Query("session_id") String sessionId,
+                                            @Query("page") long page);
 
 
 //    *****

@@ -10,6 +10,7 @@ import ua.r4mstein.moviedbdemo.data.models.response.AddMovieToListModel;
 import ua.r4mstein.moviedbdemo.data.models.response.FavoriteMoviesModel;
 import ua.r4mstein.moviedbdemo.data.models.response.GetListsModel;
 import ua.r4mstein.moviedbdemo.data.models.response.UserModel;
+import ua.r4mstein.moviedbdemo.data.models.response.WatchlistModel;
 
 public interface AccountApi {
 
@@ -24,4 +25,6 @@ public interface AccountApi {
 
     Observable<AddMovieToListModel> addToWatchList(long accountId, String apiKey, String sessionId,
                                                    AddToWatchlistSendModel sendModel);
+
+    Observable<WatchlistModel> getWatchlist(long accountId, String apiKey, String sessionId, long page);
 }

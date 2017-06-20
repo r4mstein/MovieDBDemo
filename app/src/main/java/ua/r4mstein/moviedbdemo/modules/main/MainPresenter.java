@@ -4,6 +4,7 @@ import ua.r4mstein.moviedbdemo.modules.base.BaseActivityPresenter;
 import ua.r4mstein.moviedbdemo.modules.genres.GenresFragment;
 import ua.r4mstein.moviedbdemo.modules.lists.favorite_movies.FavoriteMoviesFragment;
 import ua.r4mstein.moviedbdemo.modules.lists.get_lists.GetListsFragment;
+import ua.r4mstein.moviedbdemo.modules.lists.watchlist.WatchlistFragment;
 
 public class MainPresenter extends BaseActivityPresenter {
 
@@ -24,5 +25,9 @@ public class MainPresenter extends BaseActivityPresenter {
 
     public void addFavoriteMoviesFragment() {
         getRouter().replaceFragment(new FavoriteMoviesFragment(), false);
+    }
+
+    public void addWatchlistFragment() {
+        getRouter().replaceFragment(new WatchlistFragment(), false);
     }
 }
