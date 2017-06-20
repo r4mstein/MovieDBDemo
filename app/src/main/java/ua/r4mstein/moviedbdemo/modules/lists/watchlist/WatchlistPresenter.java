@@ -4,6 +4,7 @@ import java.util.List;
 
 import ua.r4mstein.moviedbdemo.R;
 import ua.r4mstein.moviedbdemo.data.models.request.AddToWatchlistSendModel;
+import ua.r4mstein.moviedbdemo.data.models.request.MarkFavoriteSendModel;
 import ua.r4mstein.moviedbdemo.data.models.response.Movie;
 import ua.r4mstein.moviedbdemo.data.providers.AccountProvider;
 import ua.r4mstein.moviedbdemo.modules.base.BaseFragmentPresenter;
@@ -62,6 +63,19 @@ public class WatchlistPresenter extends BaseFragmentPresenter<WatchlistPresenter
                             current_page = 1;
                             getWatchlist(current_page);
                         }, null),
+                throwable -> Logger.d(throwable.getMessage()));
+    }
+
+    public void markAsFavorite(long movieId, ChooseActionDialog dialog) {
+        MarkFavoriteSendModel sendModel = new MarkFavoriteSendModel();
+        sendModel.setFavorite(true);
+        sendModel.setMediaId(movieId);
+        sendModel.setMediaType("movie");
+
+        execute(mAccountProvider.markAsFavorite(SharedPrefManager.getInstance().getUser().getId(),
+                API_KEY, SharedPrefManager.getInstance().retrieveSessionId(), sendModel),
+                addMovieToListModel -> getRouter().showDialog(new InfoDialog(), R.string.app_name, addMovieToListModel.getStatusMessage(),
+                        v -> dialog.dismiss(), null),
                 throwable -> Logger.d(throwable.getMessage()));
     }
 

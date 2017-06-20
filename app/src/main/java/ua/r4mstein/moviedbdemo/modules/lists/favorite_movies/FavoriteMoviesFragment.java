@@ -60,7 +60,7 @@ public class FavoriteMoviesFragment extends BaseFragment<FavoriteMoviesPresenter
             public void moviesItemLongClicked(long movieId, int position) {
                 FragmentManager manager = getFragmentManager();
 
-                ChooseActionDialog dialog = ChooseActionDialog.newInstance(View.GONE, View.GONE, View.VISIBLE, View.GONE);
+                ChooseActionDialog dialog = ChooseActionDialog.newInstance(View.GONE, View.VISIBLE, View.VISIBLE, View.GONE);
                 dialog.setChooseActionClickListener(getChooseActionClickListener(movieId, dialog));
                 dialog.show(manager, "ChooseActionDialog");
             }
@@ -86,6 +86,7 @@ public class FavoriteMoviesFragment extends BaseFragment<FavoriteMoviesPresenter
             @Override
             public void watchlistClicked() {
                 Logger.d("watchlistClicked");
+                getPresenter().addToWatchlist(movieId, dialog);
             }
 
             @Override
