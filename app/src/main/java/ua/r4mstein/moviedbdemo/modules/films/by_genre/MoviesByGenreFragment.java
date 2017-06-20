@@ -73,7 +73,7 @@ public class MoviesByGenreFragment extends BaseFragment<MoviesByGenrePresenter>
             public void moviesItemLongClicked(long movieId, int position) {
                 FragmentManager manager = getFragmentManager();
 
-                ChooseActionDialog dialog = ChooseActionDialog.newInstance(View.VISIBLE, View.VISIBLE, View.GONE);
+                ChooseActionDialog dialog = ChooseActionDialog.newInstance(View.VISIBLE, View.VISIBLE, View.GONE, View.GONE);
                 dialog.setChooseActionClickListener(getChooseActionClickListener(movieId, dialog));
                 dialog.show(manager, "ChooseActionDialog");
             }
@@ -97,6 +97,11 @@ public class MoviesByGenreFragment extends BaseFragment<MoviesByGenrePresenter>
 
             @Override
             public void removeFromFavoriteClicked() {
+
+            }
+
+            @Override
+            public void removeFromWatchlistClicked() {
 
             }
         };

@@ -5,4 +5,5 @@ public interface ChooseActionClickListener {
     void favoriteClicked();
     void watchlistClicked();
     void removeFromFavoriteClicked();
+    void removeFromWatchlistClicked();
 }

@@ -18,14 +18,17 @@ public class ChooseActionDialog extends DialogFragment {
     public static final String FAVORITE_VISIBILITY = "favorite_visibility";
     public static final String WATCHLIST_VISIBILITY = "watchlist_visibility";
     public static final String REMOVE_FAVORITE_VISIBILITY = "remove_favorite_visibility";
+    public static final String REMOVE_WATCHLIST_VISIBILITY = "remove_watchlist_visibility";
 
     private TextView tvFavorite;
     private TextView tvWatchList;
     private TextView tvRemoveFromFavorite;
+    private TextView tvRemoveFromWatchlist;
 
     private LinearLayout llFavorite;
     private LinearLayout llWatchList;
     private LinearLayout llRemoveFromFavorite;
+    private LinearLayout llRemoveFromWatchlist;
 
     private ChooseActionClickListener mChooseActionClickListener;
 
@@ -47,20 +50,23 @@ public class ChooseActionDialog extends DialogFragment {
 
         setVisibilityForContainers(getArguments().getInt(FAVORITE_VISIBILITY),
                 getArguments().getInt(WATCHLIST_VISIBILITY),
-                getArguments().getInt(REMOVE_FAVORITE_VISIBILITY));
+                getArguments().getInt(REMOVE_FAVORITE_VISIBILITY),
+                getArguments().getInt(REMOVE_WATCHLIST_VISIBILITY));
 
         tvFavorite.setOnClickListener(v -> mChooseActionClickListener.favoriteClicked());
         tvWatchList.setOnClickListener(v -> mChooseActionClickListener.watchlistClicked());
         tvRemoveFromFavorite.setOnClickListener(v -> mChooseActionClickListener.removeFromFavoriteClicked());
+        tvRemoveFromWatchlist.setOnClickListener(v -> mChooseActionClickListener.removeFromWatchlistClicked());
     }
 
-    public static ChooseActionDialog newInstance(int favorite, int watchlist, int removeFavorite) {
+    public static ChooseActionDialog newInstance(int favorite, int watchlist, int removeFavorite, int removeWatchlist) {
         ChooseActionDialog dialog = new ChooseActionDialog();
 
         Bundle bundle = new Bundle();
         bundle.putInt(FAVORITE_VISIBILITY, favorite);
         bundle.putInt(WATCHLIST_VISIBILITY, watchlist);
         bundle.putInt(REMOVE_FAVORITE_VISIBILITY, removeFavorite);
+        bundle.putInt(REMOVE_WATCHLIST_VISIBILITY, removeWatchlist);
         dialog.setArguments(bundle);
 
         return dialog;
@@ -70,16 +76,19 @@ public class ChooseActionDialog extends DialogFragment {
         tvFavorite = (TextView) view.findViewById(R.id.tv_favorite_DCA);
         tvWatchList = (TextView) view.findViewById(R.id.tv_watchlist_DCA);
         tvRemoveFromFavorite = (TextView) view.findViewById(R.id.tv_remove_favorite_DCA);
+        tvRemoveFromWatchlist = (TextView) view.findViewById(R.id.tv_remove_watchlist_DCA);
 
         llFavorite = (LinearLayout) view.findViewById(R.id.ll_favorite_container_DCA);
         llWatchList = (LinearLayout) view.findViewById(R.id.ll_watchlist_container_DCA);
         llRemoveFromFavorite = (LinearLayout) view.findViewById(R.id.ll_remove_favorite_container_DCA);
+        llRemoveFromWatchlist = (LinearLayout) view.findViewById(R.id.ll_remove_watchlist_container_DCA);
     }
 
-    private void setVisibilityForContainers(int favorite, int watchlist, int removeFavorite) {
+    private void setVisibilityForContainers(int favorite, int watchlist, int removeFavorite, int removeWatchlist) {
         llFavorite.setVisibility(favorite);
         llWatchList.setVisibility(watchlist);
         llRemoveFromFavorite.setVisibility(removeFavorite);
+        llRemoveFromWatchlist.setVisibility(removeWatchlist);
     }
 
     public void setChooseActionClickListener(ChooseActionClickListener chooseActionClickListener) {

@@ -2,10 +2,14 @@ package ua.r4mstein.moviedbdemo.modules.lists.watchlist;
 
 import java.util.List;
 
+import ua.r4mstein.moviedbdemo.R;
+import ua.r4mstein.moviedbdemo.data.models.request.AddToWatchlistSendModel;
 import ua.r4mstein.moviedbdemo.data.models.response.Movie;
 import ua.r4mstein.moviedbdemo.data.providers.AccountProvider;
 import ua.r4mstein.moviedbdemo.modules.base.BaseFragmentPresenter;
 import ua.r4mstein.moviedbdemo.modules.base.FragmentView;
+import ua.r4mstein.moviedbdemo.modules.dialog.ChooseActionDialog;
+import ua.r4mstein.moviedbdemo.modules.dialog.InfoDialog;
 import ua.r4mstein.moviedbdemo.utills.Logger;
 import ua.r4mstein.moviedbdemo.utills.SharedPrefManager;
 
@@ -41,6 +45,23 @@ public class WatchlistPresenter extends BaseFragmentPresenter<WatchlistPresenter
                     else
                         getView().addList(favoriteMoviesModel.getMovies());
                 },
+                throwable -> Logger.d(throwable.getMessage()));
+    }
+
+    public void removeFromWatchlist(long movieId, ChooseActionDialog dialog) {
+        AddToWatchlistSendModel sendModel = new AddToWatchlistSendModel();
+        sendModel.setMediaType("movie");
+        sendModel.setMediaId(movieId);
+        sendModel.setWatchlist(false);
+
+        execute(mAccountProvider.addToWatchList(SharedPrefManager.getInstance().getUser().getId(),
+                API_KEY, SharedPrefManager.getInstance().retrieveSessionId(), sendModel),
+                addMovieToListModel -> getRouter().showDialog(new InfoDialog(), R.string.app_name, addMovieToListModel.getStatusMessage(),
+                        v -> {
+                            dialog.dismiss();
+                            current_page = 1;
+                            getWatchlist(current_page);
+                        }, null),
                 throwable -> Logger.d(throwable.getMessage()));
     }
 

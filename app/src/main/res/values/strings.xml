@@ -45,4 +45,5 @@
     <string name="favorite_DCA">Mark as Favorite</string>
     <string name="watchlist_DCA">Add to Watchlist</string>
     <string name="remove_favorite_DCA">Remove from Favorite</string>
+    <string name="remove_watchlist_DCA">Remove from Watchlist</string>
 </resources>
