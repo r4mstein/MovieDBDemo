@@ -65,7 +65,7 @@ public class MoviesByGenreFragment extends BaseFragment<MoviesByGenrePresenter>
                     @Override
                     public void favoriteClicked() {
                         Logger.d("favoriteClicked");
-                        dialog.dismiss();
+                        getPresenter().markAsFavorite(movieId, dialog);
                     }
 
                     @Override

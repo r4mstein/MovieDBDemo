@@ -10,6 +10,7 @@ import retrofit2.http.Path;
 import retrofit2.http.Query;
 import ua.r4mstein.moviedbdemo.data.models.request.AddMovieToListSendModel;
 import ua.r4mstein.moviedbdemo.data.models.request.CreateListSendModel;
+import ua.r4mstein.moviedbdemo.data.models.request.MarkFavoriteSendModel;
 import ua.r4mstein.moviedbdemo.data.models.response.AddMovieToListModel;
 import ua.r4mstein.moviedbdemo.data.models.response.CreateListModel;
 import ua.r4mstein.moviedbdemo.data.models.response.GenreMovieModel;
@@ -62,6 +63,12 @@ public interface RetrofitInterface {
     @GET("account")
     Observable<UserModel> getAccountDetails(@Query("api_key") String apiKey,
                                             @Query("session_id") String sessionId);
+
+    @POST("account/{account_id}/favorite")
+    Observable<AddMovieToListModel> markAsFavorite(@Path("account_id") long accountId,
+                                                   @Query("api_key") String apiKey,
+                                                   @Query("session_id") String sessionId,
+                                                   @Body MarkFavoriteSendModel sendModel);
 
 
 //    *****
