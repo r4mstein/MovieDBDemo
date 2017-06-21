@@ -35,6 +35,8 @@ public class Movie {
     private Double mVoteAverage;
     @SerializedName("vote_count")
     private Long mVoteCount;
+    @SerializedName("rating")
+    private float mRating;
 
     public Boolean getAdult() {
         return mAdult;
@@ -148,4 +150,11 @@ public class Movie {
         mVoteCount = voteCount;
     }
 
+    public float getRating() {
+        return mRating;
+    }
+
+    public void setRating(float rating) {
+        mRating = rating;
+    }
 }

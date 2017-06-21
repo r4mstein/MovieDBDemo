@@ -20,6 +20,7 @@ import ua.r4mstein.moviedbdemo.data.models.response.GenreMovieModel;
 import ua.r4mstein.moviedbdemo.data.models.response.GetListsModel;
 import ua.r4mstein.moviedbdemo.data.models.response.ListDetailsModel;
 import ua.r4mstein.moviedbdemo.data.models.response.MoviesByGenreModel;
+import ua.r4mstein.moviedbdemo.data.models.response.RatedMoviesModel;
 import ua.r4mstein.moviedbdemo.data.models.response.RequestTokenModel;
 import ua.r4mstein.moviedbdemo.data.models.response.SearchMoviesModel;
 import ua.r4mstein.moviedbdemo.data.models.response.SessionModel;
@@ -91,6 +92,12 @@ public interface RetrofitInterface {
                                             @Query("api_key") String apiKey,
                                             @Query("session_id") String sessionId,
                                             @Query("page") long page);
+
+    @GET("account/{account_id}/rated/movies")
+    Observable<RatedMoviesModel> getRatedMovies(@Path("account_id") long accountId,
+                                                @Query("api_key") String apiKey,
+                                                @Query("session_id") String sessionId,
+                                                @Query("page") long page);
 
 
 //    *****

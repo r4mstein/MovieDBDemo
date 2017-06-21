@@ -61,7 +61,9 @@ public class MainActivity extends BaseActivity<MainPresenter> {
                         new PrimaryDrawerItem().withIdentifier(3).withName(R.string.drawer_item_favorite).withIcon(R.drawable.ic_three)
                                 .withSelectedIcon(R.drawable.ic_three_select),
                         new PrimaryDrawerItem().withIdentifier(4).withName(R.string.drawer_item_watchlist).withIcon(R.drawable.ic_four)
-                                .withSelectedIcon(R.drawable.ic_four_select)
+                                .withSelectedIcon(R.drawable.ic_four_select),
+                        new PrimaryDrawerItem().withIdentifier(5).withName(R.string.drawer_item_rated_movies).withIcon(R.drawable.ic_five)
+                                .withSelectedIcon(R.drawable.ic_five_select)
                 )
                 .withActionBarDrawerToggleAnimated(true)
                 .withOnDrawerItemClickListener(getOnDrawerItemClickListener())
@@ -89,6 +91,10 @@ public class MainActivity extends BaseActivity<MainPresenter> {
                     break;
                 case 4:
                     getPresenter().addWatchlistFragment();
+                    mDrawer.closeDrawer();
+                    break;
+                case 5:
+                    getPresenter().addRatedMoviesFragment();
                     mDrawer.closeDrawer();
                     break;
             }
