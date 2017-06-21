@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                xmlns:app="http://schemas.android.com/apk/res-auto"
+                android:background="@color/white"
+                android:minWidth="@dimen/margin_300"
+                android:padding="@dimen/margin_16">
+
+    <TextView
+        android:id="@+id/tvTitle_DR"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="@dimen/margin_15"
+        android:fontFamily="sans-serif-medium"
+        android:paddingEnd="@dimen/margin_24"
+        android:paddingStart="@dimen/margin_24"
+        android:text="@string/dialog_rating"
+        android:textColor="@color/colorAccent"
+        android:textSize="@dimen/text_size_20"
+        android:textStyle="normal"/>
+
+    <com.iarcuschin.simpleratingbar.SimpleRatingBar
+        android:id="@+id/rating_bar_DR"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/tvTitle_DR"
+        android:layout_centerHorizontal="true"
+        app:srb_numberOfStars="10"
+        app:srb_stepSize="0.1"
+        app:srb_starBorderWidth="2.5"
+        app:srb_borderColor="@color/colorAccent"
+        app:srb_fillColor="@color/colorAccent"
+        app:srb_starSize="20dp"
+        />
+
+    <TextView
+        android:id="@+id/btnPositive_DR"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/rating_bar_DR"
+        android:layout_alignParentEnd="true"
+        android:padding="@dimen/margin_16"
+        android:textAllCaps="true"
+        android:fontFamily="sans-serif-medium"
+        android:textStyle="normal"
+        android:textColor="@color/colorAccent"
+        android:textSize="@dimen/text_size_16"
+        android:text="@string/button_ok" />
+
+</RelativeLayout>

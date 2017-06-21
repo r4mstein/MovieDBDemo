@@ -64,6 +64,11 @@ public class WatchlistFragment extends BaseFragment<WatchlistPresenter>
                 dialog.setChooseActionClickListener(getChooseActionClickListener(movieId, dialog));
                 dialog.show(manager, "ChooseActionDialog");
             }
+
+            @Override
+            public void ratingViewClicked(long movieId) {
+
+            }
         });
         mRecyclerView.setAdapter(adapter);
 

@@ -12,8 +12,10 @@ import java.util.List;
 import ua.r4mstein.moviedbdemo.R;
 import ua.r4mstein.moviedbdemo.data.models.response.Movie;
 import ua.r4mstein.moviedbdemo.modules.base.BaseFragment;
+import ua.r4mstein.moviedbdemo.modules.dialog.DialogRating;
 import ua.r4mstein.moviedbdemo.modules.dialog.listeners.ChooseActionClickListener;
 import ua.r4mstein.moviedbdemo.modules.dialog.ChooseActionDialog;
+import ua.r4mstein.moviedbdemo.modules.dialog.listeners.DialogRatingClickListener;
 import ua.r4mstein.moviedbdemo.utills.EndlessScrollListener;
 import ua.r4mstein.moviedbdemo.utills.Logger;
 
@@ -76,6 +78,20 @@ public class MoviesByGenreFragment extends BaseFragment<MoviesByGenrePresenter>
                 ChooseActionDialog dialog = ChooseActionDialog.newInstance(View.VISIBLE, View.VISIBLE, View.GONE, View.GONE);
                 dialog.setChooseActionClickListener(getChooseActionClickListener(movieId, dialog));
                 dialog.show(manager, "ChooseActionDialog");
+            }
+
+            @Override
+            public void ratingViewClicked(long movieId) {
+                FragmentManager manager = getFragmentManager();
+
+                DialogRating dialogRating = new DialogRating();
+                dialogRating.setDialogRatingClickListener(new DialogRatingClickListener() {
+                    @Override
+                    public void ratingChanged(float rating) {
+                        Logger.d("ratingChanged: rating = " + rating);
+                    }
+                });
+                dialogRating.show(manager, "DialogRating");
             }
         };
     }

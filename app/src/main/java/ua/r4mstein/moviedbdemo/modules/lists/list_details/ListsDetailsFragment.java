@@ -124,6 +124,11 @@ public class ListsDetailsFragment extends BaseFragment<ListDetailsPresenter>
                 public void moviesItemLongClicked(long movieId, int position) {
 
                 }
+
+                @Override
+                public void ratingViewClicked(long movieId) {
+
+                }
             });
             recyclerView.setAdapter(adapter);
 
