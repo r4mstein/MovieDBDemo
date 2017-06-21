@@ -19,12 +19,14 @@ import java.util.List;
 import ua.r4mstein.moviedbdemo.R;
 import ua.r4mstein.moviedbdemo.data.models.response.Movie;
 import ua.r4mstein.moviedbdemo.modules.base.BaseFragment;
+import ua.r4mstein.moviedbdemo.modules.dialog.DialogRating;
 import ua.r4mstein.moviedbdemo.modules.films.by_genre.MoviesByGenreAdapter;
 import ua.r4mstein.moviedbdemo.modules.films.by_genre.MoviesClickListener;
 import ua.r4mstein.moviedbdemo.modules.films.search_film.OnSearchClickListener;
 import ua.r4mstein.moviedbdemo.modules.films.search_film.SearchFilmDialog;
 import ua.r4mstein.moviedbdemo.utills.EndlessScrollListener;
 import ua.r4mstein.moviedbdemo.utills.Logger;
+import ua.r4mstein.moviedbdemo.utills.MathManager;
 
 public class ListsDetailsFragment extends BaseFragment<ListDetailsPresenter>
         implements ListDetailsPresenter.ListDetailsView, PopupMenu.OnMenuItemClickListener {
@@ -92,6 +94,20 @@ public class ListsDetailsFragment extends BaseFragment<ListDetailsPresenter>
             public void itemLongClicked(String title, long movieId) {
                 getPresenter().showRemoveItemDialog(title, movieId);
             }
+
+            @Override
+            public void ratingViewClicked(long movieId) {
+                FragmentManager manager = getFragmentManager();
+
+                DialogRating dialogRating = new DialogRating();
+                dialogRating.setDialogRatingClickListener(rating -> {
+                    float sendRating = MathManager.getRating(rating);
+                    Logger.d("positiveClicked: rating = " + sendRating);
+
+                    getPresenter().rateMovie(movieId, dialogRating, sendRating);
+                });
+                dialogRating.show(manager, "DialogRating");
+            }
         };
     }
 
@@ -127,7 +143,16 @@ public class ListsDetailsFragment extends BaseFragment<ListDetailsPresenter>
 
                 @Override
                 public void ratingViewClicked(long movieId) {
+                    FragmentManager manager = getFragmentManager();
 
+                    DialogRating dialogRating = new DialogRating();
+                    dialogRating.setDialogRatingClickListener(rating -> {
+                        float sendRating = MathManager.getRating(rating);
+                        Logger.d("positiveClicked: rating = " + sendRating);
+
+                        getPresenter().rateMovie(movieId, dialogRating, sendRating);
+                    });
+                    dialogRating.show(manager, "DialogRating");
                 }
             });
             recyclerView.setAdapter(adapter);

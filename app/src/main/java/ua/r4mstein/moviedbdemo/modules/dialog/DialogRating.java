@@ -20,6 +20,7 @@ public class DialogRating extends DialogFragment {
     private SimpleRatingBar mSimpleRatingBar;
 
     private DialogRatingClickListener mDialogRatingClickListener;
+    float sendRating = 0;
 
     @Nullable
     @Override
@@ -37,7 +38,18 @@ public class DialogRating extends DialogFragment {
 
         initVariables(view);
 
-        mSimpleRatingBar.setOnRatingBarChangeListener((simpleRatingBar, rating, fromUser) -> mDialogRatingClickListener.ratingChanged(rating));
+        mSimpleRatingBar.setOnRatingBarChangeListener(new SimpleRatingBar.OnRatingBarChangeListener() {
+            @Override
+            public void onRatingChanged(SimpleRatingBar simpleRatingBar, float rating, boolean fromUser) {
+                sendRating = rating;
+            }
+        });
+        btnPositive.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                mDialogRatingClickListener.positiveClicked(sendRating);
+            }
+        });
     }
 
     private void initVariables(View view) {

@@ -7,13 +7,16 @@ import io.reactivex.functions.Consumer;
 import ua.r4mstein.moviedbdemo.R;
 import ua.r4mstein.moviedbdemo.data.models.request.AddToWatchlistSendModel;
 import ua.r4mstein.moviedbdemo.data.models.request.MarkFavoriteSendModel;
+import ua.r4mstein.moviedbdemo.data.models.request.RateMovieSendModel;
 import ua.r4mstein.moviedbdemo.data.models.response.AddMovieToListModel;
 import ua.r4mstein.moviedbdemo.data.models.response.Movie;
 import ua.r4mstein.moviedbdemo.data.providers.AccountProvider;
 import ua.r4mstein.moviedbdemo.data.providers.GenreProvider;
+import ua.r4mstein.moviedbdemo.data.providers.MoviesProvider;
 import ua.r4mstein.moviedbdemo.modules.base.BaseFragmentPresenter;
 import ua.r4mstein.moviedbdemo.modules.base.FragmentView;
 import ua.r4mstein.moviedbdemo.modules.dialog.ChooseActionDialog;
+import ua.r4mstein.moviedbdemo.modules.dialog.DialogRating;
 import ua.r4mstein.moviedbdemo.modules.dialog.InfoDialog;
 import ua.r4mstein.moviedbdemo.utills.Logger;
 import ua.r4mstein.moviedbdemo.utills.SharedPrefManager;
@@ -24,6 +27,8 @@ public class MoviesByGenrePresenter extends BaseFragmentPresenter<MoviesByGenreP
 
     private GenreProvider mGenreProvider = new GenreProvider();
     private AccountProvider mAccountProvider = new AccountProvider();
+    private MoviesProvider mMoviesProvider = new MoviesProvider();
+
     private long current_page;
     private long total_pages;
 
@@ -74,6 +79,16 @@ public class MoviesByGenrePresenter extends BaseFragmentPresenter<MoviesByGenreP
 
         execute(mAccountProvider.addToWatchList(SharedPrefManager.getInstance().getUser().getId(),
                 API_KEY, SharedPrefManager.getInstance().retrieveSessionId(), sendModel),
+                addMovieToListModel -> getRouter().showDialog(new InfoDialog(), R.string.app_name, addMovieToListModel.getStatusMessage(),
+                        v -> dialog.dismiss(), null),
+                throwable -> Logger.d(throwable.getMessage()));
+    }
+
+    public void rateMovie(long movieId, DialogRating dialog, float rating) {
+        RateMovieSendModel sendModel = new RateMovieSendModel();
+        sendModel.setValue(rating);
+
+        execute(mMoviesProvider.rateMovie(movieId, API_KEY, SharedPrefManager.getInstance().retrieveSessionId(), sendModel),
                 addMovieToListModel -> getRouter().showDialog(new InfoDialog(), R.string.app_name, addMovieToListModel.getStatusMessage(),
                         v -> dialog.dismiss(), null),
                 throwable -> Logger.d(throwable.getMessage()));

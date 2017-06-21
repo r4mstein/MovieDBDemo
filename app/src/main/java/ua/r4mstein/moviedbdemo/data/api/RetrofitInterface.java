@@ -12,6 +12,7 @@ import ua.r4mstein.moviedbdemo.data.models.request.AddMovieToListSendModel;
 import ua.r4mstein.moviedbdemo.data.models.request.AddToWatchlistSendModel;
 import ua.r4mstein.moviedbdemo.data.models.request.CreateListSendModel;
 import ua.r4mstein.moviedbdemo.data.models.request.MarkFavoriteSendModel;
+import ua.r4mstein.moviedbdemo.data.models.request.RateMovieSendModel;
 import ua.r4mstein.moviedbdemo.data.models.response.AddMovieToListModel;
 import ua.r4mstein.moviedbdemo.data.models.response.CreateListModel;
 import ua.r4mstein.moviedbdemo.data.models.response.FavoriteMoviesModel;
@@ -119,9 +120,9 @@ public interface RetrofitInterface {
 
     @POST("list/{list_id}/clear")
     Observable<AddMovieToListModel> clearList(@Path("list_id") long listId,
-                                                        @Query("api_key") String apiKey,
-                                                        @Query("session_id") String sessionId,
-                                                        @Query("confirm") boolean confirm);
+                                              @Query("api_key") String apiKey,
+                                              @Query("session_id") String sessionId,
+                                              @Query("confirm") boolean confirm);
 
     @DELETE("list/{list_id}")
     Observable<AddMovieToListModel> deleteList(@Path("list_id") long listId,
@@ -136,6 +137,16 @@ public interface RetrofitInterface {
     Observable<SearchMoviesModel> searchMovies(@Query("api_key") String apiKey,
                                                @Query("query") String searchRequest,
                                                @Query("page") long page);
+
+//    *****
+
+//    MOVIES
+
+    @POST("movie/{movie_id}/rating")
+    Observable<AddMovieToListModel> rateMovie(@Path("movie_id") long movieId,
+                                              @Query("api_key") String apiKey,
+                                              @Query("session_id") String sessionId,
+                                              @Body RateMovieSendModel sendModel);
 
 //    *****
 }

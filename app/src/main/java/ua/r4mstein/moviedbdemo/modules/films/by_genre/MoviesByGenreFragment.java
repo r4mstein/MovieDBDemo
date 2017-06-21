@@ -7,6 +7,7 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 
+import java.math.BigDecimal;
 import java.util.List;
 
 import ua.r4mstein.moviedbdemo.R;
@@ -18,6 +19,7 @@ import ua.r4mstein.moviedbdemo.modules.dialog.ChooseActionDialog;
 import ua.r4mstein.moviedbdemo.modules.dialog.listeners.DialogRatingClickListener;
 import ua.r4mstein.moviedbdemo.utills.EndlessScrollListener;
 import ua.r4mstein.moviedbdemo.utills.Logger;
+import ua.r4mstein.moviedbdemo.utills.MathManager;
 
 public class MoviesByGenreFragment extends BaseFragment<MoviesByGenrePresenter>
         implements MoviesByGenrePresenter.MoviesByGenreView {
@@ -85,11 +87,11 @@ public class MoviesByGenreFragment extends BaseFragment<MoviesByGenrePresenter>
                 FragmentManager manager = getFragmentManager();
 
                 DialogRating dialogRating = new DialogRating();
-                dialogRating.setDialogRatingClickListener(new DialogRatingClickListener() {
-                    @Override
-                    public void ratingChanged(float rating) {
-                        Logger.d("ratingChanged: rating = " + rating);
-                    }
+                dialogRating.setDialogRatingClickListener(rating -> {
+                    float sendRating = MathManager.getRating(rating);
+                    Logger.d("positiveClicked: rating = " + sendRating);
+
+                    getPresenter().rateMovie(movieId, dialogRating, sendRating);
                 });
                 dialogRating.show(manager, "DialogRating");
             }

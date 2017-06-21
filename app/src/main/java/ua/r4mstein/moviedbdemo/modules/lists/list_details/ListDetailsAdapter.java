@@ -45,6 +45,7 @@ public class ListDetailsAdapter extends RecyclerView.Adapter<ListDetailsAdapter.
             mListDetailsClickListener.itemLongClicked(movie.getTitle(), movie.getId());
             return true;
         });
+        holder.tvVote.setOnClickListener(v -> mListDetailsClickListener.ratingViewClicked(movie.getId()));
     }
 
     private void fillPoster(ListDetailsViewHolder holder, Movie movie) {
