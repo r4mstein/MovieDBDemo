@@ -40,6 +40,7 @@ public class DetailsMovieAdapter extends RecyclerView.Adapter<DetailsMovieAdapte
     public void onBindViewHolder(DetailsMovieAdapterViewHolder holder, int position) {
         MovieDetailsModel model = mMovieList.get(position);
 
+        fillPoster(holder.ivPoster, model.getPosterPath());
         fillData(model, holder);
     }
 
@@ -48,37 +49,85 @@ public class DetailsMovieAdapter extends RecyclerView.Adapter<DetailsMovieAdapte
         return mMovieList.size();
     }
 
-    private void fillData(@NonNull MovieDetailsModel movieDetailsModel, DetailsMovieAdapterViewHolder holder) {
-        fillPoster(holder.ivPoster, movieDetailsModel.getPosterPath());
+    private void fillData(@NonNull MovieDetailsModel model, DetailsMovieAdapterViewHolder holder) {
+        holder.tvTitle.setText(model.getTitle());
 
-        holder.tvTitle.setText(movieDetailsModel.getTitle());
-        holder.tvTagline.setText(movieDetailsModel.getTagline());
-        holder.tvOverview.setText(movieDetailsModel.getOverview());
-        holder.tvReleaseDate.setText(String.format("%s %s", "Release Date:", movieDetailsModel.getReleaseDate()));
-        holder.tvBudget.setText(String.format("%s %s%s", "Budget:", String.valueOf(movieDetailsModel.getBudget()), "$"));
-        holder.tvRevenue.setText(String.format("%s %s%s", "Revenue:", String.valueOf(movieDetailsModel.getRevenue()), "$"));
-        holder.tvRuntime.setText(String.format("%s %s %s", "Runtime:", String.valueOf(movieDetailsModel.getRuntime()), "minutes"));
-        holder.tvVote.setText(String.valueOf(movieDetailsModel.getVoteAverage()));
-        holder.tvVoteCount.setText(String.valueOf(movieDetailsModel.getVoteCount()));
+        fillTagline(model.getTagline(), holder);
+        fillOverview(model.getOverview(), holder);
+        fillReleaseDate(model.getReleaseDate(), holder);
+        fillBudget(model.getBudget(), holder);
+        fillRevenue(model.getRevenue(), holder);
+        fillRuntime(model.getRuntime(), holder);
+        fillGenres(model.getGenres(), holder);
+        fillCompanies(model.getProductionCompanies(), holder);
+        fillCountries(model.getProductionCountries(), holder);
 
-        for (Genre genre : movieDetailsModel.getGenres()) {
-            holder.tvGenres.append(String.format("%s\n", genre.getName()));
-        }
+        holder.tvVote.setText(String.valueOf(model.getVoteAverage()));
+        holder.tvVoteCount.setText(String.valueOf(model.getVoteCount()));
+    }
 
-        for (ProductionCompany company: movieDetailsModel.getProductionCompanies()) {
-            holder.tvCompanies.append(String.format("%s\n", company.getName()));
-        }
-
-        for (ProductionCountry country : movieDetailsModel.getProductionCountries()) {
-            holder.tvCountries.append(String.format("%s\n", country.getName()));
+    private void fillCountries(List<ProductionCountry> data, DetailsMovieAdapterViewHolder holder) {
+        if (data == null || data.isEmpty())
+            holder.tvCountries.append(mContext.getResources().getText(R.string.error_movie_release_date) + "\n");
+        else {
+            for (ProductionCountry country : data) {
+                holder.tvCountries.append(String.format("%s\n", country.getName()));
+            }
         }
     }
 
-    public void addData(List<MovieDetailsModel> movies) {
-        if (movies != null) {
-            mMovieList.addAll(movies);
-            notifyDataSetChanged();
+    private void fillCompanies(List<ProductionCompany> data, DetailsMovieAdapterViewHolder holder) {
+        if (data == null || data.isEmpty())
+            holder.tvCompanies.append(mContext.getResources().getText(R.string.error_movie_release_date) + "\n");
+        else {
+            for (ProductionCompany company : data) {
+                holder.tvCompanies.append(String.format("%s\n", company.getName()));
+            }
         }
+    }
+
+    private void fillGenres(List<Genre> data, DetailsMovieAdapterViewHolder holder) {
+        if (data == null || data.isEmpty())
+            holder.tvGenres.append(mContext.getResources().getText(R.string.error_movie_release_date) + "\n");
+        else {
+            for (Genre genre : data) {
+                holder.tvGenres.append(String.format("%s\n", genre.getName()));
+            }
+        }
+    }
+
+    private void fillRuntime(Long data, DetailsMovieAdapterViewHolder holder) {
+        if (data == null || data == 0) holder.tvRuntime.setText(
+                String.format("%s %s", "Runtime:", mContext.getResources().getText(R.string.error_movie_release_date)));
+        else holder.tvRuntime.setText(String.format("%s %s %s", "Runtime:", String.valueOf(data), "minutes"));
+    }
+
+    private void fillRevenue(long data, DetailsMovieAdapterViewHolder holder) {
+        if (data == 0) holder.tvRevenue.setText(
+                String.format("%s %s", "Revenue:", mContext.getResources().getText(R.string.error_movie_release_date)));
+        else holder.tvRevenue.setText(String.format("%s %s%s", "Revenue:", String.valueOf(data), "$"));
+    }
+
+    private void fillBudget(long data, DetailsMovieAdapterViewHolder holder) {
+        if (data == 0) holder.tvBudget.setText(
+                String.format("%s %s", "Budget:", mContext.getResources().getText(R.string.error_movie_release_date)));
+        else holder.tvBudget.setText(String.format("%s %s%s", "Budget:", String.valueOf(data), "$"));
+    }
+
+    private void fillReleaseDate(String data, DetailsMovieAdapterViewHolder holder) {
+        if (data == null || data.isEmpty()) holder.tvReleaseDate.setText(
+                String.format("%s %s", "Release Date:", mContext.getResources().getText(R.string.error_movie_release_date)));
+        else holder.tvReleaseDate.setText(String.format("%s %s", "Release Date:", data));
+    }
+
+    private void fillOverview(String data, DetailsMovieAdapterViewHolder holder) {
+        if (data == null || data.isEmpty()) holder.tvOverview.setText(R.string.error_movie_overview);
+        else holder.tvOverview.setText(data);
+    }
+
+    private void fillTagline(String data, DetailsMovieAdapterViewHolder holder) {
+        if (data == null || data.isEmpty()) holder.tvTagline.setVisibility(View.GONE);
+        else holder.tvTagline.setText(data);
     }
 
     private void fillPoster(ImageView imageView, String url) {
@@ -87,6 +136,13 @@ public class DetailsMovieAdapter extends RecyclerView.Adapter<DetailsMovieAdapte
                 .placeholder(R.drawable.main_logo)
                 .error(R.drawable.main_logo)
                 .into(imageView);
+    }
+
+    public void addData(List<MovieDetailsModel> movies) {
+        if (movies != null) {
+            mMovieList.addAll(movies);
+            notifyDataSetChanged();
+        }
     }
 
     public class DetailsMovieAdapterViewHolder extends RecyclerView.ViewHolder {

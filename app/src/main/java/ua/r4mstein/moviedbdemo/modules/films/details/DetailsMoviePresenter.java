@@ -3,8 +3,6 @@ package ua.r4mstein.moviedbdemo.modules.films.details;
 import java.util.ArrayList;
 import java.util.List;
 
-import io.reactivex.annotations.NonNull;
-import io.reactivex.functions.Consumer;
 import ua.r4mstein.moviedbdemo.data.models.response.movie_details.MovieDetailsModel;
 import ua.r4mstein.moviedbdemo.data.providers.MoviesProvider;
 import ua.r4mstein.moviedbdemo.modules.base.BaseFragmentPresenter;
@@ -27,13 +25,10 @@ public class DetailsMoviePresenter extends BaseFragmentPresenter<DetailsMoviePre
 
     public void getMovieDetails(long movieId) {
         execute(mMoviesProvider.getMovieDetails(movieId, API_KEY),
-                new Consumer<MovieDetailsModel>() {
-                    @Override
-                    public void accept(@NonNull MovieDetailsModel movieDetailsModel) throws Exception {
-                        List<MovieDetailsModel> res = new ArrayList<>();
-                        res.add(movieDetailsModel);
-                        getView().addList(res);
-                    }
+                movieDetailsModel -> {
+                    List<MovieDetailsModel> res = new ArrayList<>();
+                    res.add(movieDetailsModel);
+                    getView().addList(res);
                 },
                 throwable -> Logger.d(throwable.getMessage()));
     }
