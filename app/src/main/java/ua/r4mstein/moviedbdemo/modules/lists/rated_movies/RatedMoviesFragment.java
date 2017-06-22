@@ -68,8 +68,8 @@ public class RatedMoviesFragment extends BaseFragment<RatedMoviesPresenter>
             }
 
             @Override
-            public void ratingViewClicked(long movieId) {
-                DialogRating dialogRating = new DialogRating();
+            public void ratingViewClicked(long movieId, float oldRating) {
+                DialogRating dialogRating = DialogRating.newInstance(oldRating);
                 dialogRating.setDialogRatingClickListener(rating -> {
                     float sendRating = MathManager.getRating(rating);
                     Logger.d("positiveClicked: rating = " + sendRating);

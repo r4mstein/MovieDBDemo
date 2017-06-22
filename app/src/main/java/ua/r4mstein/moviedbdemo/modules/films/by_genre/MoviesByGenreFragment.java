@@ -83,7 +83,7 @@ public class MoviesByGenreFragment extends BaseFragment<MoviesByGenrePresenter>
             }
 
             @Override
-            public void ratingViewClicked(long movieId) {
+            public void ratingViewClicked(long movieId, float oldRating) {
                 FragmentManager manager = getFragmentManager();
 
                 DialogRating dialogRating = new DialogRating();

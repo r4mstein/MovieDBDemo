@@ -16,6 +16,7 @@ import ua.r4mstein.moviedbdemo.modules.dialog.listeners.DialogRatingClickListene
 
 public class DialogRating extends DialogFragment {
 
+    private static final String RATING = "rating";
     private TextView btnPositive;
     private SimpleRatingBar mSimpleRatingBar;
 
@@ -38,18 +39,23 @@ public class DialogRating extends DialogFragment {
 
         initVariables(view);
 
-        mSimpleRatingBar.setOnRatingBarChangeListener(new SimpleRatingBar.OnRatingBarChangeListener() {
-            @Override
-            public void onRatingChanged(SimpleRatingBar simpleRatingBar, float rating, boolean fromUser) {
-                sendRating = rating;
-            }
-        });
-        btnPositive.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                mDialogRatingClickListener.positiveClicked(sendRating);
-            }
-        });
+        if (getArguments() != null) {
+            float rating = getArguments().getFloat(RATING);
+            mSimpleRatingBar.setRating(rating);
+        }
+
+        mSimpleRatingBar.setOnRatingBarChangeListener((simpleRatingBar, rating, fromUser) -> sendRating = rating);
+        btnPositive.setOnClickListener(v -> mDialogRatingClickListener.positiveClicked(sendRating));
+    }
+
+    public static DialogRating newInstance(float rating) {
+        DialogRating dialog = new DialogRating();
+
+        Bundle bundle = new Bundle();
+        bundle.putFloat(RATING, rating);
+        dialog.setArguments(bundle);
+
+        return dialog;
     }
 
     private void initVariables(View view) {

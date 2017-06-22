@@ -68,7 +68,7 @@ public class FavoriteMoviesFragment extends BaseFragment<FavoriteMoviesPresenter
             }
 
             @Override
-            public void ratingViewClicked(long movieId) {
+            public void ratingViewClicked(long movieId, float oldRating) {
                 DialogRating dialogRating = new DialogRating();
                 dialogRating.setDialogRatingClickListener(rating -> {
                     float sendRating = MathManager.getRating(rating);

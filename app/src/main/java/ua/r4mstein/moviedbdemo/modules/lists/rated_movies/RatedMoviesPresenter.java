@@ -32,14 +32,14 @@ public class RatedMoviesPresenter extends BaseFragmentPresenter<RatedMoviesPrese
         super.onViewCreated();
 
         current_page = 1;
-        getWatchlist(current_page);
+        getRatedMovies(current_page);
     }
 
     public void getNextPage() {
-        if (current_page < total_pages) getWatchlist(current_page + 1);
+        if (current_page < total_pages) getRatedMovies(current_page + 1);
     }
 
-    public void getWatchlist(long pageNumber) {
+    public void getRatedMovies(long pageNumber) {
         execute(mAccountProvider.getRatedMovies(SharedPrefManager.getInstance().getUser().getId(),
                 API_KEY, SharedPrefManager.getInstance().retrieveSessionId(), pageNumber),
                 favoriteMoviesModel -> {
@@ -86,7 +86,11 @@ public class RatedMoviesPresenter extends BaseFragmentPresenter<RatedMoviesPrese
 
         execute(mMoviesProvider.rateMovie(movieId, API_KEY, SharedPrefManager.getInstance().retrieveSessionId(), sendModel),
                 addMovieToListModel -> getRouter().showDialog(new InfoDialog(), R.string.app_name, addMovieToListModel.getStatusMessage(),
-                        v -> dialog.dismiss(), null),
+                        v -> {
+                            dialog.dismiss();
+                            current_page = 1;
+                            getRatedMovies(current_page);
+                        }, null),
                 throwable -> Logger.d(throwable.getMessage()));
     }
 
