@@ -70,8 +70,7 @@ public class MoviesByGenreFragment extends BaseFragment<MoviesByGenrePresenter>
         return new MoviesClickListener() {
             @Override
             public void moviesItemClicked(long movieId) {
-
-                getPresenter().getMovieDetails(movieId);
+                getPresenter().goToDetailScreen(movieId);
             }
 
             @Override
