@@ -26,6 +26,7 @@ import ua.r4mstein.moviedbdemo.data.models.response.SearchMoviesModel;
 import ua.r4mstein.moviedbdemo.data.models.response.SessionModel;
 import ua.r4mstein.moviedbdemo.data.models.response.UserModel;
 import ua.r4mstein.moviedbdemo.data.models.response.WatchlistModel;
+import ua.r4mstein.moviedbdemo.data.models.response.movie_details.MovieDetailsModel;
 
 public interface RetrofitInterface {
 
@@ -154,6 +155,10 @@ public interface RetrofitInterface {
                                               @Query("api_key") String apiKey,
                                               @Query("session_id") String sessionId,
                                               @Body RateMovieSendModel sendModel);
+
+    @GET("movie/{movie_id}")
+    Observable<MovieDetailsModel> getMovieDetails(@Path("movie_id") long movieId,
+                                                  @Query("api_key") String apiKey);
 
 //    *****
 }

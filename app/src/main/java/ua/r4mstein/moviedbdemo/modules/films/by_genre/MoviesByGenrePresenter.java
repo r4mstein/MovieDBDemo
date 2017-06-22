@@ -18,6 +18,7 @@ import ua.r4mstein.moviedbdemo.modules.base.FragmentView;
 import ua.r4mstein.moviedbdemo.modules.dialog.ChooseActionDialog;
 import ua.r4mstein.moviedbdemo.modules.dialog.DialogRating;
 import ua.r4mstein.moviedbdemo.modules.dialog.InfoDialog;
+import ua.r4mstein.moviedbdemo.modules.films.details.DetailsMovieFragment;
 import ua.r4mstein.moviedbdemo.utills.Logger;
 import ua.r4mstein.moviedbdemo.utills.SharedPrefManager;
 
@@ -92,6 +93,10 @@ public class MoviesByGenrePresenter extends BaseFragmentPresenter<MoviesByGenreP
                 addMovieToListModel -> getRouter().showDialog(new InfoDialog(), R.string.app_name, addMovieToListModel.getStatusMessage(),
                         v -> dialog.dismiss(), null),
                 throwable -> Logger.d(throwable.getMessage()));
+    }
+
+    public void getMovieDetails(long movieId) {
+        getRouter().replaceFragment(DetailsMovieFragment.newInstance(movieId), false);
     }
 
     interface MoviesByGenreView extends FragmentView {

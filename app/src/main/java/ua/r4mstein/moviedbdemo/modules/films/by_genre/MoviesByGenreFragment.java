@@ -71,6 +71,7 @@ public class MoviesByGenreFragment extends BaseFragment<MoviesByGenrePresenter>
             @Override
             public void moviesItemClicked(long movieId) {
 
+                getPresenter().getMovieDetails(movieId);
             }
 
             @Override

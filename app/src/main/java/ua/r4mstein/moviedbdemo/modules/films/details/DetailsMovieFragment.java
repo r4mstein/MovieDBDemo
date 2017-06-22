@@ -1,19 +1,23 @@
 package ua.r4mstein.moviedbdemo.modules.films.details;
 
+import android.os.Bundle;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.view.View;
-import android.widget.ImageView;
-import android.widget.TextView;
+
+import java.util.List;
 
 import ua.r4mstein.moviedbdemo.R;
+import ua.r4mstein.moviedbdemo.data.models.response.movie_details.MovieDetailsModel;
 import ua.r4mstein.moviedbdemo.modules.base.BaseFragment;
 
 public class DetailsMovieFragment extends BaseFragment<DetailsMoviePresenter>
         implements DetailsMoviePresenter.DetailsMovieView {
 
-    private ImageView ivPoster;
+    public static final String MOVIE_ID = "movie_id";
 
-    private TextView tvTitle, tvTagline, tvOverview, tvCompanies, tvCountries;
-    private TextView tvReleaseDate, tvBudget, tvRevenue, tvVote, tvVoteCount;
+    private RecyclerView mRecyclerView;
+    private DetailsMovieAdapter adapter;
 
     @Override
     protected int getTitle() {
@@ -32,22 +36,30 @@ public class DetailsMovieFragment extends BaseFragment<DetailsMoviePresenter>
 
     @Override
     protected void findUI(View rootView) {
-        ivPoster = (ImageView) rootView.findViewById(R.id.iv_poster_FDM);
-
-        tvTitle = (TextView) rootView.findViewById(R.id.tv_title_FDM);
-        tvTagline = (TextView) rootView.findViewById(R.id.tv_tagline_FDM);
-        tvOverview = (TextView) rootView.findViewById(R.id.tv_overview_FDM);
-        tvCompanies = (TextView) rootView.findViewById(R.id.tv_companies_FDM);
-        tvCountries = (TextView) rootView.findViewById(R.id.tv_countries_FDM);
-        tvReleaseDate = (TextView) rootView.findViewById(R.id.tv_release_date_FDM);
-        tvBudget = (TextView) rootView.findViewById(R.id.tv_budget_FDM);
-        tvRevenue = (TextView) rootView.findViewById(R.id.tv_revenue_FDM);
-        tvVote = (TextView) rootView.findViewById(R.id.tv_vote_FDM);
-        tvVoteCount = (TextView) rootView.findViewById(R.id.tv_vote_count_FDM);
+        mRecyclerView = (RecyclerView) rootView.findViewById(R.id.rv_FDM);
     }
 
     @Override
     protected void setupUI() {
+        LinearLayoutManager layoutManager = new LinearLayoutManager(getContext());
+        mRecyclerView.setLayoutManager(layoutManager);
 
+        adapter = new DetailsMovieAdapter(getViewContext());
+        mRecyclerView.setAdapter(adapter);
+    }
+
+    public static DetailsMovieFragment newInstance(long movieId) {
+        DetailsMovieFragment fragment = new DetailsMovieFragment();
+
+        Bundle bundle = new Bundle();
+        bundle.putLong(MOVIE_ID, movieId);
+        fragment.setArguments(bundle);
+
+        return fragment;
+    }
+
+    @Override
+    public void addList(List<MovieDetailsModel> list) {
+        adapter.addData(list);
     }
 }
