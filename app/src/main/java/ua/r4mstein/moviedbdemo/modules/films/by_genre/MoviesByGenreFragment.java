@@ -7,16 +7,16 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 
-import java.math.BigDecimal;
 import java.util.List;
 
 import ua.r4mstein.moviedbdemo.R;
 import ua.r4mstein.moviedbdemo.data.models.response.Movie;
+import ua.r4mstein.moviedbdemo.data.models.response.MovieAccountStates;
+import ua.r4mstein.moviedbdemo.data.models.response.MovieAccountStatesAlternative;
 import ua.r4mstein.moviedbdemo.modules.base.BaseFragment;
+import ua.r4mstein.moviedbdemo.modules.dialog.ChooseActionDialog;
 import ua.r4mstein.moviedbdemo.modules.dialog.DialogRating;
 import ua.r4mstein.moviedbdemo.modules.dialog.listeners.ChooseActionClickListener;
-import ua.r4mstein.moviedbdemo.modules.dialog.ChooseActionDialog;
-import ua.r4mstein.moviedbdemo.modules.dialog.listeners.DialogRatingClickListener;
 import ua.r4mstein.moviedbdemo.utills.EndlessScrollListener;
 import ua.r4mstein.moviedbdemo.utills.Logger;
 import ua.r4mstein.moviedbdemo.utills.MathManager;
@@ -75,11 +75,7 @@ public class MoviesByGenreFragment extends BaseFragment<MoviesByGenrePresenter>
 
             @Override
             public void moviesItemLongClicked(long movieId, int position) {
-                FragmentManager manager = getFragmentManager();
-
-                ChooseActionDialog dialog = ChooseActionDialog.newInstance(View.VISIBLE, View.VISIBLE, View.GONE, View.GONE);
-                dialog.setChooseActionClickListener(getChooseActionClickListener(movieId, dialog));
-                dialog.show(manager, "ChooseActionDialog");
+                getPresenter().getMovieAccountState(movieId);
             }
 
             @Override
@@ -104,23 +100,25 @@ public class MoviesByGenreFragment extends BaseFragment<MoviesByGenrePresenter>
             @Override
             public void favoriteClicked() {
                 Logger.d("favoriteClicked");
-                getPresenter().markAsFavorite(movieId, dialog);
+                getPresenter().markAsFavorite(movieId, dialog, true);
             }
 
             @Override
             public void watchlistClicked() {
                 Logger.d("watchlistClicked");
-                getPresenter().addToWatchlist(movieId, dialog);
+                getPresenter().addToWatchlist(movieId, dialog, true);
             }
 
             @Override
             public void removeFromFavoriteClicked() {
-
+                Logger.d("removeFromFavoriteClicked");
+                getPresenter().markAsFavorite(movieId, dialog, false);
             }
 
             @Override
             public void removeFromWatchlistClicked() {
-
+                Logger.d("removeFromWatchlistClicked");
+                getPresenter().addToWatchlist(movieId, dialog, false);
             }
         };
     }
@@ -143,5 +141,51 @@ public class MoviesByGenreFragment extends BaseFragment<MoviesByGenrePresenter>
     @Override
     public void addList(List<Movie> list) {
         adapter.addData(list);
+    }
+
+    @Override
+    public void createDialog(long movieId, MovieAccountStates movieAccountStates) {
+        FragmentManager manager = getFragmentManager();
+
+        int addFavorite = View.GONE;
+        int removeFavorite = View.VISIBLE;
+        if (!movieAccountStates.getFavorite()) {
+            addFavorite = View.VISIBLE;
+            removeFavorite = View.GONE;
+        }
+
+        int addWatchlist = View.GONE;
+        int removeWatchlist = View.VISIBLE;
+        if (!movieAccountStates.getWatchlist()) {
+            addWatchlist = View.VISIBLE;
+            removeWatchlist = View.GONE;
+        }
+
+        ChooseActionDialog dialog = ChooseActionDialog.newInstance(addFavorite, addWatchlist, removeFavorite, removeWatchlist);
+        dialog.setChooseActionClickListener(getChooseActionClickListener(movieId, dialog));
+        dialog.show(manager, "ChooseActionDialog");
+    }
+
+    @Override
+    public void createDialog(long movieId, MovieAccountStatesAlternative movieAccountStates) {
+        FragmentManager manager = getFragmentManager();
+
+        int addFavorite = View.GONE;
+        int removeFavorite = View.VISIBLE;
+        if (!movieAccountStates.getFavorite()) {
+            addFavorite = View.VISIBLE;
+            removeFavorite = View.GONE;
+        }
+
+        int addWatchlist = View.GONE;
+        int removeWatchlist = View.VISIBLE;
+        if (!movieAccountStates.getWatchlist()) {
+            addWatchlist = View.VISIBLE;
+            removeWatchlist = View.GONE;
+        }
+
+        ChooseActionDialog dialog = ChooseActionDialog.newInstance(addFavorite, addWatchlist, removeFavorite, removeWatchlist);
+        dialog.setChooseActionClickListener(getChooseActionClickListener(movieId, dialog));
+        dialog.show(manager, "ChooseActionDialog");
     }
 }

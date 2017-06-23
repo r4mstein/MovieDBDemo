@@ -19,6 +19,8 @@ import ua.r4mstein.moviedbdemo.data.models.response.FavoriteMoviesModel;
 import ua.r4mstein.moviedbdemo.data.models.response.GenreMovieModel;
 import ua.r4mstein.moviedbdemo.data.models.response.GetListsModel;
 import ua.r4mstein.moviedbdemo.data.models.response.ListDetailsModel;
+import ua.r4mstein.moviedbdemo.data.models.response.MovieAccountStates;
+import ua.r4mstein.moviedbdemo.data.models.response.MovieAccountStatesAlternative;
 import ua.r4mstein.moviedbdemo.data.models.response.MoviesByGenreModel;
 import ua.r4mstein.moviedbdemo.data.models.response.RatedMoviesModel;
 import ua.r4mstein.moviedbdemo.data.models.response.RequestTokenModel;
@@ -159,6 +161,16 @@ public interface RetrofitInterface {
     @GET("movie/{movie_id}")
     Observable<MovieDetailsModel> getMovieDetails(@Path("movie_id") long movieId,
                                                   @Query("api_key") String apiKey);
+
+    @GET("movie/{movie_id}/account_states")
+    Observable<MovieAccountStates> getMovieAccountStates(@Path("movie_id") long movieId,
+                                                         @Query("api_key") String apiKey,
+                                                         @Query("session_id") String sessionId);
+
+    @GET("movie/{movie_id}/account_states")
+    Observable<MovieAccountStatesAlternative> getMovieAccountStatesAlternative(@Path("movie_id") long movieId,
+                                                                               @Query("api_key") String apiKey,
+                                                                               @Query("session_id") String sessionId);
 
 //    *****
 }

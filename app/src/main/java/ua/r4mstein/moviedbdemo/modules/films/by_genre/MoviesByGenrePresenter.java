@@ -2,6 +2,8 @@ package ua.r4mstein.moviedbdemo.modules.films.by_genre;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v4.app.FragmentManager;
+import android.view.View;
 
 import java.util.List;
 
@@ -13,6 +15,8 @@ import ua.r4mstein.moviedbdemo.data.models.request.MarkFavoriteSendModel;
 import ua.r4mstein.moviedbdemo.data.models.request.RateMovieSendModel;
 import ua.r4mstein.moviedbdemo.data.models.response.AddMovieToListModel;
 import ua.r4mstein.moviedbdemo.data.models.response.Movie;
+import ua.r4mstein.moviedbdemo.data.models.response.MovieAccountStates;
+import ua.r4mstein.moviedbdemo.data.models.response.MovieAccountStatesAlternative;
 import ua.r4mstein.moviedbdemo.data.providers.AccountProvider;
 import ua.r4mstein.moviedbdemo.data.providers.GenreProvider;
 import ua.r4mstein.moviedbdemo.data.providers.MoviesProvider;
@@ -22,6 +26,7 @@ import ua.r4mstein.moviedbdemo.modules.detail.DetailActivity;
 import ua.r4mstein.moviedbdemo.modules.dialog.ChooseActionDialog;
 import ua.r4mstein.moviedbdemo.modules.dialog.DialogRating;
 import ua.r4mstein.moviedbdemo.modules.dialog.InfoDialog;
+import ua.r4mstein.moviedbdemo.modules.dialog.listeners.ChooseActionClickListener;
 import ua.r4mstein.moviedbdemo.modules.films.details.DetailsMovieFragment;
 import ua.r4mstein.moviedbdemo.modules.main.MainActivity;
 import ua.r4mstein.moviedbdemo.utills.Logger;
@@ -65,9 +70,9 @@ public class MoviesByGenrePresenter extends BaseFragmentPresenter<MoviesByGenreP
                 throwable -> Logger.d(throwable.getMessage()));
     }
 
-    public void markAsFavorite(long movieId, ChooseActionDialog dialog) {
+    public void markAsFavorite(long movieId, ChooseActionDialog dialog, boolean choice) {
         MarkFavoriteSendModel sendModel = new MarkFavoriteSendModel();
-        sendModel.setFavorite(true);
+        sendModel.setFavorite(choice);
         sendModel.setMediaId(movieId);
         sendModel.setMediaType("movie");
 
@@ -78,11 +83,11 @@ public class MoviesByGenrePresenter extends BaseFragmentPresenter<MoviesByGenreP
                 throwable -> Logger.d(throwable.getMessage()));
     }
 
-    public void addToWatchlist(long movieId, ChooseActionDialog dialog) {
+    public void addToWatchlist(long movieId, ChooseActionDialog dialog, boolean choice) {
         AddToWatchlistSendModel sendModel = new AddToWatchlistSendModel();
         sendModel.setMediaType("movie");
         sendModel.setMediaId(movieId);
-        sendModel.setWatchlist(true);
+        sendModel.setWatchlist(choice);
 
         execute(mAccountProvider.addToWatchList(SharedPrefManager.getInstance().getUser().getId(),
                 API_KEY, SharedPrefManager.getInstance().retrieveSessionId(), sendModel),
@@ -107,9 +112,46 @@ public class MoviesByGenrePresenter extends BaseFragmentPresenter<MoviesByGenreP
         getRouter().startActivity(DetailActivity.class, 0, bundle);
     }
 
+    public void getMovieAccountState(long movieId) {
+        execute(mMoviesProvider.getMovieAccountStates(movieId, API_KEY, SharedPrefManager.getInstance().retrieveSessionId()),
+                new Consumer<MovieAccountStates>() {
+                    @Override
+                    public void accept(@NonNull MovieAccountStates movieAccountStates) throws Exception {
+                        getView().createDialog(movieId, movieAccountStates);
+                    }
+                },
+                new Consumer<Throwable>() {
+                    @Override
+                    public void accept(@NonNull Throwable throwable) throws Exception {
+                        if (throwable.getClass().equals(com.google.gson.JsonSyntaxException.class)) {
+                            Logger.d(throwable.getMessage());
+                            getMovieAccountStateAlternative(movieId);
+                        }
+                    }
+                });
+    }
+
+    private void getMovieAccountStateAlternative(final long movieId) {
+        execute(mMoviesProvider.getMovieAccountStatesAlternative(movieId, API_KEY, SharedPrefManager.getInstance().retrieveSessionId()),
+                new Consumer<MovieAccountStatesAlternative>() {
+                    @Override
+                    public void accept(@NonNull MovieAccountStatesAlternative movieAccountStatesAlternative) throws Exception {
+                        getView().createDialog(movieId, movieAccountStatesAlternative);
+                    }
+                },
+                new Consumer<Throwable>() {
+                    @Override
+                    public void accept(@NonNull Throwable throwable) throws Exception {
+                        Logger.d(throwable.getMessage());
+                    }
+                });
+    }
+
     interface MoviesByGenreView extends FragmentView {
 
         void setList(List<Movie> list);
         void addList(List<Movie> list);
+        void createDialog(long movieId, MovieAccountStates movieAccountStates);
+        void createDialog(long movieId, MovieAccountStatesAlternative movieAccountStates);
     }
 }
