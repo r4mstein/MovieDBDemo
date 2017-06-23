@@ -1,6 +1,7 @@
 package ua.r4mstein.moviedbdemo.modules.lists.list_details;
 
 import android.content.res.Resources;
+import android.os.Bundle;
 import android.widget.TextView;
 
 import java.util.List;
@@ -17,6 +18,7 @@ import ua.r4mstein.moviedbdemo.data.providers.MoviesProvider;
 import ua.r4mstein.moviedbdemo.data.providers.SearchProvider;
 import ua.r4mstein.moviedbdemo.modules.base.BaseFragmentPresenter;
 import ua.r4mstein.moviedbdemo.modules.base.FragmentView;
+import ua.r4mstein.moviedbdemo.modules.detail.DetailActivity;
 import ua.r4mstein.moviedbdemo.modules.dialog.DialogRating;
 import ua.r4mstein.moviedbdemo.modules.dialog.InfoDialog;
 import ua.r4mstein.moviedbdemo.modules.dialog.QuestionDialog;
@@ -26,6 +28,7 @@ import ua.r4mstein.moviedbdemo.utills.Logger;
 import ua.r4mstein.moviedbdemo.utills.SharedPrefManager;
 
 import static ua.r4mstein.moviedbdemo.utills.Constants.API_KEY;
+import static ua.r4mstein.moviedbdemo.utills.Constants.DETAILS_MOVIE_FRAGMENT;
 
 public class ListDetailsPresenter extends BaseFragmentPresenter<ListDetailsPresenter.ListDetailsView> {
 
@@ -155,6 +158,12 @@ public class ListDetailsPresenter extends BaseFragmentPresenter<ListDetailsPrese
                 addMovieToListModel -> getRouter().showDialog(new InfoDialog(), R.string.app_name, addMovieToListModel.getStatusMessage(),
                         v -> dialog.dismiss(), null),
                 throwable -> Logger.d(throwable.getMessage()));
+    }
+
+    public void goToDetailScreen(long movieId) {
+        Bundle bundle = new Bundle();
+        bundle.putLong(DETAILS_MOVIE_FRAGMENT, movieId);
+        getRouter().startActivity(DetailActivity.class, 0, bundle);
     }
 
     interface ListDetailsView extends FragmentView {

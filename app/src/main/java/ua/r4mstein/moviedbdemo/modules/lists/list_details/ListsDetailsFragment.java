@@ -88,6 +88,7 @@ public class ListsDetailsFragment extends BaseFragment<ListDetailsPresenter>
             @Override
             public void itemClicked(long movieId) {
                 Logger.d("itemClicked: movieId = " + movieId);
+                getPresenter().goToDetailScreen(movieId);
             }
 
             @Override

@@ -57,7 +57,7 @@ public class WatchlistFragment extends BaseFragment<WatchlistPresenter>
 
             @Override
             public void moviesItemClicked(long movieId) {
-
+                getPresenter().goToDetailScreen(movieId);
             }
 
             @Override

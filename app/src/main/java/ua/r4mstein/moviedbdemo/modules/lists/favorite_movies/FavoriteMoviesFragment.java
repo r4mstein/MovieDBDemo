@@ -57,7 +57,7 @@ public class FavoriteMoviesFragment extends BaseFragment<FavoriteMoviesPresenter
 
             @Override
             public void moviesItemClicked(long movieId) {
-
+                getPresenter().goToDetailScreen(movieId);
             }
 
             @Override

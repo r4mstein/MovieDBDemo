@@ -57,7 +57,7 @@ public class RatedMoviesFragment extends BaseFragment<RatedMoviesPresenter>
 
             @Override
             public void moviesItemClicked(long movieId) {
-
+                getPresenter().goToDetailScreen(movieId);
             }
 
             @Override
