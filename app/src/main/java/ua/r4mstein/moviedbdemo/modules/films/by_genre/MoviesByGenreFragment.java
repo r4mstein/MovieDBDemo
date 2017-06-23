@@ -25,6 +25,8 @@ public class MoviesByGenreFragment extends BaseFragment<MoviesByGenrePresenter>
         implements MoviesByGenrePresenter.MoviesByGenreView {
 
     public static final String GENRE_ID = "genre_id";
+    public static final String FAVORITE_WATCHLIST = "favorite_watchlist";
+    public static final String RATING = "rating";
 
     private RecyclerView mRecyclerView;
     private MoviesByGenreAdapter adapter;
@@ -75,21 +77,12 @@ public class MoviesByGenreFragment extends BaseFragment<MoviesByGenrePresenter>
 
             @Override
             public void moviesItemLongClicked(long movieId, int position) {
-                getPresenter().getMovieAccountState(movieId);
+                getPresenter().getMovieAccountState(movieId, FAVORITE_WATCHLIST);
             }
 
             @Override
             public void ratingViewClicked(long movieId, float oldRating) {
-                FragmentManager manager = getFragmentManager();
-
-                DialogRating dialogRating = new DialogRating();
-                dialogRating.setDialogRatingClickListener(rating -> {
-                    float sendRating = MathManager.getRating(rating);
-                    Logger.d("positiveClicked: rating = " + sendRating);
-
-                    getPresenter().rateMovie(movieId, dialogRating, sendRating);
-                });
-                dialogRating.show(manager, "DialogRating");
+                getPresenter().getMovieAccountState(movieId, RATING);
             }
         };
     }
@@ -164,6 +157,34 @@ public class MoviesByGenreFragment extends BaseFragment<MoviesByGenrePresenter>
         ChooseActionDialog dialog = ChooseActionDialog.newInstance(addFavorite, addWatchlist, removeFavorite, removeWatchlist);
         dialog.setChooseActionClickListener(getChooseActionClickListener(movieId, dialog));
         dialog.show(manager, "ChooseActionDialog");
+    }
+
+    @Override
+    public void createRatingDialog(long movieId, MovieAccountStates movieAccountStates) {
+        FragmentManager manager = getFragmentManager();
+
+        DialogRating dialogRating = DialogRating.newInstance(movieAccountStates.getRated().getValue());
+        dialogRating.setDialogRatingClickListener(rating -> {
+            float sendRating = MathManager.getRating(rating);
+            Logger.d("positiveClicked: rating = " + sendRating);
+
+            MoviesByGenreFragment.this.getPresenter().rateMovie(movieId, dialogRating, sendRating);
+        });
+        dialogRating.show(manager, "DialogRating");
+    }
+
+    @Override
+    public void createRatingDialog(long movieId, MovieAccountStatesAlternative movieAccountStates) {
+        FragmentManager manager = getFragmentManager();
+
+        DialogRating dialogRating = new DialogRating();
+        dialogRating.setDialogRatingClickListener(rating -> {
+            float sendRating = MathManager.getRating(rating);
+            Logger.d("positiveClicked: rating = " + sendRating);
+
+            MoviesByGenreFragment.this.getPresenter().rateMovie(movieId, dialogRating, sendRating);
+        });
+        dialogRating.show(manager, "DialogRating");
     }
 
     @Override

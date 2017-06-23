@@ -1,19 +1,13 @@
 package ua.r4mstein.moviedbdemo.modules.films.by_genre;
 
-import android.content.Intent;
 import android.os.Bundle;
-import android.support.v4.app.FragmentManager;
-import android.view.View;
 
 import java.util.List;
 
-import io.reactivex.annotations.NonNull;
-import io.reactivex.functions.Consumer;
 import ua.r4mstein.moviedbdemo.R;
 import ua.r4mstein.moviedbdemo.data.models.request.AddToWatchlistSendModel;
 import ua.r4mstein.moviedbdemo.data.models.request.MarkFavoriteSendModel;
 import ua.r4mstein.moviedbdemo.data.models.request.RateMovieSendModel;
-import ua.r4mstein.moviedbdemo.data.models.response.AddMovieToListModel;
 import ua.r4mstein.moviedbdemo.data.models.response.Movie;
 import ua.r4mstein.moviedbdemo.data.models.response.MovieAccountStates;
 import ua.r4mstein.moviedbdemo.data.models.response.MovieAccountStatesAlternative;
@@ -26,12 +20,11 @@ import ua.r4mstein.moviedbdemo.modules.detail.DetailActivity;
 import ua.r4mstein.moviedbdemo.modules.dialog.ChooseActionDialog;
 import ua.r4mstein.moviedbdemo.modules.dialog.DialogRating;
 import ua.r4mstein.moviedbdemo.modules.dialog.InfoDialog;
-import ua.r4mstein.moviedbdemo.modules.dialog.listeners.ChooseActionClickListener;
-import ua.r4mstein.moviedbdemo.modules.films.details.DetailsMovieFragment;
-import ua.r4mstein.moviedbdemo.modules.main.MainActivity;
 import ua.r4mstein.moviedbdemo.utills.Logger;
 import ua.r4mstein.moviedbdemo.utills.SharedPrefManager;
 
+import static ua.r4mstein.moviedbdemo.modules.films.by_genre.MoviesByGenreFragment.FAVORITE_WATCHLIST;
+import static ua.r4mstein.moviedbdemo.modules.films.by_genre.MoviesByGenreFragment.RATING;
 import static ua.r4mstein.moviedbdemo.utills.Constants.API_KEY;
 import static ua.r4mstein.moviedbdemo.utills.Constants.DETAILS_MOVIE_FRAGMENT;
 
@@ -112,39 +105,39 @@ public class MoviesByGenrePresenter extends BaseFragmentPresenter<MoviesByGenreP
         getRouter().startActivity(DetailActivity.class, 0, bundle);
     }
 
-    public void getMovieAccountState(long movieId) {
+    public void getMovieAccountState(long movieId, String reasonType) {
         execute(mMoviesProvider.getMovieAccountStates(movieId, API_KEY, SharedPrefManager.getInstance().retrieveSessionId()),
-                new Consumer<MovieAccountStates>() {
-                    @Override
-                    public void accept(@NonNull MovieAccountStates movieAccountStates) throws Exception {
-                        getView().createDialog(movieId, movieAccountStates);
+                movieAccountStates -> {
+                    switch (reasonType) {
+                        case FAVORITE_WATCHLIST:
+                            getView().createDialog(movieId, movieAccountStates);
+                            break;
+                        case RATING:
+                            getView().createRatingDialog(movieId, movieAccountStates);
+                            break;
                     }
                 },
-                new Consumer<Throwable>() {
-                    @Override
-                    public void accept(@NonNull Throwable throwable) throws Exception {
-                        if (throwable.getClass().equals(com.google.gson.JsonSyntaxException.class)) {
-                            Logger.d(throwable.getMessage());
-                            getMovieAccountStateAlternative(movieId);
-                        }
+                throwable -> {
+                    if (throwable.getClass().equals(com.google.gson.JsonSyntaxException.class)) {
+                        Logger.d(throwable.getMessage());
+                        getMovieAccountStateAlternative(movieId, reasonType);
                     }
                 });
     }
 
-    private void getMovieAccountStateAlternative(final long movieId) {
+    private void getMovieAccountStateAlternative(final long movieId, String reasonType) {
         execute(mMoviesProvider.getMovieAccountStatesAlternative(movieId, API_KEY, SharedPrefManager.getInstance().retrieveSessionId()),
-                new Consumer<MovieAccountStatesAlternative>() {
-                    @Override
-                    public void accept(@NonNull MovieAccountStatesAlternative movieAccountStatesAlternative) throws Exception {
-                        getView().createDialog(movieId, movieAccountStatesAlternative);
+                movieAccountStatesAlternative -> {
+                    switch (reasonType) {
+                        case FAVORITE_WATCHLIST:
+                            getView().createDialog(movieId, movieAccountStatesAlternative);
+                            break;
+                        case RATING:
+                            getView().createRatingDialog(movieId, movieAccountStatesAlternative);
+                            break;
                     }
                 },
-                new Consumer<Throwable>() {
-                    @Override
-                    public void accept(@NonNull Throwable throwable) throws Exception {
-                        Logger.d(throwable.getMessage());
-                    }
-                });
+                throwable -> Logger.d(throwable.getMessage()));
     }
 
     interface MoviesByGenreView extends FragmentView {
@@ -153,5 +146,7 @@ public class MoviesByGenrePresenter extends BaseFragmentPresenter<MoviesByGenreP
         void addList(List<Movie> list);
         void createDialog(long movieId, MovieAccountStates movieAccountStates);
         void createDialog(long movieId, MovieAccountStatesAlternative movieAccountStates);
+        void createRatingDialog(long movieId, MovieAccountStates movieAccountStates);
+        void createRatingDialog(long movieId, MovieAccountStatesAlternative movieAccountStates);
     }
 }
