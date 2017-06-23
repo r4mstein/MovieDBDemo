@@ -22,6 +22,7 @@ import ua.r4mstein.moviedbdemo.data.models.response.ListDetailsModel;
 import ua.r4mstein.moviedbdemo.data.models.response.MovieAccountStates;
 import ua.r4mstein.moviedbdemo.data.models.response.MovieAccountStatesAlternative;
 import ua.r4mstein.moviedbdemo.data.models.response.MoviesByGenreModel;
+import ua.r4mstein.moviedbdemo.data.models.response.PopularMoviesModel;
 import ua.r4mstein.moviedbdemo.data.models.response.RatedMoviesModel;
 import ua.r4mstein.moviedbdemo.data.models.response.RequestTokenModel;
 import ua.r4mstein.moviedbdemo.data.models.response.SearchMoviesModel;
@@ -176,6 +177,10 @@ public interface RetrofitInterface {
     Observable<AddMovieToListModel> deleteRating(@Path("movie_id") long movieId,
                                                  @Query("api_key") String apiKey,
                                                  @Query("session_id") String sessionId);
+
+    @GET("movie/popular")
+    Observable<PopularMoviesModel> getPopularMovies(@Query("api_key") String apiKey,
+                                                    @Query("page") long page);
 
 //    *****
 }

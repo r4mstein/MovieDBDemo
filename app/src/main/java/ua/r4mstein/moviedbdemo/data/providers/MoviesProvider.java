@@ -6,6 +6,7 @@ import ua.r4mstein.moviedbdemo.data.models.request.RateMovieSendModel;
 import ua.r4mstein.moviedbdemo.data.models.response.AddMovieToListModel;
 import ua.r4mstein.moviedbdemo.data.models.response.MovieAccountStates;
 import ua.r4mstein.moviedbdemo.data.models.response.MovieAccountStatesAlternative;
+import ua.r4mstein.moviedbdemo.data.models.response.PopularMoviesModel;
 import ua.r4mstein.moviedbdemo.data.models.response.movie_details.MovieDetailsModel;
 
 public class MoviesProvider extends BaseProvider implements MoviesApi {
@@ -33,5 +34,10 @@ public class MoviesProvider extends BaseProvider implements MoviesApi {
     @Override
     public Observable<AddMovieToListModel> deleteRating(long movieId, String apiKey, String sessionId) {
         return api.deleteRating(movieId, apiKey, sessionId);
+    }
+
+    @Override
+    public Observable<PopularMoviesModel> getPopularMovies(String apiKey, long page) {
+        return api.getPopularMovies(apiKey, page);
     }
 }

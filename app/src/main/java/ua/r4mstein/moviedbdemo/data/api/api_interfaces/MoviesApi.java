@@ -5,6 +5,7 @@ import ua.r4mstein.moviedbdemo.data.models.request.RateMovieSendModel;
 import ua.r4mstein.moviedbdemo.data.models.response.AddMovieToListModel;
 import ua.r4mstein.moviedbdemo.data.models.response.MovieAccountStates;
 import ua.r4mstein.moviedbdemo.data.models.response.MovieAccountStatesAlternative;
+import ua.r4mstein.moviedbdemo.data.models.response.PopularMoviesModel;
 import ua.r4mstein.moviedbdemo.data.models.response.movie_details.MovieDetailsModel;
 
 public interface MoviesApi {
@@ -19,4 +20,6 @@ public interface MoviesApi {
     Observable<MovieAccountStatesAlternative> getMovieAccountStatesAlternative(long movieId, String apiKey, String sessionId);
 
     Observable<AddMovieToListModel> deleteRating(long movieId, String apiKey, String sessionId);
+
+    Observable<PopularMoviesModel> getPopularMovies(String apiKey, long page);
 }
