@@ -1,5 +1,6 @@
 package ua.r4mstein.moviedbdemo.modules.lists.rated_movies;
 
+import android.content.res.Resources;
 import android.support.annotation.NonNull;
 import android.support.v4.app.FragmentManager;
 import android.support.v7.widget.LinearLayoutManager;
@@ -52,7 +53,19 @@ public class RatedMoviesFragment extends BaseFragment<RatedMoviesPresenter>
         mRecyclerView.setLayoutManager(layoutManager);
 
         adapter = new MoviesByGenreAdapter(getViewContext());
-        adapter.setMoviesClickListener(new MoviesClickListener() {
+        adapter.setMoviesClickListener(getMoviesClickListener());
+        mRecyclerView.setAdapter(adapter);
+
+        mRecyclerView.addOnScrollListener(new EndlessScrollListener(layoutManager,
+                () -> {
+                    getPresenter().getNextPage();
+                    return true;
+                }));
+    }
+
+    @NonNull
+    private MoviesClickListener getMoviesClickListener() {
+        return new MoviesClickListener() {
             FragmentManager manager = getFragmentManager();
 
             @Override
@@ -81,16 +94,9 @@ public class RatedMoviesFragment extends BaseFragment<RatedMoviesPresenter>
 
             @Override
             public void ratingViewLongClicked(long movieId) {
-
+                getPresenter().showDeleteRatingDialog(movieId);
             }
-        });
-        mRecyclerView.setAdapter(adapter);
-
-        mRecyclerView.addOnScrollListener(new EndlessScrollListener(layoutManager,
-                () -> {
-                    getPresenter().getNextPage();
-                    return true;
-                }));
+        };
     }
 
     @NonNull
@@ -128,5 +134,10 @@ public class RatedMoviesFragment extends BaseFragment<RatedMoviesPresenter>
     @Override
     public void addList(List<Movie> list) {
         adapter.addData(list);
+    }
+
+    @Override
+    public Resources getAppResources() {
+        return getResources();
     }
 }

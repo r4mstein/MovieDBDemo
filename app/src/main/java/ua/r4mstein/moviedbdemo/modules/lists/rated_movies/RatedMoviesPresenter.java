@@ -1,5 +1,6 @@
 package ua.r4mstein.moviedbdemo.modules.lists.rated_movies;
 
+import android.content.res.Resources;
 import android.os.Bundle;
 
 import java.util.List;
@@ -17,6 +18,7 @@ import ua.r4mstein.moviedbdemo.modules.detail.DetailActivity;
 import ua.r4mstein.moviedbdemo.modules.dialog.ChooseActionDialog;
 import ua.r4mstein.moviedbdemo.modules.dialog.DialogRating;
 import ua.r4mstein.moviedbdemo.modules.dialog.InfoDialog;
+import ua.r4mstein.moviedbdemo.modules.dialog.QuestionDialog;
 import ua.r4mstein.moviedbdemo.utills.Logger;
 import ua.r4mstein.moviedbdemo.utills.SharedPrefManager;
 
@@ -104,9 +106,29 @@ public class RatedMoviesPresenter extends BaseFragmentPresenter<RatedMoviesPrese
         getRouter().startActivity(DetailActivity.class, 0, bundle);
     }
 
+    private void deleteRatingOfMovie(long movieId) {
+        execute(mMoviesProvider.deleteRating(movieId, API_KEY, SharedPrefManager.getInstance().retrieveSessionId()),
+                addMovieToListModel -> getRouter().showDialog(new InfoDialog(), R.string.app_name, addMovieToListModel.getStatusMessage(),
+                        v -> {
+                            current_page = 1;
+                            getRatedMovies(current_page);
+                        }, null),
+                throwable -> Logger.d(throwable.getMessage()));
+    }
+
+    public void showDeleteRatingDialog(long movieId) {
+            getRouter().showQuestionDialog(new QuestionDialog(), R.string.app_name,
+                    getView().getAppResources().getString(R.string.dialog_delete_rating_message),
+                    v -> {
+                        Logger.d("positive clicked");
+                        deleteRatingOfMovie(movieId);
+                    },
+                    v -> Logger.d("negative clicked"));
+    }
+
     interface RatedMoviesView extends FragmentView {
         void setList(List<Movie> list);
-
         void addList(List<Movie> list);
+        Resources getAppResources();
     }
 }
