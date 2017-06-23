@@ -43,6 +43,8 @@
     <string name="dialog_empty_message">This list is already empty</string>
     <string name="dialog_clear_list_message">Do you really want to clear this list?</string>
     <string name="dialog_delete_list_message">Do you really want to delete this list?</string>
+    <string name="dialog_delete_rating_message">Do you really want to delete rating for this movie?</string>
+    <string name="dialog_delete_rating_attention_message">You don\'t rated this movie</string>
     <string name="dialog_delete_message">Do you really want to delete:\u0020</string>
     <string name="title_DCA">Choose the action, please:</string>
     <string name="favorite_DCA">Mark as Favorite</string>

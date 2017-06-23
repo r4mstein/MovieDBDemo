@@ -47,6 +47,10 @@ public class MoviesByGenreAdapter extends RecyclerView.Adapter<MoviesByGenreAdap
         });
 
         holder.tvVote.setOnClickListener(v -> mMoviesClickListener.ratingViewClicked(movie.getId(), movie.getRating()));
+        holder.tvVote.setOnLongClickListener(v -> {
+            mMoviesClickListener.ratingViewLongClicked(movie.getId());
+            return true;
+        });
     }
 
     private void fillPoster(MoviesByGenreViewHolder holder, Movie movie) {

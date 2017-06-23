@@ -1,5 +1,6 @@
 package ua.r4mstein.moviedbdemo.modules.films.by_genre;
 
+import android.content.res.Resources;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v4.app.FragmentManager;
@@ -26,7 +27,8 @@ public class MoviesByGenreFragment extends BaseFragment<MoviesByGenrePresenter>
 
     public static final String GENRE_ID = "genre_id";
     public static final String FAVORITE_WATCHLIST = "favorite_watchlist";
-    public static final String RATING = "rating";
+    public static final String SET_RATING = "rating";
+    public static final String DELETE_RATING = "delete_rating";
 
     private RecyclerView mRecyclerView;
     private MoviesByGenreAdapter adapter;
@@ -82,7 +84,12 @@ public class MoviesByGenreFragment extends BaseFragment<MoviesByGenrePresenter>
 
             @Override
             public void ratingViewClicked(long movieId, float oldRating) {
-                getPresenter().getMovieAccountState(movieId, RATING);
+                getPresenter().getMovieAccountState(movieId, SET_RATING);
+            }
+
+            @Override
+            public void ratingViewLongClicked(long movieId) {
+                getPresenter().getMovieAccountState(movieId, DELETE_RATING);
             }
         };
     }
@@ -160,6 +167,29 @@ public class MoviesByGenreFragment extends BaseFragment<MoviesByGenrePresenter>
     }
 
     @Override
+    public void createDialog(long movieId, MovieAccountStatesAlternative movieAccountStates) {
+        FragmentManager manager = getFragmentManager();
+
+        int addFavorite = View.GONE;
+        int removeFavorite = View.VISIBLE;
+        if (!movieAccountStates.getFavorite()) {
+            addFavorite = View.VISIBLE;
+            removeFavorite = View.GONE;
+        }
+
+        int addWatchlist = View.GONE;
+        int removeWatchlist = View.VISIBLE;
+        if (!movieAccountStates.getWatchlist()) {
+            addWatchlist = View.VISIBLE;
+            removeWatchlist = View.GONE;
+        }
+
+        ChooseActionDialog dialog = ChooseActionDialog.newInstance(addFavorite, addWatchlist, removeFavorite, removeWatchlist);
+        dialog.setChooseActionClickListener(getChooseActionClickListener(movieId, dialog));
+        dialog.show(manager, "ChooseActionDialog");
+    }
+
+    @Override
     public void createRatingDialog(long movieId, MovieAccountStates movieAccountStates) {
         FragmentManager manager = getFragmentManager();
 
@@ -188,25 +218,7 @@ public class MoviesByGenreFragment extends BaseFragment<MoviesByGenrePresenter>
     }
 
     @Override
-    public void createDialog(long movieId, MovieAccountStatesAlternative movieAccountStates) {
-        FragmentManager manager = getFragmentManager();
-
-        int addFavorite = View.GONE;
-        int removeFavorite = View.VISIBLE;
-        if (!movieAccountStates.getFavorite()) {
-            addFavorite = View.VISIBLE;
-            removeFavorite = View.GONE;
-        }
-
-        int addWatchlist = View.GONE;
-        int removeWatchlist = View.VISIBLE;
-        if (!movieAccountStates.getWatchlist()) {
-            addWatchlist = View.VISIBLE;
-            removeWatchlist = View.GONE;
-        }
-
-        ChooseActionDialog dialog = ChooseActionDialog.newInstance(addFavorite, addWatchlist, removeFavorite, removeWatchlist);
-        dialog.setChooseActionClickListener(getChooseActionClickListener(movieId, dialog));
-        dialog.show(manager, "ChooseActionDialog");
+    public Resources getAppResources() {
+        return getResources();
     }
 }

@@ -29,4 +29,9 @@ public class MoviesProvider extends BaseProvider implements MoviesApi {
     public Observable<MovieAccountStatesAlternative> getMovieAccountStatesAlternative(long movieId, String apiKey, String sessionId) {
         return api.getMovieAccountStatesAlternative(movieId, apiKey, sessionId);
     }
+
+    @Override
+    public Observable<AddMovieToListModel> deleteRating(long movieId, String apiKey, String sessionId) {
+        return api.deleteRating(movieId, apiKey, sessionId);
+    }
 }

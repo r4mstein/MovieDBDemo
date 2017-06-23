@@ -172,5 +172,10 @@ public interface RetrofitInterface {
                                                                                @Query("api_key") String apiKey,
                                                                                @Query("session_id") String sessionId);
 
+    @DELETE("movie/{movie_id}/rating")
+    Observable<AddMovieToListModel> deleteRating(@Path("movie_id") long movieId,
+                                                 @Query("api_key") String apiKey,
+                                                 @Query("session_id") String sessionId);
+
 //    *****
 }

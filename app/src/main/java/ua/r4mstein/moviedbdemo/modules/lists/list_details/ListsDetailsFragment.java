@@ -155,6 +155,11 @@ public class ListsDetailsFragment extends BaseFragment<ListDetailsPresenter>
                     });
                     dialogRating.show(manager, "DialogRating");
                 }
+
+                @Override
+                public void ratingViewLongClicked(long movieId) {
+
+                }
             });
             recyclerView.setAdapter(adapter);
 

@@ -78,6 +78,11 @@ public class RatedMoviesFragment extends BaseFragment<RatedMoviesPresenter>
                 });
                 dialogRating.show(manager, "DialogRating");
             }
+
+            @Override
+            public void ratingViewLongClicked(long movieId) {
+
+            }
         });
         mRecyclerView.setAdapter(adapter);
 

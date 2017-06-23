@@ -1,5 +1,6 @@
 package ua.r4mstein.moviedbdemo.modules.films.by_genre;
 
+import android.content.res.Resources;
 import android.os.Bundle;
 
 import java.util.List;
@@ -20,11 +21,13 @@ import ua.r4mstein.moviedbdemo.modules.detail.DetailActivity;
 import ua.r4mstein.moviedbdemo.modules.dialog.ChooseActionDialog;
 import ua.r4mstein.moviedbdemo.modules.dialog.DialogRating;
 import ua.r4mstein.moviedbdemo.modules.dialog.InfoDialog;
+import ua.r4mstein.moviedbdemo.modules.dialog.QuestionDialog;
 import ua.r4mstein.moviedbdemo.utills.Logger;
 import ua.r4mstein.moviedbdemo.utills.SharedPrefManager;
 
+import static ua.r4mstein.moviedbdemo.modules.films.by_genre.MoviesByGenreFragment.DELETE_RATING;
 import static ua.r4mstein.moviedbdemo.modules.films.by_genre.MoviesByGenreFragment.FAVORITE_WATCHLIST;
-import static ua.r4mstein.moviedbdemo.modules.films.by_genre.MoviesByGenreFragment.RATING;
+import static ua.r4mstein.moviedbdemo.modules.films.by_genre.MoviesByGenreFragment.SET_RATING;
 import static ua.r4mstein.moviedbdemo.utills.Constants.API_KEY;
 import static ua.r4mstein.moviedbdemo.utills.Constants.DETAILS_MOVIE_FRAGMENT;
 
@@ -112,8 +115,11 @@ public class MoviesByGenrePresenter extends BaseFragmentPresenter<MoviesByGenreP
                         case FAVORITE_WATCHLIST:
                             getView().createDialog(movieId, movieAccountStates);
                             break;
-                        case RATING:
+                        case SET_RATING:
                             getView().createRatingDialog(movieId, movieAccountStates);
+                            break;
+                        case DELETE_RATING:
+                            showDeleteRatingDialog(movieId, true);
                             break;
                     }
                 },
@@ -132,12 +138,38 @@ public class MoviesByGenrePresenter extends BaseFragmentPresenter<MoviesByGenreP
                         case FAVORITE_WATCHLIST:
                             getView().createDialog(movieId, movieAccountStatesAlternative);
                             break;
-                        case RATING:
+                        case SET_RATING:
                             getView().createRatingDialog(movieId, movieAccountStatesAlternative);
+                            break;
+                        case DELETE_RATING:
+                            showDeleteRatingDialog(movieId, false);
                             break;
                     }
                 },
                 throwable -> Logger.d(throwable.getMessage()));
+    }
+
+    private void deleteRatingOfMovie(long movieId) {
+        execute(mMoviesProvider.deleteRating(movieId, API_KEY, SharedPrefManager.getInstance().retrieveSessionId()),
+                addMovieToListModel -> getRouter().showDialog(new InfoDialog(), R.string.app_name, addMovieToListModel.getStatusMessage(),
+                        v -> {}, null),
+                throwable -> Logger.d(throwable.getMessage()));
+    }
+
+    public void showDeleteRatingDialog(long movieId, boolean isRated) {
+        if (isRated) {
+            getRouter().showQuestionDialog(new QuestionDialog(), R.string.app_name,
+                    getView().getAppResources().getString(R.string.dialog_delete_rating_message),
+                    v -> {
+                        Logger.d("positive clicked");
+                        deleteRatingOfMovie(movieId);
+                    },
+                    v -> Logger.d("negative clicked"));
+        } else {
+            getRouter().showDialog(new InfoDialog(), R.string.app_name,
+                    getView().getAppResources().getString(R.string.dialog_delete_rating_attention_message),
+                    v -> {}, null);
+        }
     }
 
     interface MoviesByGenreView extends FragmentView {
@@ -148,5 +180,6 @@ public class MoviesByGenrePresenter extends BaseFragmentPresenter<MoviesByGenreP
         void createDialog(long movieId, MovieAccountStatesAlternative movieAccountStates);
         void createRatingDialog(long movieId, MovieAccountStates movieAccountStates);
         void createRatingDialog(long movieId, MovieAccountStatesAlternative movieAccountStates);
+        Resources getAppResources();
     }
 }
