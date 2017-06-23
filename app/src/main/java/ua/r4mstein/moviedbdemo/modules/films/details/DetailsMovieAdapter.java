@@ -25,6 +25,7 @@ public class DetailsMovieAdapter extends RecyclerView.Adapter<DetailsMovieAdapte
 
     private List<MovieDetailsModel> mMovieList = new ArrayList<>();
     private Context mContext;
+    private DetailsMovieClickListener mDetailsMovieClickListener;
 
     public DetailsMovieAdapter(Context context) {
         mContext = context;
@@ -42,6 +43,8 @@ public class DetailsMovieAdapter extends RecyclerView.Adapter<DetailsMovieAdapte
 
         fillPoster(holder.ivPoster, model.getPosterPath());
         fillData(model, holder);
+
+        holder.tvVote.setOnClickListener(v -> mDetailsMovieClickListener.ratingViewClicked(model.getId()));
     }
 
     @Override
@@ -143,6 +146,10 @@ public class DetailsMovieAdapter extends RecyclerView.Adapter<DetailsMovieAdapte
             mMovieList.addAll(movies);
             notifyDataSetChanged();
         }
+    }
+
+    public void setDetailsMovieClickListener(DetailsMovieClickListener detailsMovieClickListener) {
+        mDetailsMovieClickListener = detailsMovieClickListener;
     }
 
     public class DetailsMovieAdapterViewHolder extends RecyclerView.ViewHolder {
