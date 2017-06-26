@@ -30,6 +30,7 @@ import ua.r4mstein.moviedbdemo.data.models.response.SessionModel;
 import ua.r4mstein.moviedbdemo.data.models.response.UserModel;
 import ua.r4mstein.moviedbdemo.data.models.response.WatchlistModel;
 import ua.r4mstein.moviedbdemo.data.models.response.movie_details.MovieDetailsModel;
+import ua.r4mstein.moviedbdemo.data.models.response.popular_people.PopularPeopleModel;
 
 public interface RetrofitInterface {
 
@@ -180,6 +181,14 @@ public interface RetrofitInterface {
 
     @GET("movie/popular")
     Observable<PopularMoviesModel> getPopularMovies(@Query("api_key") String apiKey,
+                                                    @Query("page") long page);
+
+//    *****
+
+//    PEOPLE
+
+    @GET("person/popular")
+    Observable<PopularPeopleModel> getPopularPeople(@Query("api_key") String apiKey,
                                                     @Query("page") long page);
 
 //    *****

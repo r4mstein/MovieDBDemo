@@ -65,7 +65,9 @@ public class MainActivity extends BaseActivity<MainPresenter> {
                         new PrimaryDrawerItem().withIdentifier(5).withName(R.string.drawer_item_rated_movies).withIcon(R.drawable.ic_five)
                                 .withSelectedIcon(R.drawable.ic_five_select),
                         new PrimaryDrawerItem().withIdentifier(6).withName(R.string.drawer_item_popular_movies).withIcon(R.drawable.ic_six)
-                                .withSelectedIcon(R.drawable.ic_six_select)
+                                .withSelectedIcon(R.drawable.ic_six_select),
+                        new PrimaryDrawerItem().withIdentifier(7).withName(R.string.drawer_item_popular_people).withIcon(R.drawable.ic_seven)
+                                .withSelectedIcon(R.drawable.ic_seven_select)
                 )
                 .withActionBarDrawerToggleAnimated(true)
                 .withOnDrawerItemClickListener(getOnDrawerItemClickListener())
@@ -101,6 +103,10 @@ public class MainActivity extends BaseActivity<MainPresenter> {
                     break;
                 case 6:
                     getPresenter().addPopularMoviesFragment();
+                    mDrawer.closeDrawer();
+                    break;
+                case 7:
+                    getPresenter().addPopularPeopleFragment();
                     mDrawer.closeDrawer();
                     break;
             }
