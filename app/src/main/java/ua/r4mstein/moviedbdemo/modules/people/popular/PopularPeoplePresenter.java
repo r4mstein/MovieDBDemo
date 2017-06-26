@@ -1,16 +1,16 @@
 package ua.r4mstein.moviedbdemo.modules.people.popular;
 
-import android.view.View;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentTransaction;
 
 import java.util.List;
 
-import ua.r4mstein.moviedbdemo.R;
 import ua.r4mstein.moviedbdemo.data.models.response.popular_people.KnownFor;
 import ua.r4mstein.moviedbdemo.data.models.response.popular_people.PopularPeopleItem;
 import ua.r4mstein.moviedbdemo.data.providers.PeopleProvider;
 import ua.r4mstein.moviedbdemo.modules.base.BaseFragmentPresenter;
 import ua.r4mstein.moviedbdemo.modules.base.FragmentView;
-import ua.r4mstein.moviedbdemo.modules.dialog.InfoDialog;
+import ua.r4mstein.moviedbdemo.modules.dialog.KnownForDialog;
 import ua.r4mstein.moviedbdemo.utills.Logger;
 
 import static ua.r4mstein.moviedbdemo.utills.Constants.API_KEY;
@@ -49,15 +49,16 @@ public class PopularPeoplePresenter extends BaseFragmentPresenter<PopularPeopleP
     }
 
     public void showDialog(List<KnownFor> list) {
-        StringBuilder res = new StringBuilder();
-        for (KnownFor knownFor: list) {
-            if (knownFor.getTitle() != null) res.append(knownFor.getTitle());
-        }
-        getRouter().showDialog(new InfoDialog(), R.string.app_name, res.toString(), v -> {}, null);
+        FragmentManager manager = getView().getFragManager();
+        FragmentTransaction transaction = manager.beginTransaction();
+
+        KnownForDialog dialog = KnownForDialog.newInstance(list);
+        dialog.show(transaction, "KnownForDialog");
     }
 
     interface PopularPeopleView extends FragmentView {
         void setList(List<PopularPeopleItem> list);
         void addList(List<PopularPeopleItem> list);
+        FragmentManager getFragManager();
     }
 }

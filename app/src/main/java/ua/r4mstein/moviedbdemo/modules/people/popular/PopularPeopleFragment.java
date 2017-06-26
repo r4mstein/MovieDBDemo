@@ -1,6 +1,7 @@
 package ua.r4mstein.moviedbdemo.modules.people.popular;
 
 import android.support.annotation.NonNull;
+import android.support.v4.app.FragmentManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
@@ -83,5 +84,10 @@ public class PopularPeopleFragment extends BaseFragment<PopularPeoplePresenter>
     @Override
     public void addList(List<PopularPeopleItem> list) {
         mAdapter.addData(list);
+    }
+
+    @Override
+    public FragmentManager getFragManager() {
+        return getFragmentManager();
     }
 }
