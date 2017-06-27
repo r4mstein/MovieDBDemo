@@ -25,12 +25,15 @@
 
         </activity>
 
-        <activity android:name=".modules.main.MainActivity" >
+        <activity android:name=".modules.main.MainActivity"
+            android:screenOrientation="portrait">
         </activity>
 
-        <activity android:name=".modules.login.activity.LoginActivity"/>
+        <activity android:name=".modules.login.activity.LoginActivity"
+            android:screenOrientation="portrait"/>
 
-        <activity android:name=".modules.detail.DetailActivity"/>
+        <activity android:name=".modules.detail.DetailActivity"
+            android:screenOrientation="portrait"/>
     </application>
 
 </manifest>

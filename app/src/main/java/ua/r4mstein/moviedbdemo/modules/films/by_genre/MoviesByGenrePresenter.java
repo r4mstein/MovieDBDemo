@@ -3,15 +3,22 @@ package ua.r4mstein.moviedbdemo.modules.films.by_genre;
 import android.content.res.Resources;
 import android.os.Bundle;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.io.IOException;
 import java.util.List;
 
+import okhttp3.Call;
+import okhttp3.Callback;
+import okhttp3.OkHttpClient;
+import okhttp3.Response;
 import ua.r4mstein.moviedbdemo.R;
+import ua.r4mstein.moviedbdemo.data.api.base.HttpManager;
 import ua.r4mstein.moviedbdemo.data.models.request.AddToWatchlistSendModel;
 import ua.r4mstein.moviedbdemo.data.models.request.MarkFavoriteSendModel;
 import ua.r4mstein.moviedbdemo.data.models.request.RateMovieSendModel;
 import ua.r4mstein.moviedbdemo.data.models.response.Movie;
-import ua.r4mstein.moviedbdemo.data.models.response.MovieAccountStates;
-import ua.r4mstein.moviedbdemo.data.models.response.MovieAccountStatesAlternative;
 import ua.r4mstein.moviedbdemo.data.providers.AccountProvider;
 import ua.r4mstein.moviedbdemo.data.providers.GenreProvider;
 import ua.r4mstein.moviedbdemo.data.providers.MoviesProvider;
@@ -109,50 +116,57 @@ public class MoviesByGenrePresenter extends BaseFragmentPresenter<MoviesByGenreP
     }
 
     public void getMovieAccountState(long movieId, String reasonType) {
-        execute(mMoviesProvider.getMovieAccountStates(movieId, API_KEY, SharedPrefManager.getInstance().retrieveSessionId()),
-                movieAccountStates -> {
-                    switch (reasonType) {
-                        case FAVORITE_WATCHLIST:
-                            getView().createDialog(movieId, movieAccountStates);
-                            break;
-                        case SET_RATING:
-                            getView().createRatingDialog(movieId, movieAccountStates);
-                            break;
-                        case DELETE_RATING:
-                            showDeleteRatingDialog(movieId, true);
-                            break;
-                    }
-                },
-                throwable -> {
-                    if (throwable.getClass().equals(com.google.gson.JsonSyntaxException.class)) {
-                        Logger.d(throwable.getMessage());
-                        getMovieAccountStateAlternative(movieId, reasonType);
-                    }
-                });
-    }
+        OkHttpClient client = new OkHttpClient();
+        HttpManager httpManager = new HttpManager();
 
-    private void getMovieAccountStateAlternative(final long movieId, String reasonType) {
-        execute(mMoviesProvider.getMovieAccountStatesAlternative(movieId, API_KEY, SharedPrefManager.getInstance().retrieveSessionId()),
-                movieAccountStatesAlternative -> {
+        client.newCall(httpManager.getRequestInstance(movieId)).enqueue(new Callback() {
+            @Override
+            public void onFailure(Call call, IOException e) {
+                Logger.d(e.getMessage());
+            }
+
+            @Override
+            public void onResponse(Call call, Response response) throws IOException {
+                JSONObject object;
+                try {
+                    String result = response.body().string();
+                    Logger.d(result);
+                    object = new JSONObject(result);
+
                     switch (reasonType) {
                         case FAVORITE_WATCHLIST:
-                            getView().createDialog(movieId, movieAccountStatesAlternative);
+                            boolean isFavorite = object.getBoolean("favorite");
+                            boolean isWatchlist = object.getBoolean("watchlist");
+                            getView().createDialog(movieId, isFavorite, isWatchlist);
                             break;
                         case SET_RATING:
-                            getView().createRatingDialog(movieId, movieAccountStatesAlternative);
+                            double vote = 0;
+                            if (!(object.getString("rated").equals("false"))) {
+                                JSONObject objectRated = new JSONObject(object.getString("rated"));
+                                vote = objectRated.getDouble("value");
+                                Logger.d(String.valueOf(vote));
+                            }
+                            getView().createRatingDialog(movieId, vote);
                             break;
                         case DELETE_RATING:
-                            showDeleteRatingDialog(movieId, false);
+                            boolean isRated = true;
+                            if (object.getString("rated").equals("false"))
+                                isRated = false;
+                            showDeleteRatingDialog(movieId, isRated);
                             break;
                     }
-                },
-                throwable -> Logger.d(throwable.getMessage()));
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+        });
     }
 
     private void deleteRatingOfMovie(long movieId) {
         execute(mMoviesProvider.deleteRating(movieId, API_KEY, SharedPrefManager.getInstance().retrieveSessionId()),
                 addMovieToListModel -> getRouter().showDialog(new InfoDialog(), R.string.app_name, addMovieToListModel.getStatusMessage(),
-                        v -> {}, null),
+                        v -> {
+                        }, null),
                 throwable -> Logger.d(throwable.getMessage()));
     }
 
@@ -168,18 +182,21 @@ public class MoviesByGenrePresenter extends BaseFragmentPresenter<MoviesByGenreP
         } else {
             getRouter().showDialog(new InfoDialog(), R.string.app_name,
                     getView().getAppResources().getString(R.string.dialog_delete_rating_attention_message),
-                    v -> {}, null);
+                    v -> {
+                    }, null);
         }
     }
 
     interface MoviesByGenreView extends FragmentView {
 
         void setList(List<Movie> list);
+
         void addList(List<Movie> list);
-        void createDialog(long movieId, MovieAccountStates movieAccountStates);
-        void createDialog(long movieId, MovieAccountStatesAlternative movieAccountStates);
-        void createRatingDialog(long movieId, MovieAccountStates movieAccountStates);
-        void createRatingDialog(long movieId, MovieAccountStatesAlternative movieAccountStates);
+
+        void createDialog(long movieId, boolean isFavorite, boolean isWatchlist);
+
+        void createRatingDialog(long movieId, double value);
+
         Resources getAppResources();
     }
 }

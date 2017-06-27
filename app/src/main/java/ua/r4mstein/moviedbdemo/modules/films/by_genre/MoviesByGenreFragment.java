@@ -144,19 +144,19 @@ public class MoviesByGenreFragment extends BaseFragment<MoviesByGenrePresenter>
     }
 
     @Override
-    public void createDialog(long movieId, MovieAccountStates movieAccountStates) {
+    public void createDialog(long movieId, boolean isFavorite, boolean isWatchlist) {
         FragmentManager manager = getFragmentManager();
 
         int addFavorite = View.GONE;
         int removeFavorite = View.VISIBLE;
-        if (!movieAccountStates.getFavorite()) {
+        if (!isFavorite) {
             addFavorite = View.VISIBLE;
             removeFavorite = View.GONE;
         }
 
         int addWatchlist = View.GONE;
         int removeWatchlist = View.VISIBLE;
-        if (!movieAccountStates.getWatchlist()) {
+        if (!isWatchlist) {
             addWatchlist = View.VISIBLE;
             removeWatchlist = View.GONE;
         }
@@ -167,47 +167,10 @@ public class MoviesByGenreFragment extends BaseFragment<MoviesByGenrePresenter>
     }
 
     @Override
-    public void createDialog(long movieId, MovieAccountStatesAlternative movieAccountStates) {
+    public void createRatingDialog(long movieId, double value) {
         FragmentManager manager = getFragmentManager();
 
-        int addFavorite = View.GONE;
-        int removeFavorite = View.VISIBLE;
-        if (!movieAccountStates.getFavorite()) {
-            addFavorite = View.VISIBLE;
-            removeFavorite = View.GONE;
-        }
-
-        int addWatchlist = View.GONE;
-        int removeWatchlist = View.VISIBLE;
-        if (!movieAccountStates.getWatchlist()) {
-            addWatchlist = View.VISIBLE;
-            removeWatchlist = View.GONE;
-        }
-
-        ChooseActionDialog dialog = ChooseActionDialog.newInstance(addFavorite, addWatchlist, removeFavorite, removeWatchlist);
-        dialog.setChooseActionClickListener(getChooseActionClickListener(movieId, dialog));
-        dialog.show(manager, "ChooseActionDialog");
-    }
-
-    @Override
-    public void createRatingDialog(long movieId, MovieAccountStates movieAccountStates) {
-        FragmentManager manager = getFragmentManager();
-
-        DialogRating dialogRating = DialogRating.newInstance(movieAccountStates.getRated().getValue());
-        dialogRating.setDialogRatingClickListener(rating -> {
-            float sendRating = MathManager.getRating(rating);
-            Logger.d("positiveClicked: rating = " + sendRating);
-
-            MoviesByGenreFragment.this.getPresenter().rateMovie(movieId, dialogRating, sendRating);
-        });
-        dialogRating.show(manager, "DialogRating");
-    }
-
-    @Override
-    public void createRatingDialog(long movieId, MovieAccountStatesAlternative movieAccountStates) {
-        FragmentManager manager = getFragmentManager();
-
-        DialogRating dialogRating = new DialogRating();
+        DialogRating dialogRating = DialogRating.newInstance((float) value);
         dialogRating.setDialogRatingClickListener(rating -> {
             float sendRating = MathManager.getRating(rating);
             Logger.d("positiveClicked: rating = " + sendRating);
