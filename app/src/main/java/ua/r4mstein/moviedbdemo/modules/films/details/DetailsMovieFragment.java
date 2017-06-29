@@ -15,6 +15,10 @@ import ua.r4mstein.moviedbdemo.modules.dialog.DialogRating;
 import ua.r4mstein.moviedbdemo.utills.Logger;
 import ua.r4mstein.moviedbdemo.utills.MathManager;
 
+import static ua.r4mstein.moviedbdemo.modules.films.by_genre.MoviesByGenreFragment.DELETE_RATING;
+import static ua.r4mstein.moviedbdemo.modules.films.by_genre.MoviesByGenreFragment.FAVORITE_WATCHLIST;
+import static ua.r4mstein.moviedbdemo.modules.films.by_genre.MoviesByGenreFragment.SET_RATING;
+
 public class DetailsMovieFragment extends BaseFragment<DetailsMoviePresenter>
         implements DetailsMoviePresenter.DetailsMovieView {
 
@@ -51,17 +55,18 @@ public class DetailsMovieFragment extends BaseFragment<DetailsMoviePresenter>
         adapter = new DetailsMovieAdapter(getViewContext());
         adapter.setDetailsMovieClickListener(new DetailsMovieClickListener() {
             @Override
+            public void moviesItemLongClicked(long movieId) {
+                getPresenter().getMovieAccountState(movieId, FAVORITE_WATCHLIST);
+            }
+
+            @Override
             public void ratingViewClicked(long movieId) {
-                FragmentManager manager = getFragmentManager();
+                getPresenter().getMovieAccountState(movieId, SET_RATING);
+            }
 
-                DialogRating dialogRating = new DialogRating();
-                dialogRating.setDialogRatingClickListener(rating -> {
-                    float sendRating = MathManager.getRating(rating);
-                    Logger.d("positiveClicked: rating = " + sendRating);
-
-                    getPresenter().rateMovie(movieId, dialogRating, sendRating);
-                });
-                dialogRating.show(manager, "DialogRating");
+            @Override
+            public void ratingViewLongClicked(long movieId) {
+                getPresenter().getMovieAccountState(movieId, DELETE_RATING);
             }
         });
         mRecyclerView.setAdapter(adapter);

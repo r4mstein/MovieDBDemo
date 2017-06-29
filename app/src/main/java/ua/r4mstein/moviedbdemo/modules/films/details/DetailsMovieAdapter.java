@@ -1,11 +1,13 @@
 package ua.r4mstein.moviedbdemo.modules.films.details;
 
 import android.content.Context;
+import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.squareup.picasso.Picasso;
@@ -44,7 +46,15 @@ public class DetailsMovieAdapter extends RecyclerView.Adapter<DetailsMovieAdapte
         fillPoster(holder.ivPoster, model.getPosterPath());
         fillData(model, holder);
 
+        holder.rvContainer.setOnLongClickListener(v -> {
+            mDetailsMovieClickListener.moviesItemLongClicked(model.getId());
+            return true;
+        });
         holder.tvVote.setOnClickListener(v -> mDetailsMovieClickListener.ratingViewClicked(model.getId()));
+        holder.tvVote.setOnLongClickListener(v -> {
+            mDetailsMovieClickListener.ratingViewLongClicked(model.getId());
+            return true;
+        });
     }
 
     @Override
@@ -154,6 +164,7 @@ public class DetailsMovieAdapter extends RecyclerView.Adapter<DetailsMovieAdapte
 
     public class DetailsMovieAdapterViewHolder extends RecyclerView.ViewHolder {
 
+        private RelativeLayout rvContainer;
         private ImageView ivPoster;
 
         private TextView tvTitle, tvTagline, tvOverview, tvCompanies, tvCountries, tvGenres;
@@ -162,6 +173,7 @@ public class DetailsMovieAdapter extends RecyclerView.Adapter<DetailsMovieAdapte
         public DetailsMovieAdapterViewHolder(View itemView) {
             super(itemView);
 
+            rvContainer = (RelativeLayout) itemView.findViewById(R.id.rl_container_FDM);
             ivPoster = (ImageView) itemView.findViewById(R.id.iv_poster_FDM);
 
             tvTitle = (TextView) itemView.findViewById(R.id.tv_title_FDM);

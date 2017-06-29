@@ -58,8 +58,8 @@
     <string name="dialog_rating">Leave your rating, please</string>
 
     <string name="genres_FDM">Genres:</string>
-    <string name="production_companies_FDM">Production Companies:</string>
-    <string name="production_countries_FDM">Production Countries:</string>
+    <string name="production_companies_FDM">Companies:</string>
+    <string name="production_countries_FDM">Countries:</string>
 
     <string name="popularity_IPP">Popularity:</string>
     <string name="known_for_IPP">Known For</string>
