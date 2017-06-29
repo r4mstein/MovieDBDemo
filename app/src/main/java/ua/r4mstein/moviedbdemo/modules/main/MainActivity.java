@@ -2,17 +2,14 @@ package ua.r4mstein.moviedbdemo.modules.main;
 
 import android.support.annotation.NonNull;
 import android.support.v7.widget.Toolbar;
-import android.view.View;
 
 import com.mikepenz.materialdrawer.Drawer;
 import com.mikepenz.materialdrawer.DrawerBuilder;
 import com.mikepenz.materialdrawer.holder.DimenHolder;
 import com.mikepenz.materialdrawer.model.PrimaryDrawerItem;
-import com.mikepenz.materialdrawer.model.interfaces.IDrawerItem;
 
 import ua.r4mstein.moviedbdemo.R;
 import ua.r4mstein.moviedbdemo.modules.base.BaseActivity;
-import ua.r4mstein.moviedbdemo.utills.Logger;
 
 public class MainActivity extends BaseActivity<MainPresenter> {
 

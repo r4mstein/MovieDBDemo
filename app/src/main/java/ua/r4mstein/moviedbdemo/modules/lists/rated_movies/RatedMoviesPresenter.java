@@ -106,7 +106,7 @@ public class RatedMoviesPresenter extends BaseFragmentPresenter<RatedMoviesPrese
         getRouter().startActivity(DetailActivity.class, 0, bundle);
     }
 
-    private void deleteRatingOfMovie(long movieId) {
+    public void deleteRatingOfMovie(long movieId) {
         execute(mMoviesProvider.deleteRating(movieId, API_KEY, SharedPrefManager.getInstance().retrieveSessionId()),
                 addMovieToListModel -> getRouter().showDialog(new InfoDialog(), R.string.app_name, addMovieToListModel.getStatusMessage(),
                         v -> {

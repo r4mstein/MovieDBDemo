@@ -45,6 +45,8 @@ public interface Router {
 
     void hideLoadingDialog();
 
+    void hideLoadDialog();
+
     void startActivity(Intent intent);
 
     void startActivity(Class _activityClass, int flags, Bundle _bundle, View... sharedViews);

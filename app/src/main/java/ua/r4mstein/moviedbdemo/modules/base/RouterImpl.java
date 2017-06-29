@@ -269,4 +269,13 @@ public class RouterImpl implements Router {
             }
         }, 400);
     }
+
+    public void hideLoadDialog() {
+        try {
+            if (progressDialog != null && progressDialog.isShowing() && !progressDialog.isDismiss())
+                progressDialog.dismiss();
+        } catch (IllegalStateException e) {
+            Logger.e(e);
+        }
+    }
 }

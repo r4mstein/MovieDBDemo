@@ -93,8 +93,7 @@ public class WatchlistFragment extends BaseFragment<WatchlistPresenter>
                 }));
     }
 
-    @NonNull
-    private ChooseActionClickListener getChooseActionClickListener(long movieId, ChooseActionDialog dialog) {
+    public ChooseActionClickListener getChooseActionClickListener(long movieId, ChooseActionDialog dialog) {
         return new ChooseActionClickListener() {
             @Override
             public void favoriteClicked() {

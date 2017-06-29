@@ -2,10 +2,12 @@ package ua.r4mstein.moviedbdemo.modules.base;
 
 import android.content.Context;
 import android.content.Intent;
+import android.content.res.Resources;
 import android.graphics.Point;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -13,7 +15,14 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.ViewTreeObserver;
 
+import ua.r4mstein.moviedbdemo.modules.dialog.ChooseActionDialog;
+import ua.r4mstein.moviedbdemo.modules.dialog.DialogRating;
+import ua.r4mstein.moviedbdemo.modules.dialog.listeners.ChooseActionClickListener;
+import ua.r4mstein.moviedbdemo.modules.dialog.listeners.DialogRatingClickListener;
 import ua.r4mstein.moviedbdemo.utills.Logger;
+
+import static ua.r4mstein.moviedbdemo.utills.Constants.CHOOSE_ACTION_EXCEPTION;
+import static ua.r4mstein.moviedbdemo.utills.Constants.DIALOG_RATING_EXCEPTION;
 
 
 public abstract class BaseFragment<P extends BaseFragmentPresenter> extends Fragment
@@ -156,5 +165,25 @@ public abstract class BaseFragment<P extends BaseFragmentPresenter> extends Frag
     @Override
     public Context getViewContext() {
         return getContext();
+    }
+
+    @Override
+    public FragmentManager getFragmManager() {
+        return getFragmentManager();
+    }
+
+    @Override
+    public Resources getAppResources() {
+        return getResources();
+    }
+
+    @Override
+    public ChooseActionClickListener getChooseActionClickListener(long movieId, ChooseActionDialog dialog) {
+        throw new IllegalArgumentException(CHOOSE_ACTION_EXCEPTION);
+    }
+
+    @Override
+    public DialogRatingClickListener getDialogRatingClickListener(long movieId, DialogRating dialogRating) {
+        throw new IllegalArgumentException(DIALOG_RATING_EXCEPTION);
     }
 }

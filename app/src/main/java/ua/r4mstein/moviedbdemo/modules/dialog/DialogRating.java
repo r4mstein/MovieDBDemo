@@ -40,8 +40,8 @@ public class DialogRating extends DialogFragment {
         initVariables(view);
 
         if (getArguments() != null) {
-            float rating = getArguments().getFloat(RATING);
-            mSimpleRatingBar.setRating(rating);
+            sendRating = getArguments().getFloat(RATING);
+            mSimpleRatingBar.setRating(sendRating);
         }
 
         mSimpleRatingBar.setOnRatingBarChangeListener((simpleRatingBar, rating, fromUser) -> sendRating = rating);

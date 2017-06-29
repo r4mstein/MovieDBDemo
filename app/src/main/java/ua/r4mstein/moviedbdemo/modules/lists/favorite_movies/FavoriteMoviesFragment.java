@@ -93,8 +93,7 @@ public class FavoriteMoviesFragment extends BaseFragment<FavoriteMoviesPresenter
                 }));
     }
 
-    @NonNull
-    private ChooseActionClickListener getChooseActionClickListener(long movieId, ChooseActionDialog dialog) {
+    public ChooseActionClickListener getChooseActionClickListener(long movieId, ChooseActionDialog dialog) {
         return new ChooseActionClickListener() {
             @Override
             public void favoriteClicked() {
