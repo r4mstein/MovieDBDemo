@@ -20,9 +20,7 @@ import ua.r4mstein.moviedbdemo.modules.dialog.DialogRating;
 import ua.r4mstein.moviedbdemo.modules.dialog.listeners.ChooseActionClickListener;
 import ua.r4mstein.moviedbdemo.modules.dialog.listeners.DialogRatingClickListener;
 import ua.r4mstein.moviedbdemo.utills.Logger;
-
-import static ua.r4mstein.moviedbdemo.utills.Constants.CHOOSE_ACTION_EXCEPTION;
-import static ua.r4mstein.moviedbdemo.utills.Constants.DIALOG_RATING_EXCEPTION;
+import ua.r4mstein.moviedbdemo.utills.MathManager;
 
 
 public abstract class BaseFragment<P extends BaseFragmentPresenter> extends Fragment
@@ -35,7 +33,7 @@ public abstract class BaseFragment<P extends BaseFragmentPresenter> extends Frag
 
     protected abstract int getTitle();
 
-    protected String getStringTitle(){
+    protected String getStringTitle() {
         return null;
     }
 
@@ -179,11 +177,40 @@ public abstract class BaseFragment<P extends BaseFragmentPresenter> extends Frag
 
     @Override
     public ChooseActionClickListener getChooseActionClickListener(long movieId, ChooseActionDialog dialog) {
-        throw new IllegalArgumentException(CHOOSE_ACTION_EXCEPTION);
+        return new ChooseActionClickListener() {
+            @Override
+            public void favoriteClicked() {
+                Logger.d("favoriteClicked");
+                getPresenter().markAsFavorite(movieId, dialog, true);
+            }
+
+            @Override
+            public void watchlistClicked() {
+                Logger.d("watchlistClicked");
+                getPresenter().addToWatchlist(movieId, dialog, true);
+            }
+
+            @Override
+            public void removeFromFavoriteClicked() {
+                Logger.d("removeFromFavoriteClicked");
+                getPresenter().markAsFavorite(movieId, dialog, false);
+            }
+
+            @Override
+            public void removeFromWatchlistClicked() {
+                Logger.d("removeFromWatchlistClicked");
+                getPresenter().addToWatchlist(movieId, dialog, false);
+            }
+        };
     }
 
     @Override
     public DialogRatingClickListener getDialogRatingClickListener(long movieId, DialogRating dialogRating) {
-        throw new IllegalArgumentException(DIALOG_RATING_EXCEPTION);
+        return rating -> {
+            float sendRating = MathManager.getRating(rating);
+            Logger.d("positiveClicked: rating = " + sendRating);
+
+            getPresenter().rateMovie(movieId, dialogRating, sendRating);
+        };
     }
 }

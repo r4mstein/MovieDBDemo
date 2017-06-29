@@ -11,13 +11,7 @@ import java.util.List;
 import ua.r4mstein.moviedbdemo.R;
 import ua.r4mstein.moviedbdemo.data.models.response.Movie;
 import ua.r4mstein.moviedbdemo.modules.base.BaseFragment;
-import ua.r4mstein.moviedbdemo.modules.dialog.ChooseActionDialog;
-import ua.r4mstein.moviedbdemo.modules.dialog.DialogRating;
-import ua.r4mstein.moviedbdemo.modules.dialog.listeners.ChooseActionClickListener;
-import ua.r4mstein.moviedbdemo.modules.dialog.listeners.DialogRatingClickListener;
 import ua.r4mstein.moviedbdemo.utills.EndlessScrollListener;
-import ua.r4mstein.moviedbdemo.utills.Logger;
-import ua.r4mstein.moviedbdemo.utills.MathManager;
 
 public class MoviesByGenreFragment extends BaseFragment<MoviesByGenrePresenter>
         implements MoviesByGenrePresenter.MoviesByGenreView {
@@ -88,44 +82,6 @@ public class MoviesByGenreFragment extends BaseFragment<MoviesByGenrePresenter>
             public void ratingViewLongClicked(long movieId) {
                 getPresenter().getMovieAccountState(movieId, DELETE_RATING);
             }
-        };
-    }
-
-    public ChooseActionClickListener getChooseActionClickListener(final long movieId, final ChooseActionDialog dialog) {
-        return new ChooseActionClickListener() {
-            @Override
-            public void favoriteClicked() {
-                Logger.d("favoriteClicked");
-                getPresenter().markAsFavorite(movieId, dialog, true);
-            }
-
-            @Override
-            public void watchlistClicked() {
-                Logger.d("watchlistClicked");
-                getPresenter().addToWatchlist(movieId, dialog, true);
-            }
-
-            @Override
-            public void removeFromFavoriteClicked() {
-                Logger.d("removeFromFavoriteClicked");
-                getPresenter().markAsFavorite(movieId, dialog, false);
-            }
-
-            @Override
-            public void removeFromWatchlistClicked() {
-                Logger.d("removeFromWatchlistClicked");
-                getPresenter().addToWatchlist(movieId, dialog, false);
-            }
-        };
-    }
-
-    @Override
-    public DialogRatingClickListener getDialogRatingClickListener(long movieId, DialogRating dialogRating) {
-        return rating -> {
-            float sendRating = MathManager.getRating(rating);
-            Logger.d("positiveClicked: rating = " + sendRating);
-
-            MoviesByGenreFragment.this.getPresenter().rateMovie(movieId, dialogRating, sendRating);
         };
     }
 

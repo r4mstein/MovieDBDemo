@@ -1,8 +1,6 @@
 package ua.r4mstein.moviedbdemo.modules.lists.rated_movies;
 
-import android.content.res.Resources;
 import android.support.annotation.NonNull;
-import android.support.v4.app.FragmentManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
@@ -12,14 +10,13 @@ import java.util.List;
 import ua.r4mstein.moviedbdemo.R;
 import ua.r4mstein.moviedbdemo.data.models.response.Movie;
 import ua.r4mstein.moviedbdemo.modules.base.BaseFragment;
-import ua.r4mstein.moviedbdemo.modules.dialog.ChooseActionDialog;
-import ua.r4mstein.moviedbdemo.modules.dialog.DialogRating;
-import ua.r4mstein.moviedbdemo.modules.dialog.listeners.ChooseActionClickListener;
 import ua.r4mstein.moviedbdemo.modules.films.by_genre.MoviesByGenreAdapter;
 import ua.r4mstein.moviedbdemo.modules.films.by_genre.MoviesClickListener;
 import ua.r4mstein.moviedbdemo.utills.EndlessScrollListener;
-import ua.r4mstein.moviedbdemo.utills.Logger;
-import ua.r4mstein.moviedbdemo.utills.MathManager;
+
+import static ua.r4mstein.moviedbdemo.modules.films.by_genre.MoviesByGenreFragment.DELETE_RATING;
+import static ua.r4mstein.moviedbdemo.modules.films.by_genre.MoviesByGenreFragment.FAVORITE_WATCHLIST;
+import static ua.r4mstein.moviedbdemo.modules.films.by_genre.MoviesByGenreFragment.SET_RATING;
 
 public class RatedMoviesFragment extends BaseFragment<RatedMoviesPresenter>
         implements RatedMoviesPresenter.RatedMoviesView {
@@ -66,8 +63,6 @@ public class RatedMoviesFragment extends BaseFragment<RatedMoviesPresenter>
     @NonNull
     private MoviesClickListener getMoviesClickListener() {
         return new MoviesClickListener() {
-            FragmentManager manager = getFragmentManager();
-
             @Override
             public void moviesItemClicked(long movieId) {
                 getPresenter().goToDetailScreen(movieId);
@@ -75,52 +70,17 @@ public class RatedMoviesFragment extends BaseFragment<RatedMoviesPresenter>
 
             @Override
             public void moviesItemLongClicked(long movieId, int position) {
-                ChooseActionDialog dialog = ChooseActionDialog.newInstance(View.VISIBLE, View.VISIBLE, View.GONE, View.GONE);
-                dialog.setChooseActionClickListener(getChooseActionClickListener(movieId, dialog));
-                dialog.show(manager, "ChooseActionDialog");
+                getPresenter().getMovieAccountState(movieId, FAVORITE_WATCHLIST);
             }
 
             @Override
             public void ratingViewClicked(long movieId, float oldRating) {
-                DialogRating dialogRating = DialogRating.newInstance(oldRating);
-                dialogRating.setDialogRatingClickListener(rating -> {
-                    float sendRating = MathManager.getRating(rating);
-                    Logger.d("positiveClicked: rating = " + sendRating);
-
-                    getPresenter().rateMovie(movieId, dialogRating, sendRating);
-                });
-                dialogRating.show(manager, "DialogRating");
+                getPresenter().getMovieAccountState(movieId, SET_RATING);
             }
 
             @Override
             public void ratingViewLongClicked(long movieId) {
-                getPresenter().showDeleteRatingDialog(movieId);
-            }
-        };
-    }
-
-    public ChooseActionClickListener getChooseActionClickListener(long movieId, ChooseActionDialog dialog) {
-        return new ChooseActionClickListener() {
-            @Override
-            public void favoriteClicked() {
-                Logger.d("favoriteClicked");
-                getPresenter().markAsFavorite(movieId, dialog);
-            }
-
-            @Override
-            public void watchlistClicked() {
-                Logger.d("watchlistClicked");
-                getPresenter().addToWatchlist(movieId, dialog);
-            }
-
-            @Override
-            public void removeFromFavoriteClicked() {
-                Logger.d("removeFromFavoriteClicked");
-            }
-
-            @Override
-            public void removeFromWatchlistClicked() {
-                Logger.d("removeFromWatchlistClicked");
+                getPresenter().getMovieAccountState(movieId, DELETE_RATING);
             }
         };
     }
@@ -133,10 +93,5 @@ public class RatedMoviesFragment extends BaseFragment<RatedMoviesPresenter>
     @Override
     public void addList(List<Movie> list) {
         adapter.addData(list);
-    }
-
-    @Override
-    public Resources getAppResources() {
-        return getResources();
     }
 }

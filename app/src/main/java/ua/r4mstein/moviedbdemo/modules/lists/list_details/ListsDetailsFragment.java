@@ -1,7 +1,6 @@
 package ua.r4mstein.moviedbdemo.modules.lists.list_details;
 
 import android.content.Context;
-import android.content.res.Resources;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.FloatingActionButton;
@@ -19,14 +18,16 @@ import java.util.List;
 import ua.r4mstein.moviedbdemo.R;
 import ua.r4mstein.moviedbdemo.data.models.response.Movie;
 import ua.r4mstein.moviedbdemo.modules.base.BaseFragment;
-import ua.r4mstein.moviedbdemo.modules.dialog.DialogRating;
 import ua.r4mstein.moviedbdemo.modules.films.by_genre.MoviesByGenreAdapter;
 import ua.r4mstein.moviedbdemo.modules.films.by_genre.MoviesClickListener;
 import ua.r4mstein.moviedbdemo.modules.films.search_film.OnSearchClickListener;
 import ua.r4mstein.moviedbdemo.modules.films.search_film.SearchFilmDialog;
 import ua.r4mstein.moviedbdemo.utills.EndlessScrollListener;
 import ua.r4mstein.moviedbdemo.utills.Logger;
-import ua.r4mstein.moviedbdemo.utills.MathManager;
+
+import static ua.r4mstein.moviedbdemo.modules.films.by_genre.MoviesByGenreFragment.DELETE_RATING;
+import static ua.r4mstein.moviedbdemo.modules.films.by_genre.MoviesByGenreFragment.FAVORITE_WATCHLIST;
+import static ua.r4mstein.moviedbdemo.modules.films.by_genre.MoviesByGenreFragment.SET_RATING;
 
 public class ListsDetailsFragment extends BaseFragment<ListDetailsPresenter>
         implements ListDetailsPresenter.ListDetailsView, PopupMenu.OnMenuItemClickListener {
@@ -40,7 +41,6 @@ public class ListsDetailsFragment extends BaseFragment<ListDetailsPresenter>
     private MoviesByGenreAdapter adapter;
     private SearchFilmDialog filmDialog;
     private PopupMenu mDeletePopup;
-    private Resources mResources;
 
     private int startSearchPage = 1;
 
@@ -79,7 +79,6 @@ public class ListsDetailsFragment extends BaseFragment<ListDetailsPresenter>
         mFAB.setOnClickListener(getFABClickListener());
 
         tvDelete.setOnClickListener(v -> showDeletePopup());
-        mResources = getResources();
     }
 
     @NonNull
@@ -97,17 +96,13 @@ public class ListsDetailsFragment extends BaseFragment<ListDetailsPresenter>
             }
 
             @Override
-            public void ratingViewClicked(long movieId) {
-                FragmentManager manager = getFragmentManager();
+            public void ratingViewClicked(long movieId, float rating) {
+                getPresenter().getMovieAccountState(movieId, SET_RATING);
+            }
 
-                DialogRating dialogRating = new DialogRating();
-                dialogRating.setDialogRatingClickListener(rating -> {
-                    float sendRating = MathManager.getRating(rating);
-                    Logger.d("positiveClicked: rating = " + sendRating);
-
-                    getPresenter().rateMovie(movieId, dialogRating, sendRating);
-                });
-                dialogRating.show(manager, "DialogRating");
+            @Override
+            public void ratingViewLongClicked(long movieId) {
+                getPresenter().getMovieAccountState(movieId, DELETE_RATING);
             }
         };
     }
@@ -131,36 +126,7 @@ public class ListsDetailsFragment extends BaseFragment<ListDetailsPresenter>
             recyclerView.setLayoutManager(layoutManager);
 
             adapter = new MoviesByGenreAdapter(getViewContext());
-            adapter.setMoviesClickListener(new MoviesClickListener() {
-                @Override
-                public void moviesItemClicked(long movieId) {
-                    getPresenter().addMovieToList(movieId);
-                }
-
-                @Override
-                public void moviesItemLongClicked(long movieId, int position) {
-
-                }
-
-                @Override
-                public void ratingViewClicked(long movieId, float oldRating) {
-                    FragmentManager manager = getFragmentManager();
-
-                    DialogRating dialogRating = new DialogRating();
-                    dialogRating.setDialogRatingClickListener(rating -> {
-                        float sendRating = MathManager.getRating(rating);
-                        Logger.d("positiveClicked: rating = " + sendRating);
-
-                        getPresenter().rateMovie(movieId, dialogRating, sendRating);
-                    });
-                    dialogRating.show(manager, "DialogRating");
-                }
-
-                @Override
-                public void ratingViewLongClicked(long movieId) {
-
-                }
-            });
+            adapter.setMoviesClickListener(getMoviesClickListener());
             recyclerView.setAdapter(adapter);
 
             recyclerView.addOnScrollListener(new EndlessScrollListener(layoutManager,
@@ -170,6 +136,31 @@ public class ListsDetailsFragment extends BaseFragment<ListDetailsPresenter>
                     }));
 
             getPresenter().getSearchMovies(searchRequest, startSearchPage);
+        };
+    }
+
+    @NonNull
+    private MoviesClickListener getMoviesClickListener() {
+        return new MoviesClickListener() {
+            @Override
+            public void moviesItemClicked(long movieId) {
+                getPresenter().addMovieToList(movieId);
+            }
+
+            @Override
+            public void moviesItemLongClicked(long movieId, int position) {
+                getPresenter().getMovieAccountState(movieId, FAVORITE_WATCHLIST);
+            }
+
+            @Override
+            public void ratingViewClicked(long movieId, float oldRating) {
+                getPresenter().getMovieAccountState(movieId, SET_RATING);
+            }
+
+            @Override
+            public void ratingViewLongClicked(long movieId) {
+                getPresenter().getMovieAccountState(movieId, DELETE_RATING);
+            }
         };
     }
 
@@ -229,10 +220,5 @@ public class ListsDetailsFragment extends BaseFragment<ListDetailsPresenter>
     @Override
     public SearchFilmDialog getSearchFilmDialog() {
         return filmDialog;
-    }
-
-    @Override
-    public Resources getAppResources() {
-        return mResources;
     }
 }

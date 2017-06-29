@@ -4,5 +4,6 @@ public interface ListDetailsClickListener {
 
     void itemClicked(long movieId);
     void itemLongClicked(String title, long movieId);
-    void ratingViewClicked(long movieId);
+    void ratingViewClicked(long movieId, float rating);
+    void ratingViewLongClicked(long movieId);
 }

@@ -1,6 +1,5 @@
 package ua.r4mstein.moviedbdemo.modules.lists.get_lists;
 
-import android.content.res.Resources;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.FragmentManager;
 import android.support.v7.widget.LinearLayoutManager;
@@ -21,7 +20,6 @@ public class GetListsFragment extends BaseFragment<GetListsPresenter>
     private RecyclerView mRecyclerView;
     private FloatingActionButton mFAB;
     private GetListsAdapter mAdapter;
-    private Resources mResources;
 
     @Override
     protected int getTitle() {
@@ -67,8 +65,6 @@ public class GetListsFragment extends BaseFragment<GetListsPresenter>
 
             dialog.show(manager, "dialog");
         });
-
-        mResources = getResources();
     }
 
     @Override
@@ -79,10 +75,5 @@ public class GetListsFragment extends BaseFragment<GetListsPresenter>
     @Override
     public void addList(List<GetListsModel.Result> list) {
         mAdapter.addData(list);
-    }
-
-    @Override
-    public Resources getAppResources() {
-        return mResources;
     }
 }

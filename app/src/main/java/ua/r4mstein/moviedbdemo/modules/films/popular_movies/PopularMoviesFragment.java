@@ -14,6 +14,10 @@ import ua.r4mstein.moviedbdemo.modules.films.by_genre.MoviesByGenreAdapter;
 import ua.r4mstein.moviedbdemo.modules.films.by_genre.MoviesClickListener;
 import ua.r4mstein.moviedbdemo.utills.EndlessScrollListener;
 
+import static ua.r4mstein.moviedbdemo.modules.films.by_genre.MoviesByGenreFragment.DELETE_RATING;
+import static ua.r4mstein.moviedbdemo.modules.films.by_genre.MoviesByGenreFragment.FAVORITE_WATCHLIST;
+import static ua.r4mstein.moviedbdemo.modules.films.by_genre.MoviesByGenreFragment.SET_RATING;
+
 public class PopularMoviesFragment extends BaseFragment<PopularMoviesPresenter>
         implements PopularMoviesPresenter.PopularMoviesView {
 
@@ -66,17 +70,17 @@ public class PopularMoviesFragment extends BaseFragment<PopularMoviesPresenter>
 
             @Override
             public void moviesItemLongClicked(long movieId, int position) {
-
+                getPresenter().getMovieAccountState(movieId, FAVORITE_WATCHLIST);
             }
 
             @Override
             public void ratingViewClicked(long movieId, float oldRating) {
-
+                getPresenter().getMovieAccountState(movieId, SET_RATING);
             }
 
             @Override
             public void ratingViewLongClicked(long movieId) {
-
+                getPresenter().getMovieAccountState(movieId, DELETE_RATING);
             }
         };
     }

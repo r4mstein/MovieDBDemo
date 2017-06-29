@@ -1,14 +1,9 @@
 package ua.r4mstein.moviedbdemo.modules.lists.get_lists;
 
-import android.content.res.Resources;
-
 import java.util.List;
 
-import io.reactivex.annotations.NonNull;
-import io.reactivex.functions.Consumer;
 import ua.r4mstein.moviedbdemo.R;
 import ua.r4mstein.moviedbdemo.data.models.request.CreateListSendModel;
-import ua.r4mstein.moviedbdemo.data.models.response.AddMovieToListModel;
 import ua.r4mstein.moviedbdemo.data.models.response.GetListsModel;
 import ua.r4mstein.moviedbdemo.data.providers.AccountProvider;
 import ua.r4mstein.moviedbdemo.data.providers.ListsProvider;
@@ -110,7 +105,5 @@ public class GetListsPresenter extends BaseFragmentPresenter<GetListsPresenter.G
         void setList(List<GetListsModel.Result> list);
 
         void addList(List<GetListsModel.Result> list);
-
-        Resources getAppResources();
     }
 }
