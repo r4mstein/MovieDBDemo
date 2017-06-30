@@ -22,6 +22,7 @@ import ua.r4mstein.moviedbdemo.data.models.response.ListDetailsModel;
 import ua.r4mstein.moviedbdemo.data.models.response.MovieAccountStates;
 import ua.r4mstein.moviedbdemo.data.models.response.MovieAccountStatesAlternative;
 import ua.r4mstein.moviedbdemo.data.models.response.MoviesByGenreModel;
+import ua.r4mstein.moviedbdemo.data.models.response.PersonDetailsModel;
 import ua.r4mstein.moviedbdemo.data.models.response.PopularMoviesModel;
 import ua.r4mstein.moviedbdemo.data.models.response.RatedMoviesModel;
 import ua.r4mstein.moviedbdemo.data.models.response.RequestTokenModel;
@@ -190,6 +191,10 @@ public interface RetrofitInterface {
     @GET("person/popular")
     Observable<PopularPeopleModel> getPopularPeople(@Query("api_key") String apiKey,
                                                     @Query("page") long page);
+
+    @GET("person/{person_id}")
+    Observable<PersonDetailsModel> getPersonDetails(@Path("person_id") long personID,
+                                                    @Query("api_key") String apiKey);
 
 //    *****
 }

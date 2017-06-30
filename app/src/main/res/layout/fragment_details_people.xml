@@ -1,0 +1,150 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.v7.widget.CardView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_margin="@dimen/margin_16"
+    app:cardCornerRadius="@dimen/margin_3">
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <RelativeLayout
+            android:id="@+id/rl_container_FDP"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="@dimen/margin_10">
+
+            <ImageView
+                android:id="@+id/iv_poster_FDP"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/poster_details_height"
+                tools:src="@drawable/ic_acc_logo"/>
+
+            <TextView
+                android:id="@+id/tv_title_FDP"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/iv_poster_FDP"
+                android:layout_centerHorizontal="true"
+                android:textColor="@color/colorAccent"
+                android:textSize="@dimen/text_size_20"
+                android:layout_marginTop="@dimen/margin_8"
+                android:textStyle="bold"
+                tools:text="Title"
+                />
+
+            <LinearLayout
+                android:id="@+id/ll_known_container_FDP"
+                android:orientation="horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/tv_title_FDP"
+                android:layout_marginTop="@dimen/margin_8">
+
+                <TextView
+                    android:id="@+id/tv_known_static_FDP"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/colorAccent"
+                    android:textSize="@dimen/text_size_18"
+                    android:textStyle="italic"
+                    android:text="@string/known_as_FDP"
+                    />
+
+                <TextView
+                    android:id="@+id/tv_known_FDP"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/colorAccent"
+                    android:textSize="@dimen/text_size_18"
+                    android:textStyle="italic"
+                    tools:text="Галь Гадот \nГаль Гадот"
+                    />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/ll_place_container_FDP"
+                android:orientation="horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/ll_known_container_FDP">
+
+                <TextView
+                    android:id="@+id/tv_place_static_FDP"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/colorAccent"
+                    android:textSize="@dimen/text_size_16"
+                    android:textStyle="italic"
+                    android:text="@string/place_of_birth_FDP"/>
+
+                <TextView
+                    android:id="@+id/tv_place_FDP"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/colorAccent"
+                    android:textSize="@dimen/text_size_16"
+                    tools:text="Ukraine"
+                    android:textStyle="italic"/>
+
+            </LinearLayout>
+
+            <TextView
+                android:id="@+id/tv_biography_FDP"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/ll_place_container_FDP"
+                android:layout_marginTop="@dimen/margin_8"
+                android:textColor="@color/colorAccent"
+                android:textSize="@dimen/text_size_16"
+                tools:text="An Amazon princess comes to the world of Man to become the greatest"/>
+
+            <TextView
+                android:id="@+id/tv_birthday_FDP"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentEnd="true"
+                android:layout_below="@+id/tv_biography_FDP"
+                android:layout_marginTop="@dimen/margin_8"
+                android:textColor="@color/colorAccent"
+                android:textSize="@dimen/text_size_16"
+                tools:text="Birthday: 1985-04-30"
+                android:textStyle="italic"
+                />
+
+            <TextView
+                android:id="@+id/tv_deathday_FDP"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentEnd="true"
+                android:layout_below="@+id/tv_birthday_FDP"
+                android:layout_marginTop="@dimen/margin_4"
+                android:textColor="@color/colorAccent"
+                android:textSize="@dimen/text_size_16"
+                tools:text="Deathday: 1985-04-30"
+                android:textStyle="italic"
+                />
+
+            <TextView
+                android:id="@+id/tv_homepage_FDP"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentEnd="true"
+                android:layout_below="@+id/tv_deathday_FDP"
+                android:layout_marginTop="@dimen/margin_4"
+                android:textColor="@color/colorAccent"
+                android:textSize="@dimen/text_size_16"
+                tools:text="http://www.galgadot.com"
+                android:textStyle="italic"
+                />
+
+        </RelativeLayout>
+
+    </ScrollView>
+
+</android.support.v7.widget.CardView>

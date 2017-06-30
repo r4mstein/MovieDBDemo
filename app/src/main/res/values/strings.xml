@@ -12,6 +12,7 @@
     <string name="title_details_movie">Details Movie</string>
     <string name="title_popular_movies">Popular Movies</string>
     <string name="title_popular_people">Popular People</string>
+    <string name="title_details_people">Details</string>
 
     <string name="login_username">Username</string>
     <string name="login_pass">Password</string>
@@ -63,4 +64,7 @@
 
     <string name="popularity_IPP">Popularity:</string>
     <string name="known_for_IPP">Known For</string>
+
+    <string name="known_as_FDP">Known as:\u0020</string>
+    <string name="place_of_birth_FDP">Place of Birth:\u0020</string>
 </resources>

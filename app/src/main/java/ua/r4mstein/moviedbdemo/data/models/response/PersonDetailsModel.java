@@ -1,0 +1,141 @@
+
+package ua.r4mstein.moviedbdemo.data.models.response;
+
+import com.google.gson.annotations.SerializedName;
+
+import java.util.List;
+
+public class PersonDetailsModel {
+
+    @SerializedName("adult")
+    private Boolean mAdult;
+    @SerializedName("also_known_as")
+    private List<String> mAlsoKnownAs;
+    @SerializedName("biography")
+    private String mBiography;
+    @SerializedName("birthday")
+    private String mBirthday;
+    @SerializedName("deathday")
+    private String mDeathday;
+    @SerializedName("gender")
+    private Long mGender;
+    @SerializedName("homepage")
+    private String mHomepage;
+    @SerializedName("id")
+    private Long mId;
+    @SerializedName("imdb_id")
+    private String mImdbId;
+    @SerializedName("name")
+    private String mName;
+    @SerializedName("place_of_birth")
+    private String mPlaceOfBirth;
+    @SerializedName("popularity")
+    private Double mPopularity;
+    @SerializedName("profile_path")
+    private String mProfilePath;
+
+    public Boolean getAdult() {
+        return mAdult;
+    }
+
+    public void setAdult(Boolean adult) {
+        mAdult = adult;
+    }
+
+    public List<String> getAlsoKnownAs() {
+        return mAlsoKnownAs;
+    }
+
+    public void setAlsoKnownAs(List<String> alsoKnownAs) {
+        mAlsoKnownAs = alsoKnownAs;
+    }
+
+    public String getBiography() {
+        return mBiography;
+    }
+
+    public void setBiography(String biography) {
+        mBiography = biography;
+    }
+
+    public String getBirthday() {
+        return mBirthday;
+    }
+
+    public void setBirthday(String birthday) {
+        mBirthday = birthday;
+    }
+
+    public String getDeathday() {
+        return mDeathday;
+    }
+
+    public void setDeathday(String deathday) {
+        mDeathday = deathday;
+    }
+
+    public Long getGender() {
+        return mGender;
+    }
+
+    public void setGender(Long gender) {
+        mGender = gender;
+    }
+
+    public String getHomepage() {
+        return mHomepage;
+    }
+
+    public void setHomepage(String homepage) {
+        mHomepage = homepage;
+    }
+
+    public Long getId() {
+        return mId;
+    }
+
+    public void setId(Long id) {
+        mId = id;
+    }
+
+    public String getImdbId() {
+        return mImdbId;
+    }
+
+    public void setImdbId(String imdbId) {
+        mImdbId = imdbId;
+    }
+
+    public String getName() {
+        return mName;
+    }
+
+    public void setName(String name) {
+        mName = name;
+    }
+
+    public String getPlaceOfBirth() {
+        return mPlaceOfBirth;
+    }
+
+    public void setPlaceOfBirth(String placeOfBirth) {
+        mPlaceOfBirth = placeOfBirth;
+    }
+
+    public Double getPopularity() {
+        return mPopularity;
+    }
+
+    public void setPopularity(Double popularity) {
+        mPopularity = popularity;
+    }
+
+    public String getProfilePath() {
+        return mProfilePath;
+    }
+
+    public void setProfilePath(String profilePath) {
+        mProfilePath = profilePath;
+    }
+
+}

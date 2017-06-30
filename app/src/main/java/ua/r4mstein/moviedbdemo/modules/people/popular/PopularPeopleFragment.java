@@ -61,7 +61,7 @@ public class PopularPeopleFragment extends BaseFragment<PopularPeoplePresenter>
         return new PopularPeopleClickListener() {
             @Override
             public void popularPeopleItemClicked(long movieId) {
-
+                getPresenter().goToPersonDetailScreen(movieId);
             }
 
             @Override

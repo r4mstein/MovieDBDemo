@@ -3,16 +3,11 @@ package ua.r4mstein.moviedbdemo.modules.films.details;
 import java.util.ArrayList;
 import java.util.List;
 
-import ua.r4mstein.moviedbdemo.R;
-import ua.r4mstein.moviedbdemo.data.models.request.RateMovieSendModel;
 import ua.r4mstein.moviedbdemo.data.models.response.movie_details.MovieDetailsModel;
 import ua.r4mstein.moviedbdemo.data.providers.MoviesProvider;
 import ua.r4mstein.moviedbdemo.modules.base.BaseFragmentPresenter;
 import ua.r4mstein.moviedbdemo.modules.base.FragmentView;
-import ua.r4mstein.moviedbdemo.modules.dialog.DialogRating;
-import ua.r4mstein.moviedbdemo.modules.dialog.InfoDialog;
 import ua.r4mstein.moviedbdemo.utills.Logger;
-import ua.r4mstein.moviedbdemo.utills.SharedPrefManager;
 
 import static ua.r4mstein.moviedbdemo.utills.Constants.API_KEY;
 
@@ -35,16 +30,6 @@ public class DetailsMoviePresenter extends BaseFragmentPresenter<DetailsMoviePre
                     res.add(movieDetailsModel);
                     getView().addList(res);
                 },
-                throwable -> Logger.d(throwable.getMessage()));
-    }
-
-    public void rateMovie(long movieId, DialogRating dialog, float rating) {
-        RateMovieSendModel sendModel = new RateMovieSendModel();
-        sendModel.setValue(rating);
-
-        execute(mMoviesProvider.rateMovie(movieId, API_KEY, SharedPrefManager.getInstance().retrieveSessionId(), sendModel),
-                addMovieToListModel -> getRouter().showDialog(new InfoDialog(), R.string.app_name, addMovieToListModel.getStatusMessage(),
-                        v -> dialog.dismiss(), null),
                 throwable -> Logger.d(throwable.getMessage()));
     }
 

@@ -32,6 +32,7 @@ import static ua.r4mstein.moviedbdemo.modules.films.by_genre.MoviesByGenreFragme
 import static ua.r4mstein.moviedbdemo.modules.films.by_genre.MoviesByGenreFragment.SET_RATING;
 import static ua.r4mstein.moviedbdemo.utills.Constants.API_KEY;
 import static ua.r4mstein.moviedbdemo.utills.Constants.DETAILS_MOVIE_FRAGMENT;
+import static ua.r4mstein.moviedbdemo.utills.Constants.DETAILS_PERSON_FRAGMENT;
 
 public abstract class BaseFragmentPresenter<V extends FragmentView> extends BasePresenterImpl<V> {
 
@@ -184,6 +185,12 @@ public abstract class BaseFragmentPresenter<V extends FragmentView> extends Base
     public void goToDetailScreen(long movieId) {
         Bundle bundle = new Bundle();
         bundle.putLong(DETAILS_MOVIE_FRAGMENT, movieId);
+        getRouter().startActivity(DetailActivity.class, 0, bundle);
+    }
+
+    public void goToPersonDetailScreen(long personId) {
+        Bundle bundle = new Bundle();
+        bundle.putLong(DETAILS_PERSON_FRAGMENT, personId);
         getRouter().startActivity(DetailActivity.class, 0, bundle);
     }
 

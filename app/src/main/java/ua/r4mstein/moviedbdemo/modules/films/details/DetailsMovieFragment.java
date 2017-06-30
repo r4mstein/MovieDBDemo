@@ -1,7 +1,7 @@
 package ua.r4mstein.moviedbdemo.modules.films.details;
 
 import android.os.Bundle;
-import android.support.v4.app.FragmentManager;
+import android.support.annotation.NonNull;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
@@ -11,9 +11,6 @@ import java.util.List;
 import ua.r4mstein.moviedbdemo.R;
 import ua.r4mstein.moviedbdemo.data.models.response.movie_details.MovieDetailsModel;
 import ua.r4mstein.moviedbdemo.modules.base.BaseFragment;
-import ua.r4mstein.moviedbdemo.modules.dialog.DialogRating;
-import ua.r4mstein.moviedbdemo.utills.Logger;
-import ua.r4mstein.moviedbdemo.utills.MathManager;
 
 import static ua.r4mstein.moviedbdemo.modules.films.by_genre.MoviesByGenreFragment.DELETE_RATING;
 import static ua.r4mstein.moviedbdemo.modules.films.by_genre.MoviesByGenreFragment.FAVORITE_WATCHLIST;
@@ -53,7 +50,13 @@ public class DetailsMovieFragment extends BaseFragment<DetailsMoviePresenter>
         mRecyclerView.setLayoutManager(layoutManager);
 
         adapter = new DetailsMovieAdapter(getViewContext());
-        adapter.setDetailsMovieClickListener(new DetailsMovieClickListener() {
+        adapter.setDetailsMovieClickListener(getDetailsMovieClickListener());
+        mRecyclerView.setAdapter(adapter);
+    }
+
+    @NonNull
+    private DetailsMovieClickListener getDetailsMovieClickListener() {
+        return new DetailsMovieClickListener() {
             @Override
             public void moviesItemLongClicked(long movieId) {
                 getPresenter().getMovieAccountState(movieId, FAVORITE_WATCHLIST);
@@ -68,8 +71,7 @@ public class DetailsMovieFragment extends BaseFragment<DetailsMoviePresenter>
             public void ratingViewLongClicked(long movieId) {
                 getPresenter().getMovieAccountState(movieId, DELETE_RATING);
             }
-        });
-        mRecyclerView.setAdapter(adapter);
+        };
     }
 
     public static DetailsMovieFragment newInstance(long movieId) {
