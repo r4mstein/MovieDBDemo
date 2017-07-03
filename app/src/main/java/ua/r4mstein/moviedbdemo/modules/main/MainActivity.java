@@ -1,6 +1,7 @@
 package ua.r4mstein.moviedbdemo.modules.main;
 
 import android.support.annotation.NonNull;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.Toolbar;
 
 import com.mikepenz.materialdrawer.Drawer;
@@ -52,31 +53,40 @@ public class MainActivity extends BaseActivity<MainPresenter> {
                 .withHeader(R.layout.main_header)
                 .withHeaderHeight(DimenHolder.fromDp(175))
                 .addDrawerItems(
-                        new PrimaryDrawerItem().withIdentifier(1).withName(R.string.drawer_item_genres).withIcon(R.drawable.ic_one)
-                                .withSelectedIcon(R.drawable.ic_one_select),
-                        new PrimaryDrawerItem().withIdentifier(2).withName(R.string.drawer_item_lists).withIcon(R.drawable.ic_two)
-                                .withSelectedIcon(R.drawable.ic_two_select),
-                        new PrimaryDrawerItem().withIdentifier(3).withName(R.string.drawer_item_favorite).withIcon(R.drawable.ic_three)
-                                .withSelectedIcon(R.drawable.ic_three_select),
-                        new PrimaryDrawerItem().withIdentifier(4).withName(R.string.drawer_item_watchlist).withIcon(R.drawable.ic_four)
-                                .withSelectedIcon(R.drawable.ic_four_select),
-                        new PrimaryDrawerItem().withIdentifier(5).withName(R.string.drawer_item_rated_movies).withIcon(R.drawable.ic_five)
-                                .withSelectedIcon(R.drawable.ic_five_select),
-                        new PrimaryDrawerItem().withIdentifier(6).withName(R.string.drawer_item_popular_movies).withIcon(R.drawable.ic_six)
-                                .withSelectedIcon(R.drawable.ic_six_select),
-                        new PrimaryDrawerItem().withIdentifier(7).withName(R.string.drawer_item_search_movies).withIcon(R.drawable.ic_seven)
-                                .withSelectedIcon(R.drawable.ic_seven_select),
+                        new PrimaryDrawerItem().withIdentifier(1).withName(R.string.drawer_item_genres).withIcon(R.drawable.ic_movie)
+                                .withSelectedIcon(R.drawable.ic_movie_select),
+                        new PrimaryDrawerItem().withIdentifier(2).withName(R.string.drawer_item_lists).withIcon(R.drawable.ic_movie)
+                                .withSelectedIcon(R.drawable.ic_movie_select),
+                        new PrimaryDrawerItem().withIdentifier(3).withName(R.string.drawer_item_favorite).withIcon(R.drawable.ic_movie)
+                                .withSelectedIcon(R.drawable.ic_movie_select),
+                        new PrimaryDrawerItem().withIdentifier(4).withName(R.string.drawer_item_watchlist).withIcon(R.drawable.ic_movie)
+                                .withSelectedIcon(R.drawable.ic_movie_select),
+                        new PrimaryDrawerItem().withIdentifier(5).withName(R.string.drawer_item_rated_movies).withIcon(R.drawable.ic_movie)
+                                .withSelectedIcon(R.drawable.ic_movie_select),
+                        new PrimaryDrawerItem().withIdentifier(6).withName(R.string.drawer_item_popular_movies).withIcon(R.drawable.ic_movie)
+                                .withSelectedIcon(R.drawable.ic_movie_select),
+                        new PrimaryDrawerItem().withIdentifier(7).withName(R.string.drawer_item_search_movies).withIcon(R.drawable.ic_movie)
+                                .withSelectedIcon(R.drawable.ic_movie_select),
                         new DividerDrawerItem(),
-                        new PrimaryDrawerItem().withIdentifier(8).withName(R.string.drawer_item_popular_people).withIcon(R.drawable.ic_seven)
-                                .withSelectedIcon(R.drawable.ic_seven_select),
-                        new PrimaryDrawerItem().withIdentifier(9).withName(R.string.drawer_item_search_people).withIcon(R.drawable.ic_eight)
-                                .withSelectedIcon(R.drawable.ic_eight_select),
+                        new PrimaryDrawerItem().withIdentifier(8).withName(R.string.drawer_item_popular_people).withIcon(R.drawable.ic_people)
+                                .withSelectedIcon(R.drawable.ic_people_select),
+                        new PrimaryDrawerItem().withIdentifier(9).withName(R.string.drawer_item_search_people).withIcon(R.drawable.ic_people)
+                                .withSelectedIcon(R.drawable.ic_people_select),
                         new DividerDrawerItem()
                 )
                 .withActionBarDrawerToggleAnimated(true)
                 .withOnDrawerItemClickListener(getOnDrawerItemClickListener())
                 .build();
 
+        mDrawer.addStickyFooterItem(new PrimaryDrawerItem().withName("Log Out").withIdentifier(0).withIcon(R.drawable.ic_logout)
+                .withTextColor(ContextCompat.getColor(this, R.color.red))
+                .withOnDrawerItemClickListener((view, position, drawerItem) -> {
+                    if (drawerItem.getIdentifier() == 0) {
+
+                        return true;
+                    }
+                    return false;
+                }));
         mDrawer.openDrawer();
 
     }
