@@ -2,12 +2,14 @@ package ua.r4mstein.moviedbdemo.modules.base;
 
 import android.os.Bundle;
 import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentTransaction;
 import android.view.View;
 
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.IOException;
+import java.util.List;
 
 import okhttp3.Call;
 import okhttp3.Callback;
@@ -17,12 +19,14 @@ import ua.r4mstein.moviedbdemo.data.api.base.HttpManager;
 import ua.r4mstein.moviedbdemo.data.models.request.AddToWatchlistSendModel;
 import ua.r4mstein.moviedbdemo.data.models.request.MarkFavoriteSendModel;
 import ua.r4mstein.moviedbdemo.data.models.request.RateMovieSendModel;
+import ua.r4mstein.moviedbdemo.data.models.response.popular_people.KnownFor;
 import ua.r4mstein.moviedbdemo.data.providers.AccountProvider;
 import ua.r4mstein.moviedbdemo.data.providers.MoviesProvider;
 import ua.r4mstein.moviedbdemo.modules.detail.DetailActivity;
 import ua.r4mstein.moviedbdemo.modules.dialog.ChooseActionDialog;
 import ua.r4mstein.moviedbdemo.modules.dialog.DialogRating;
 import ua.r4mstein.moviedbdemo.modules.dialog.InfoDialog;
+import ua.r4mstein.moviedbdemo.modules.dialog.KnownForDialog;
 import ua.r4mstein.moviedbdemo.modules.dialog.QuestionDialog;
 import ua.r4mstein.moviedbdemo.utills.Logger;
 import ua.r4mstein.moviedbdemo.utills.SharedPrefManager;
@@ -192,6 +196,14 @@ public abstract class BaseFragmentPresenter<V extends FragmentView> extends Base
         Bundle bundle = new Bundle();
         bundle.putLong(DETAILS_PERSON_FRAGMENT, personId);
         getRouter().startActivity(DetailActivity.class, 0, bundle);
+    }
+
+    public void showKnownForDialog(List<KnownFor> list) {
+        FragmentManager manager = getView().getFragmManager();
+        FragmentTransaction transaction = manager.beginTransaction();
+
+        KnownForDialog dialog = KnownForDialog.newInstance(list);
+        dialog.show(transaction, "KnownForDialog");
     }
 
 }

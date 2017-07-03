@@ -8,6 +8,7 @@ import ua.r4mstein.moviedbdemo.modules.lists.get_lists.GetListsFragment;
 import ua.r4mstein.moviedbdemo.modules.lists.rated_movies.RatedMoviesFragment;
 import ua.r4mstein.moviedbdemo.modules.lists.watchlist.WatchlistFragment;
 import ua.r4mstein.moviedbdemo.modules.people.popular.PopularPeopleFragment;
+import ua.r4mstein.moviedbdemo.modules.people.search_people.SearchPeopleFragment;
 
 public class MainPresenter extends BaseActivityPresenter {
 
@@ -44,5 +45,9 @@ public class MainPresenter extends BaseActivityPresenter {
 
     public void addPopularPeopleFragment() {
         getRouter().replaceFragment(new PopularPeopleFragment(), false);
+    }
+
+    public void addSearchPeopleFragment() {
+        getRouter().replaceFragment(new SearchPeopleFragment(), false);
     }
 }

@@ -151,6 +151,11 @@ public interface RetrofitInterface {
                                                @Query("query") String searchRequest,
                                                @Query("page") long page);
 
+    @GET("search/person")
+    Observable<PopularPeopleModel> searchPersons(@Query("api_key") String apiKey,
+                                                 @Query("query") String searchRequest,
+                                                 @Query("page") long page);
+
 //    *****
 
 //    MOVIES

@@ -48,14 +48,6 @@ public class PopularPeoplePresenter extends BaseFragmentPresenter<PopularPeopleP
                 throwable -> Logger.d(throwable.getMessage()));
     }
 
-    public void showDialog(List<KnownFor> list) {
-        FragmentManager manager = getView().getFragManager();
-        FragmentTransaction transaction = manager.beginTransaction();
-
-        KnownForDialog dialog = KnownForDialog.newInstance(list);
-        dialog.show(transaction, "KnownForDialog");
-    }
-
     interface PopularPeopleView extends FragmentView {
         void setList(List<PopularPeopleItem> list);
         void addList(List<PopularPeopleItem> list);
