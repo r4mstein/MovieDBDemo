@@ -1,4 +1,4 @@
-package ua.r4mstein.moviedbdemo.modules.films.search_film;
+package ua.r4mstein.moviedbdemo.modules.dialog;
 
 import android.app.Dialog;
 import android.graphics.drawable.ColorDrawable;
@@ -18,6 +18,7 @@ import android.view.WindowManager;
 import android.widget.TextView;
 
 import ua.r4mstein.moviedbdemo.R;
+import ua.r4mstein.moviedbdemo.modules.dialog.listeners.OnSearchClickListener;
 
 public class SearchFilmDialog extends DialogFragment {
 
@@ -93,6 +94,7 @@ public class SearchFilmDialog extends DialogFragment {
             String searchRequest = tetSearchRequest.getText().toString().trim();
 
             if (!TextUtils.isEmpty(tetSearchRequest.getText().toString())) {
+                tilSearchContainer.setErrorEnabled(false);
                 mClickListener.onPositiveClicked(searchRequest, mRecyclerView);
             } else {
                 tilSearchContainer.setErrorEnabled(true);

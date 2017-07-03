@@ -13,7 +13,7 @@ import ua.r4mstein.moviedbdemo.modules.base.BaseFragmentPresenter;
 import ua.r4mstein.moviedbdemo.modules.base.FragmentView;
 import ua.r4mstein.moviedbdemo.modules.dialog.InfoDialog;
 import ua.r4mstein.moviedbdemo.modules.dialog.QuestionDialog;
-import ua.r4mstein.moviedbdemo.modules.films.search_film.SearchFilmDialog;
+import ua.r4mstein.moviedbdemo.modules.dialog.SearchFilmDialog;
 import ua.r4mstein.moviedbdemo.modules.lists.get_lists.GetListsFragment;
 import ua.r4mstein.moviedbdemo.utills.Logger;
 import ua.r4mstein.moviedbdemo.utills.SharedPrefManager;

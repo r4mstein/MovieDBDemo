@@ -1,4 +1,4 @@
-package ua.r4mstein.moviedbdemo.modules.films.search_film;
+package ua.r4mstein.moviedbdemo.modules.dialog.listeners;
 
 import android.support.v7.widget.RecyclerView;
 
