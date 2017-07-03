@@ -1,6 +1,7 @@
 package ua.r4mstein.moviedbdemo.modules.dialog;
 
 import android.app.Dialog;
+import android.content.Intent;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -19,6 +20,10 @@ import java.util.List;
 
 import ua.r4mstein.moviedbdemo.R;
 import ua.r4mstein.moviedbdemo.data.models.response.popular_people.KnownFor;
+import ua.r4mstein.moviedbdemo.modules.detail.DetailActivity;
+import ua.r4mstein.moviedbdemo.modules.dialog.listeners.KnownForClickListener;
+
+import static ua.r4mstein.moviedbdemo.utills.Constants.DETAILS_MOVIE_FRAGMENT;
 
 public class KnownForDialog extends DialogFragment {
 
@@ -85,8 +90,20 @@ public class KnownForDialog extends DialogFragment {
         LinearLayoutManager layoutManager = new LinearLayoutManager(getContext());
         mRecyclerView.setLayoutManager(layoutManager);
         KnownForDialogAdapter adapter = new KnownForDialogAdapter(getContext());
+        adapter.setKnownForClickListener(getKnownForClickListener());
         mRecyclerView.setAdapter(adapter);
         adapter.addData(modelList);
+    }
+
+    @NonNull
+    private KnownForClickListener getKnownForClickListener() {
+        return movieId -> {
+            Bundle bundle = new Bundle();
+            bundle.putLong(DETAILS_MOVIE_FRAGMENT, movieId);
+            Intent intent = new Intent(getContext(), DetailActivity.class);
+            intent.putExtras(bundle);
+            startActivity(intent, bundle);
+        };
     }
 
     private void initVariables(View view) {

@@ -15,12 +15,14 @@ import java.util.List;
 
 import ua.r4mstein.moviedbdemo.R;
 import ua.r4mstein.moviedbdemo.data.models.response.popular_people.KnownFor;
+import ua.r4mstein.moviedbdemo.modules.dialog.listeners.KnownForClickListener;
 import ua.r4mstein.moviedbdemo.utills.Constants;
 
 public class KnownForDialogAdapter extends RecyclerView.Adapter<KnownForDialogAdapter.KnownForDialogViewHolder> {
 
     private List<KnownFor> mModelList = new ArrayList<>();
     private Context mContext;
+    private KnownForClickListener mKnownForClickListener;
 
     public KnownForDialogAdapter(Context context) {
         mContext = context;
@@ -38,6 +40,8 @@ public class KnownForDialogAdapter extends RecyclerView.Adapter<KnownForDialogAd
 
         fillPoster(holder, model);
         fillData(holder, model);
+
+        holder.itemView.setOnClickListener(v -> mKnownForClickListener.itemClicked(model.getId()));
     }
 
     private void fillData(KnownForDialogViewHolder holder, KnownFor model) {
@@ -77,6 +81,10 @@ public class KnownForDialogAdapter extends RecyclerView.Adapter<KnownForDialogAd
             mModelList.addAll(models);
             notifyDataSetChanged();
         }
+    }
+
+    public void setKnownForClickListener(KnownForClickListener knownForClickListener) {
+        mKnownForClickListener = knownForClickListener;
     }
 
     public class KnownForDialogViewHolder extends RecyclerView.ViewHolder {
