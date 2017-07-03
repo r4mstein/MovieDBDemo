@@ -2,6 +2,7 @@ package ua.r4mstein.moviedbdemo.modules.main;
 
 import ua.r4mstein.moviedbdemo.modules.base.BaseActivityPresenter;
 import ua.r4mstein.moviedbdemo.modules.films.popular_movies.PopularMoviesFragment;
+import ua.r4mstein.moviedbdemo.modules.films.search_movie.SearchMovieFragment;
 import ua.r4mstein.moviedbdemo.modules.genres.GenresFragment;
 import ua.r4mstein.moviedbdemo.modules.lists.favorite_movies.FavoriteMoviesFragment;
 import ua.r4mstein.moviedbdemo.modules.lists.get_lists.GetListsFragment;
@@ -49,5 +50,9 @@ public class MainPresenter extends BaseActivityPresenter {
 
     public void addSearchPeopleFragment() {
         getRouter().replaceFragment(new SearchPeopleFragment(), false);
+    }
+
+    public void addSearchMoviesFragment() {
+        getRouter().replaceFragment(new SearchMovieFragment(), false);
     }
 }

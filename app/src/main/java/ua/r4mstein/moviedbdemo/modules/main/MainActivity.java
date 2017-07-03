@@ -6,6 +6,7 @@ import android.support.v7.widget.Toolbar;
 import com.mikepenz.materialdrawer.Drawer;
 import com.mikepenz.materialdrawer.DrawerBuilder;
 import com.mikepenz.materialdrawer.holder.DimenHolder;
+import com.mikepenz.materialdrawer.model.DividerDrawerItem;
 import com.mikepenz.materialdrawer.model.PrimaryDrawerItem;
 
 import ua.r4mstein.moviedbdemo.R;
@@ -63,10 +64,14 @@ public class MainActivity extends BaseActivity<MainPresenter> {
                                 .withSelectedIcon(R.drawable.ic_five_select),
                         new PrimaryDrawerItem().withIdentifier(6).withName(R.string.drawer_item_popular_movies).withIcon(R.drawable.ic_six)
                                 .withSelectedIcon(R.drawable.ic_six_select),
-                        new PrimaryDrawerItem().withIdentifier(7).withName(R.string.drawer_item_popular_people).withIcon(R.drawable.ic_seven)
+                        new PrimaryDrawerItem().withIdentifier(7).withName(R.string.drawer_item_search_movies).withIcon(R.drawable.ic_seven)
                                 .withSelectedIcon(R.drawable.ic_seven_select),
-                        new PrimaryDrawerItem().withIdentifier(8).withName(R.string.drawer_item_search_people).withIcon(R.drawable.ic_eight)
-                                .withSelectedIcon(R.drawable.ic_eight_select)
+                        new DividerDrawerItem(),
+                        new PrimaryDrawerItem().withIdentifier(8).withName(R.string.drawer_item_popular_people).withIcon(R.drawable.ic_seven)
+                                .withSelectedIcon(R.drawable.ic_seven_select),
+                        new PrimaryDrawerItem().withIdentifier(9).withName(R.string.drawer_item_search_people).withIcon(R.drawable.ic_eight)
+                                .withSelectedIcon(R.drawable.ic_eight_select),
+                        new DividerDrawerItem()
                 )
                 .withActionBarDrawerToggleAnimated(true)
                 .withOnDrawerItemClickListener(getOnDrawerItemClickListener())
@@ -105,10 +110,14 @@ public class MainActivity extends BaseActivity<MainPresenter> {
                     mDrawer.closeDrawer();
                     break;
                 case 7:
-                    getPresenter().addPopularPeopleFragment();
+                    getPresenter().addSearchMoviesFragment();
                     mDrawer.closeDrawer();
                     break;
                 case 8:
+                    getPresenter().addPopularPeopleFragment();
+                    mDrawer.closeDrawer();
+                    break;
+                case 9:
                     getPresenter().addSearchPeopleFragment();
                     mDrawer.closeDrawer();
                     break;
