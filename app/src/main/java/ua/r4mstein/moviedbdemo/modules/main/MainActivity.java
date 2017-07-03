@@ -47,6 +47,28 @@ public class MainActivity extends BaseActivity<MainPresenter> {
                 getSupportActionBar().setDisplayHomeAsUpEnabled(getSupportFragmentManager().getBackStackEntryCount() > 0)
         );
 
+        setupDrawer();
+        setupDrawerFooter();
+        mDrawer.openDrawer();
+    }
+
+    private void setupDrawerFooter() {
+        mDrawer.addStickyFooterItem(new PrimaryDrawerItem()
+                .withName(R.string.drawer_item_log_out)
+                .withIdentifier(0)
+                .withIcon(R.drawable.ic_logout)
+                .withTextColor(ContextCompat.getColor(this, R.color.red))
+                .withSelectedTextColor(ContextCompat.getColor(this, R.color.red))
+                .withOnDrawerItemClickListener((view, position, drawerItem) -> {
+                    if (drawerItem.getIdentifier() == 0) {
+                        getPresenter().goToLoginScreen();
+                        return true;
+                    }
+                    return false;
+                }));
+    }
+
+    private void setupDrawer() {
         mDrawer = new DrawerBuilder()
                 .withActivity(this)
                 .withToolbar(mToolbar)
@@ -77,18 +99,6 @@ public class MainActivity extends BaseActivity<MainPresenter> {
                 .withActionBarDrawerToggleAnimated(true)
                 .withOnDrawerItemClickListener(getOnDrawerItemClickListener())
                 .build();
-
-        mDrawer.addStickyFooterItem(new PrimaryDrawerItem().withName("Log Out").withIdentifier(0).withIcon(R.drawable.ic_logout)
-                .withTextColor(ContextCompat.getColor(this, R.color.red))
-                .withOnDrawerItemClickListener((view, position, drawerItem) -> {
-                    if (drawerItem.getIdentifier() == 0) {
-
-                        return true;
-                    }
-                    return false;
-                }));
-        mDrawer.openDrawer();
-
     }
 
     @NonNull

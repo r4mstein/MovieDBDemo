@@ -1,5 +1,7 @@
 package ua.r4mstein.moviedbdemo.modules.main;
 
+import android.content.Intent;
+
 import ua.r4mstein.moviedbdemo.modules.base.BaseActivityPresenter;
 import ua.r4mstein.moviedbdemo.modules.films.popular_movies.PopularMoviesFragment;
 import ua.r4mstein.moviedbdemo.modules.films.search_movie.SearchMovieFragment;
@@ -8,8 +10,10 @@ import ua.r4mstein.moviedbdemo.modules.lists.favorite_movies.FavoriteMoviesFragm
 import ua.r4mstein.moviedbdemo.modules.lists.get_lists.GetListsFragment;
 import ua.r4mstein.moviedbdemo.modules.lists.rated_movies.RatedMoviesFragment;
 import ua.r4mstein.moviedbdemo.modules.lists.watchlist.WatchlistFragment;
+import ua.r4mstein.moviedbdemo.modules.login.activity.LoginActivity;
 import ua.r4mstein.moviedbdemo.modules.people.popular.PopularPeopleFragment;
 import ua.r4mstein.moviedbdemo.modules.people.search_people.SearchPeopleFragment;
+import ua.r4mstein.moviedbdemo.utills.SharedPrefManager;
 
 public class MainPresenter extends BaseActivityPresenter {
 
@@ -54,5 +58,13 @@ public class MainPresenter extends BaseActivityPresenter {
 
     public void addSearchMoviesFragment() {
         getRouter().replaceFragment(new SearchMovieFragment(), false);
+    }
+
+    public void goToLoginScreen() {
+        SharedPrefManager.getInstance().clear();
+
+        int flags = Intent.FLAG_ACTIVITY_CLEAR_TOP;
+        getRouter().startActivity(LoginActivity.class, flags, null);
+        getRouter().finishActivity();
     }
 }
