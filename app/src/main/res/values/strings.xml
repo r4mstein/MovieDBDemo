@@ -73,4 +73,6 @@
     <string name="known_as_FDP">Known as:\u0020</string>
     <string name="place_of_birth_FDP">Place of Birth:\u0020</string>
     <string name="search_FSP">Search</string>
+
+    <string name="without_internet_message">Internet connection appears to be offline</string>
 </resources>

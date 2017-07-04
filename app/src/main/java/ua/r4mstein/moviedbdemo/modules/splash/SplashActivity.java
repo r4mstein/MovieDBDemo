@@ -1,9 +1,11 @@
 package ua.r4mstein.moviedbdemo.modules.splash;
 
+import android.content.Context;
+
 import ua.r4mstein.moviedbdemo.R;
 import ua.r4mstein.moviedbdemo.modules.base.BaseActivity;
 
-public class SplashActivity extends BaseActivity<SplashPresenter> {
+public class SplashActivity extends BaseActivity<SplashPresenter> implements SplashPresenter.SplashView {
 
     @Override
     protected SplashPresenter initPresenter() {
@@ -23,5 +25,10 @@ public class SplashActivity extends BaseActivity<SplashPresenter> {
     @Override
     protected void setupUI() {
 
+    }
+
+    @Override
+    public Context getSplashContext() {
+        return this;
     }
 }

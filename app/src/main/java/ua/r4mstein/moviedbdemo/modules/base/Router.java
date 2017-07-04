@@ -21,7 +21,7 @@ public interface Router {
 
     void replaceFragment(Fragment _fragment, boolean _addToBackStack, View _sharedElement, String _sharedName);
 
-//    void showInfoDialog(@StringRes int _title, @StringRes int _message, View.OnClickListener _listener);
+    void showInfoDialog(@StringRes int _title, @StringRes int _message, View.OnClickListener _listener);
 //
 //    void showErrorDialog(@StringRes int _title, @StringRes int _message, View.OnClickListener _listener);
 //
@@ -31,8 +31,8 @@ public interface Router {
 //
 //    void showEmailDialog(@StringRes int _title, String _message, View.OnClickListener _listener);
 
-//    void showDialog(BaseDialog _dialog, @StringRes int _title, @StringRes int _message, View.OnClickListener _positiveListener, View.OnClickListener _negativeListener);
-//
+    void showDialog(BaseDialog _dialog, @StringRes int _title, @StringRes int _message, View.OnClickListener _positiveListener, View.OnClickListener _negativeListener);
+
     void showDialog(BaseDialog _dialog, @StringRes int _title, String _message, View.OnClickListener _listener, View.OnClickListener _negativeListener);
 
     void showDialog(BaseDialog _dialog, @StringRes int _title, String _message, @DrawableRes int _icon, View.OnClickListener _listener);

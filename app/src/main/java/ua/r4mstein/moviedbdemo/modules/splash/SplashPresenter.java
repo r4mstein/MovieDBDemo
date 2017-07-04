@@ -1,22 +1,18 @@
 package ua.r4mstein.moviedbdemo.modules.splash;
 
+import android.content.Context;
 import android.content.Intent;
 
 import java.util.concurrent.TimeUnit;
 
 import io.reactivex.Observable;
-import io.reactivex.annotations.NonNull;
-import io.reactivex.functions.Consumer;
-import ua.r4mstein.moviedbdemo.App;
-import ua.r4mstein.moviedbdemo.data.models.response.UserModel;
 import ua.r4mstein.moviedbdemo.data.providers.AccountProvider;
 import ua.r4mstein.moviedbdemo.modules.base.ActivityView;
 import ua.r4mstein.moviedbdemo.modules.base.BaseActivityPresenter;
-import ua.r4mstein.moviedbdemo.modules.dialog.InfoDialog;
 import ua.r4mstein.moviedbdemo.modules.login.activity.LoginActivity;
 import ua.r4mstein.moviedbdemo.modules.main.MainActivity;
-import ua.r4mstein.moviedbdemo.utills.Constants;
 import ua.r4mstein.moviedbdemo.utills.Logger;
+import ua.r4mstein.moviedbdemo.utills.NetworkManager;
 import ua.r4mstein.moviedbdemo.utills.SharedPrefManager;
 
 import static ua.r4mstein.moviedbdemo.utills.Constants.API_KEY;
@@ -29,7 +25,11 @@ public class SplashPresenter extends BaseActivityPresenter<SplashPresenter.Splas
     public void onViewCreated() {
         super.onViewCreated();
 
-        executeWithoutProgress(Observable.timer(1, TimeUnit.SECONDS), aLong -> chooseNextScreen());
+        if (NetworkManager.isOnline(getView().getSplashContext())) {
+            executeWithoutProgress(Observable.timer(1, TimeUnit.SECONDS), aLong -> chooseNextScreen());
+        } else {
+            NetworkManager.getInfoDialogWithFinish(getRouter());
+        }
     }
 
     private void chooseNextScreen() {
@@ -64,5 +64,6 @@ public class SplashPresenter extends BaseActivityPresenter<SplashPresenter.Splas
 
     interface SplashView extends ActivityView {
 
+        Context getSplashContext();
     }
 }

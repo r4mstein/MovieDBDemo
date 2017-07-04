@@ -19,6 +19,7 @@ import retrofit2.Response;
 import ua.r4mstein.moviedbdemo.R;
 import ua.r4mstein.moviedbdemo.data.models.response.ErrorModel;
 import ua.r4mstein.moviedbdemo.modules.dialog.InfoDialog;
+import ua.r4mstein.moviedbdemo.utills.NetworkManager;
 import ua.r4mstein.moviedbdemo.utills.RxUtils;
 
 
@@ -91,52 +92,60 @@ public abstract class BasePresenterImpl<V extends BaseView> implements BasePrese
     }
 
     protected <T> Disposable executeWithoutProgress(Observable<T> request, Consumer<T> onSuccess, Consumer<Throwable> onError, Action onComplete) {
-        if (request != null) {
-            Disposable subscription = request
-                    .subscribeOn(Schedulers.newThread())
-                    .observeOn(AndroidSchedulers.mainThread())
-                    .subscribe(
-                            t -> onExecuteSuccess(t, onSuccess),
-                            throwable -> {
-                                if (onError != null) {
-                                    onError.accept(throwable);
-                                    handleError(throwable);
+        if (NetworkManager.isOnline(getView().getViewContext())) {
+            if (request != null) {
+                Disposable subscription = request
+                        .subscribeOn(Schedulers.newThread())
+                        .observeOn(AndroidSchedulers.mainThread())
+                        .subscribe(
+                                t -> onExecuteSuccess(t, onSuccess),
+                                throwable -> {
+                                    if (onError != null) {
+                                        onError.accept(throwable);
+                                        handleError(throwable);
+                                    }
+                                }, () -> {
+                                    if (onComplete != null)
+                                        onComplete.run();
                                 }
-                            }, () -> {
-                                if (onComplete != null)
-                                    onComplete.run();
-                            }
-                    );
-            addSubscription(subscription);
-            return subscription;
+                        );
+                addSubscription(subscription);
+                return subscription;
+            }
+        } else {
+            NetworkManager.getInfoDialog(getRouter());
         }
         return null;
     }
 
     protected <T> Disposable execute(Observable<T> request, Consumer<T> onSuccess, Consumer<Throwable> onError, Action onComplete) {
-        if (onComplete == null)
-            getRouter().showLoadingDialog();
-        if (request != null) {
-            Disposable subscription = request
-                    .subscribeOn(Schedulers.newThread())
-                    .observeOn(AndroidSchedulers.mainThread())
-                    .subscribe(
-                            t -> {
-                                hideLoading();
-                                onExecuteSuccess(t, onSuccess);
-                            },
-                            throwable -> {
-                                hideLoading();
+        if (NetworkManager.isOnline(getView().getViewContext())) {
+            if (onComplete == null)
+                getRouter().showLoadingDialog();
+            if (request != null) {
+                Disposable subscription = request
+                        .subscribeOn(Schedulers.newThread())
+                        .observeOn(AndroidSchedulers.mainThread())
+                        .subscribe(
+                                t -> {
+                                    hideLoading();
+                                    onExecuteSuccess(t, onSuccess);
+                                },
+                                throwable -> {
+                                    hideLoading();
 
-                                if (onError != null) {
-                                    onError.accept(throwable);
-                                    handleError(throwable);
-                                }
-                            }, () -> onExecutingComplete(onComplete)
+                                    if (onError != null) {
+                                        onError.accept(throwable);
+                                        handleError(throwable);
+                                    }
+                                }, () -> onExecutingComplete(onComplete)
 
-                    );
-            addSubscription(subscription);
-            return subscription;
+                        );
+                addSubscription(subscription);
+                return subscription;
+            }
+        } else {
+            NetworkManager.getInfoDialog(getRouter());
         }
         return null;
     }

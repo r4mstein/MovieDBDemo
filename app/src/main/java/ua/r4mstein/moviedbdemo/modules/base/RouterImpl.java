@@ -12,6 +12,7 @@ import android.view.View;
 
 import java.util.List;
 
+import ua.r4mstein.moviedbdemo.modules.dialog.InfoDialog;
 import ua.r4mstein.moviedbdemo.modules.dialog.QuestionDialog;
 import ua.r4mstein.moviedbdemo.utills.KeyboardManager;
 import ua.r4mstein.moviedbdemo.utills.Logger;
@@ -158,10 +159,10 @@ public class RouterImpl implements Router {
          mActivity.setToolbarTitle(title);
     }
 
-//    @Override
-//    public void showInfoDialog(@StringRes int _title, @StringRes int _message, View.OnClickListener _listener) {
-//        showDialog(new InfoDialog(), _title, _message, _listener, null);
-//    }
+    @Override
+    public void showInfoDialog(@StringRes int _title, @StringRes int _message, View.OnClickListener _listener) {
+        showDialog(new InfoDialog(), _title, _message, _listener, null);
+    }
 //
 //    @Override
 //    public void showErrorDialog(@StringRes int _title, @StringRes int _message, View.OnClickListener _listener) {
@@ -183,19 +184,19 @@ public class RouterImpl implements Router {
 ////        showDialog(new ErrorInfoDialog(), _title, _message, R.drawable.ic_chats, _listener);
 //    }
 //
-//    @Override
-//    public void showDialog(BaseDialog _dialog, @StringRes int _title, @StringRes int _message, View.OnClickListener _positiveListener, View.OnClickListener _negativeListener) {
-//        if (progressDialog != null && progressDialog.isShowing()) progressDialog.dismiss();
-//        if (mDialog != null && mDialog.isVisible()) mDialog.dismiss();
-//        mDialog = _dialog;
-//        mDialog.setTitle(_title);
-//        mDialog.setMessage(_message);
-//        mDialog.setOnPositiveClickListener(_positiveListener);
-//        mDialog.setOnNegativeClickListener(_negativeListener);
-//        mDialog.show(mActivity.asActivity().getSupportFragmentManager(), "");
-//
-//    }
-//
+    @Override
+    public void showDialog(BaseDialog _dialog, @StringRes int _title, @StringRes int _message, View.OnClickListener _positiveListener, View.OnClickListener _negativeListener) {
+        if (progressDialog != null && progressDialog.isShowing()) progressDialog.dismiss();
+        if (mDialog != null && mDialog.isVisible()) mDialog.dismiss();
+        mDialog = _dialog;
+        mDialog.setTitle(_title);
+        mDialog.setMessage(_message);
+        mDialog.setOnPositiveClickListener(_positiveListener);
+        mDialog.setOnNegativeClickListener(_negativeListener);
+        mDialog.show(mActivity.asActivity().getSupportFragmentManager(), "");
+
+    }
+
     @Override
     public void showDialog(BaseDialog _dialog, @StringRes int _title, String _message, View.OnClickListener _listener, View.OnClickListener _negativeListener) {
         if (progressDialog != null && progressDialog.isShowing()) progressDialog.dismiss();

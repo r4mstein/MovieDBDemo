@@ -38,7 +38,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:drawablePadding="@dimen/margin_16"
-                android:drawableStart="@drawable/ic_acc_logo"
+                android:drawableStart="@drawable/ic_account"
                 android:hint="@string/login_username"
                 android:inputType="textEmailAddress"/>
 
@@ -57,7 +57,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:drawablePadding="@dimen/margin_16"
-                android:drawableStart="@drawable/ic_pass_logo"
+                android:drawableStart="@drawable/ic_password"
                 android:hint="@string/login_pass"
                 android:inputType="textPassword"/>
 
