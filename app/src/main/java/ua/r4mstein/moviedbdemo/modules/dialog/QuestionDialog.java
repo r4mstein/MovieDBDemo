@@ -7,8 +7,6 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import io.reactivex.annotations.NonNull;
-import io.reactivex.functions.Consumer;
 import ua.r4mstein.moviedbdemo.R;
 import ua.r4mstein.moviedbdemo.modules.base.BaseDialog;
 import ua.r4mstein.moviedbdemo.utills.RxUtils;
@@ -45,19 +43,9 @@ public class QuestionDialog extends BaseDialog {
         btnClose = (TextView) _rootView.findViewById(R.id.btnNegative);
         btnOk = (TextView) _rootView.findViewById(R.id.btnPositive);
 
-        RxUtils.click(btnOk, new Consumer() {
-            @Override
-            public void accept(@NonNull Object o) throws Exception {
-                QuestionDialog.this.onPositiveClick();
-            }
-        });
+        RxUtils.click(btnOk, o -> QuestionDialog.this.onPositiveClick());
 
-        RxUtils.click(btnClose, new Consumer() {
-            @Override
-            public void accept(@NonNull Object o) throws Exception {
-                QuestionDialog.this.onNegativeClick();
-            }
-        });
+        RxUtils.click(btnClose, o -> QuestionDialog.this.onNegativeClick());
 
         if (mMessageRes != 0) tvMessage.setText(getString(mMessageRes));
         else if (!TextUtils.isEmpty(mMessage)) tvMessage.setText(mMessage);

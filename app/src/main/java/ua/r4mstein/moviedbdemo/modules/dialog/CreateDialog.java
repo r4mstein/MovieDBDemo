@@ -25,7 +25,6 @@ public class CreateDialog extends DialogFragment {
     private TextView tvNegative;
 
     private TextInputLayout tilName;
-    private TextInputLayout tilDescription;
 
     private TextInputEditText tetName;
     private TextInputEditText tetDescription;
@@ -84,7 +83,6 @@ public class CreateDialog extends DialogFragment {
         tvNegative = (TextView) _rootView.findViewById(R.id.tvNegative_DCL);
 
         tilName = (TextInputLayout) _rootView.findViewById(R.id.til_name_container_DCL);
-        tilDescription = (TextInputLayout) _rootView.findViewById(R.id.til_description_container_DCL);
 
         tetName = (TextInputEditText) _rootView.findViewById(R.id.tiet_name_DCL);
         tetDescription = (TextInputEditText) _rootView.findViewById(R.id.tiet_description_DCL);

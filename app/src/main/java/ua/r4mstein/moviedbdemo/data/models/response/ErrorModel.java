@@ -14,16 +14,8 @@ public class ErrorModel {
         return mStatusCode;
     }
 
-    public void setStatusCode(Long statusCode) {
-        mStatusCode = statusCode;
-    }
-
     public String getStatusMessage() {
         return mStatusMessage;
-    }
-
-    public void setStatusMessage(String statusMessage) {
-        mStatusMessage = statusMessage;
     }
 
 }

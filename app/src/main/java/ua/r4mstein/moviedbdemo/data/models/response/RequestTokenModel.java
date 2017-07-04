@@ -16,24 +16,12 @@ public class RequestTokenModel {
         return mExpiresAt;
     }
 
-    public void setExpiresAt(String expiresAt) {
-        mExpiresAt = expiresAt;
-    }
-
     public String getRequestToken() {
         return mRequestToken;
     }
 
-    public void setRequestToken(String requestToken) {
-        mRequestToken = requestToken;
-    }
-
     public Boolean getSuccess() {
         return mSuccess;
-    }
-
-    public void setSuccess(Boolean success) {
-        mSuccess = success;
     }
 
 }

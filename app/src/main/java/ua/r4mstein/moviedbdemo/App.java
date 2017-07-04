@@ -18,12 +18,7 @@ public class App extends Application {
     public void onCreate() {
         super.onCreate();
         instance = this;
-        initialGlobalComponents();
         checkUser();
-    }
-
-    private void initialGlobalComponents() {
-
     }
 
     private void checkUser() {

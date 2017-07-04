@@ -1,16 +1,11 @@
 package ua.r4mstein.moviedbdemo.modules.people.popular;
 
-import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentTransaction;
-
 import java.util.List;
 
-import ua.r4mstein.moviedbdemo.data.models.response.popular_people.KnownFor;
 import ua.r4mstein.moviedbdemo.data.models.response.popular_people.PopularPeopleItem;
 import ua.r4mstein.moviedbdemo.data.providers.PeopleProvider;
 import ua.r4mstein.moviedbdemo.modules.base.BaseFragmentPresenter;
 import ua.r4mstein.moviedbdemo.modules.base.FragmentView;
-import ua.r4mstein.moviedbdemo.modules.dialog.KnownForDialog;
 import ua.r4mstein.moviedbdemo.utills.Logger;
 
 import static ua.r4mstein.moviedbdemo.utills.Constants.API_KEY;
@@ -51,6 +46,5 @@ public class PopularPeoplePresenter extends BaseFragmentPresenter<PopularPeopleP
     interface PopularPeopleView extends FragmentView {
         void setList(List<PopularPeopleItem> list);
         void addList(List<PopularPeopleItem> list);
-        FragmentManager getFragManager();
     }
 }

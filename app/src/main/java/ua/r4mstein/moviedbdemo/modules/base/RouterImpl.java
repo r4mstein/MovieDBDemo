@@ -42,14 +42,6 @@ public class RouterImpl implements Router {
     }
 
     @Override
-    public void onSessionExpired() {
-//        showErrorDialog(R.string.error_network, R.string.error_session_expired, view -> {
-//            startActivity(LoginActivity.class, 0, null);
-//            finishActivity();
-//        });
-    }
-
-    @Override
     public void clearBackStack() {
         mActivity.asActivity().getSupportFragmentManager().popBackStackImmediate(null, FragmentManager.POP_BACK_STACK_INCLUSIVE);
     }
@@ -163,27 +155,7 @@ public class RouterImpl implements Router {
     public void showInfoDialog(@StringRes int _title, @StringRes int _message, View.OnClickListener _listener) {
         showDialog(new InfoDialog(), _title, _message, _listener, null);
     }
-//
-//    @Override
-//    public void showErrorDialog(@StringRes int _title, @StringRes int _message, View.OnClickListener _listener) {
-////        showDialog(new ErrorDialog(), _title, _message, _listener, null);
-//    }
-//
-//    @Override
-//    public void showErrorDialog(@StringRes int _title, String _message, View.OnClickListener _listener) {
-////        showDialog(new ErrorDialog(), _title, _message, _listener, null);
-//    }
-//
-//    @Override
-//    public void showBlockDialog(int _title, String _message, View.OnClickListener _listener) {
-////        showDialog(new ErrorInfoDialog(), _title, _message, R.drawable.ic_not_interested, _listener);
-//    }
-//
-//    @Override
-//    public void showEmailDialog(@StringRes int _title, String _message, View.OnClickListener _listener) {
-////        showDialog(new ErrorInfoDialog(), _title, _message, R.drawable.ic_chats, _listener);
-//    }
-//
+
     @Override
     public void showDialog(BaseDialog _dialog, @StringRes int _title, @StringRes int _message, View.OnClickListener _positiveListener, View.OnClickListener _negativeListener) {
         if (progressDialog != null && progressDialog.isShowing()) progressDialog.dismiss();
@@ -233,14 +205,6 @@ public class RouterImpl implements Router {
         mDialog.show(mActivity.asActivity().getSupportFragmentManager(), "");
     }
 
-    //
-//    @Override
-//    public void showDialog(BaseDialog _dialog) {
-//        if (mDialog != null && mDialog.isVisible()) mDialog.dismiss();
-//        mDialog = _dialog;
-//        mDialog.show(mActivity.asActivity().getSupportFragmentManager(), "");
-//    }
-//
     @Override
     public void showLoadingDialog() {
         if (mActivity.isActivityResumed()) {

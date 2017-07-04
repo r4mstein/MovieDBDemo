@@ -4,7 +4,6 @@ import io.reactivex.Observable;
 import retrofit2.http.Body;
 import retrofit2.http.DELETE;
 import retrofit2.http.GET;
-import retrofit2.http.Headers;
 import retrofit2.http.POST;
 import retrofit2.http.Path;
 import retrofit2.http.Query;
@@ -19,8 +18,6 @@ import ua.r4mstein.moviedbdemo.data.models.response.FavoriteMoviesModel;
 import ua.r4mstein.moviedbdemo.data.models.response.GenreMovieModel;
 import ua.r4mstein.moviedbdemo.data.models.response.GetListsModel;
 import ua.r4mstein.moviedbdemo.data.models.response.ListDetailsModel;
-import ua.r4mstein.moviedbdemo.data.models.response.MovieAccountStates;
-import ua.r4mstein.moviedbdemo.data.models.response.MovieAccountStatesAlternative;
 import ua.r4mstein.moviedbdemo.data.models.response.MoviesByGenreModel;
 import ua.r4mstein.moviedbdemo.data.models.response.PersonDetailsModel;
 import ua.r4mstein.moviedbdemo.data.models.response.PopularMoviesModel;
@@ -169,16 +166,6 @@ public interface RetrofitInterface {
     @GET("movie/{movie_id}")
     Observable<MovieDetailsModel> getMovieDetails(@Path("movie_id") long movieId,
                                                   @Query("api_key") String apiKey);
-
-    @GET("movie/{movie_id}/account_states")
-    Observable<MovieAccountStates> getMovieAccountStates(@Path("movie_id") long movieId,
-                                                         @Query("api_key") String apiKey,
-                                                         @Query("session_id") String sessionId);
-
-    @GET("movie/{movie_id}/account_states")
-    Observable<MovieAccountStatesAlternative> getMovieAccountStatesAlternative(@Path("movie_id") long movieId,
-                                                                               @Query("api_key") String apiKey,
-                                                                               @Query("session_id") String sessionId);
 
     @DELETE("movie/{movie_id}/rating")
     Observable<AddMovieToListModel> deleteRating(@Path("movie_id") long movieId,

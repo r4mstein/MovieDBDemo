@@ -14,16 +14,8 @@ public class SessionModel {
         return mSessionId;
     }
 
-    public void setSessionId(String sessionId) {
-        mSessionId = sessionId;
-    }
-
     public Boolean getSuccess() {
         return mSuccess;
-    }
-
-    public void setSuccess(Boolean success) {
-        mSuccess = success;
     }
 
 }

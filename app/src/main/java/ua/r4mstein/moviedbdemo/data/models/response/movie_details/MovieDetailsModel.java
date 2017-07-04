@@ -58,172 +58,48 @@ public class MovieDetailsModel {
     @SerializedName("vote_count")
     private Long mVoteCount;
 
-    public Boolean getAdult() {
-        return mAdult;
-    }
-
-    public void setAdult(Boolean adult) {
-        mAdult = adult;
-    }
-
-    public String getBackdropPath() {
-        return mBackdropPath;
-    }
-
-    public void setBackdropPath(String backdropPath) {
-        mBackdropPath = backdropPath;
-    }
-
-    public Object getBelongsToCollection() {
-        return mBelongsToCollection;
-    }
-
-    public void setBelongsToCollection(Object belongsToCollection) {
-        mBelongsToCollection = belongsToCollection;
-    }
-
     public Long getBudget() {
         return mBudget;
-    }
-
-    public void setBudget(Long budget) {
-        mBudget = budget;
     }
 
     public List<Genre> getGenres() {
         return mGenres;
     }
 
-    public void setGenres(List<Genre> genres) {
-        mGenres = genres;
-    }
-
-    public String getHomepage() {
-        return mHomepage;
-    }
-
-    public void setHomepage(String homepage) {
-        mHomepage = homepage;
-    }
-
     public Long getId() {
         return mId;
-    }
-
-    public void setId(Long id) {
-        mId = id;
-    }
-
-    public String getImdbId() {
-        return mImdbId;
-    }
-
-    public void setImdbId(String imdbId) {
-        mImdbId = imdbId;
-    }
-
-    public String getOriginalLanguage() {
-        return mOriginalLanguage;
-    }
-
-    public void setOriginalLanguage(String originalLanguage) {
-        mOriginalLanguage = originalLanguage;
-    }
-
-    public String getOriginalTitle() {
-        return mOriginalTitle;
-    }
-
-    public void setOriginalTitle(String originalTitle) {
-        mOriginalTitle = originalTitle;
     }
 
     public String getOverview() {
         return mOverview;
     }
 
-    public void setOverview(String overview) {
-        mOverview = overview;
-    }
-
-    public Double getPopularity() {
-        return mPopularity;
-    }
-
-    public void setPopularity(Double popularity) {
-        mPopularity = popularity;
-    }
-
     public String getPosterPath() {
         return mPosterPath;
-    }
-
-    public void setPosterPath(String posterPath) {
-        mPosterPath = posterPath;
     }
 
     public List<ProductionCompany> getProductionCompanies() {
         return mProductionCompanies;
     }
 
-    public void setProductionCompanies(List<ProductionCompany> productionCompanies) {
-        mProductionCompanies = productionCompanies;
-    }
-
     public List<ProductionCountry> getProductionCountries() {
         return mProductionCountries;
-    }
-
-    public void setProductionCountries(List<ProductionCountry> productionCountries) {
-        mProductionCountries = productionCountries;
     }
 
     public String getReleaseDate() {
         return mReleaseDate;
     }
 
-    public void setReleaseDate(String releaseDate) {
-        mReleaseDate = releaseDate;
-    }
-
     public Long getRevenue() {
         return mRevenue;
-    }
-
-    public void setRevenue(Long revenue) {
-        mRevenue = revenue;
     }
 
     public Long getRuntime() {
         return mRuntime;
     }
 
-    public void setRuntime(Long runtime) {
-        mRuntime = runtime;
-    }
-
-    public List<SpokenLanguage> getSpokenLanguages() {
-        return mSpokenLanguages;
-    }
-
-    public void setSpokenLanguages(List<SpokenLanguage> spokenLanguages) {
-        mSpokenLanguages = spokenLanguages;
-    }
-
-    public String getStatus() {
-        return mStatus;
-    }
-
-    public void setStatus(String status) {
-        mStatus = status;
-    }
-
     public String getTagline() {
         return mTagline;
-    }
-
-    public void setTagline(String tagline) {
-        mTagline = tagline;
     }
 
     public String getTitle() {
@@ -234,27 +110,11 @@ public class MovieDetailsModel {
         mTitle = title;
     }
 
-    public Boolean getVideo() {
-        return mVideo;
-    }
-
-    public void setVideo(Boolean video) {
-        mVideo = video;
-    }
-
     public Long getVoteCount() {
         return mVoteCount;
     }
 
-    public void setVoteCount(Long voteCount) {
-        mVoteCount = voteCount;
-    }
-
     public Double getVoteAverage() {
         return mVoteAverage;
-    }
-
-    public void setVoteAverage(Double voteAverage) {
-        mVoteAverage = voteAverage;
     }
 }

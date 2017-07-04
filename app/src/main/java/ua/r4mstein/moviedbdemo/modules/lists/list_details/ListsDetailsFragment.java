@@ -18,10 +18,10 @@ import java.util.List;
 import ua.r4mstein.moviedbdemo.R;
 import ua.r4mstein.moviedbdemo.data.models.response.Movie;
 import ua.r4mstein.moviedbdemo.modules.base.BaseFragment;
+import ua.r4mstein.moviedbdemo.modules.dialog.SearchFilmDialog;
+import ua.r4mstein.moviedbdemo.modules.dialog.listeners.OnSearchClickListener;
 import ua.r4mstein.moviedbdemo.modules.films.by_genre.MoviesByGenreAdapter;
 import ua.r4mstein.moviedbdemo.modules.films.by_genre.MoviesClickListener;
-import ua.r4mstein.moviedbdemo.modules.dialog.listeners.OnSearchClickListener;
-import ua.r4mstein.moviedbdemo.modules.dialog.SearchFilmDialog;
 import ua.r4mstein.moviedbdemo.utills.EndlessScrollListener;
 import ua.r4mstein.moviedbdemo.utills.Logger;
 

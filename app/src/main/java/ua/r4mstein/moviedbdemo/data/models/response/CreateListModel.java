@@ -14,36 +14,19 @@ public class CreateListModel {
     @SerializedName("success")
     private Boolean mSuccess;
 
-    public Long getListId() {
-        return mListId;
+    public String getStatusMessage() {
+        return mStatusMessage;
     }
 
-    public void setListId(Long listId) {
-        mListId = listId;
+    public Long getListId() {
+        return mListId;
     }
 
     public Long getStatusCode() {
         return mStatusCode;
     }
 
-    public void setStatusCode(Long statusCode) {
-        mStatusCode = statusCode;
-    }
-
-    public String getStatusMessage() {
-        return mStatusMessage;
-    }
-
-    public void setStatusMessage(String statusMessage) {
-        mStatusMessage = statusMessage;
-    }
-
     public Boolean getSuccess() {
         return mSuccess;
     }
-
-    public void setSuccess(Boolean success) {
-        mSuccess = success;
-    }
-
 }

@@ -14,7 +14,6 @@ public class RetrofitAdapter implements IRestAdapter {
     public <T> T createApi(Class<T> clazz, String base_url) {
 
         OkHttpClient.Builder builder = new OkHttpClient.Builder();
-//        builder.addInterceptor(new TokenInterceptor());
         HttpLoggingInterceptor interceptor = new HttpLoggingInterceptor();
         interceptor.setLevel(HttpLoggingInterceptor.Level.BODY);
 

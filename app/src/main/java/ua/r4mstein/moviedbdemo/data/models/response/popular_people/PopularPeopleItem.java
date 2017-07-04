@@ -20,28 +20,12 @@ public class PopularPeopleItem {
     @SerializedName("profile_path")
     private String mProfilePath;
 
-    public Boolean getAdult() {
-        return mAdult;
-    }
-
-    public void setAdult(Boolean adult) {
-        mAdult = adult;
-    }
-
     public Long getId() {
         return mId;
     }
 
-    public void setId(Long id) {
-        mId = id;
-    }
-
     public List<KnownFor> getKnownFor() {
         return mKnownFor;
-    }
-
-    public void setKnownFor(List<KnownFor> knownFor) {
-        mKnownFor = knownFor;
     }
 
     public String getName() {
@@ -56,16 +40,8 @@ public class PopularPeopleItem {
         return mPopularity;
     }
 
-    public void setPopularity(Double popularity) {
-        mPopularity = popularity;
-    }
-
     public String getProfilePath() {
         return mProfilePath;
-    }
-
-    public void setProfilePath(String profilePath) {
-        mProfilePath = profilePath;
     }
 
 }

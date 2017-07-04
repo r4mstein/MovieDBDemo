@@ -95,7 +95,7 @@ public abstract class BaseFragmentPresenter<V extends FragmentView> extends Base
         });
     }
 
-    protected void createDialog(long movieId, boolean isFavorite, boolean isWatchlist) {
+    private void createDialog(long movieId, boolean isFavorite, boolean isWatchlist) {
         FragmentManager manager = getView().getFragmManager();
 
         int addFavorite = View.GONE;
@@ -117,7 +117,7 @@ public abstract class BaseFragmentPresenter<V extends FragmentView> extends Base
         dialog.show(manager, "ChooseActionDialog");
     }
 
-    protected void createRatingDialog(long movieId, double value) {
+    private void createRatingDialog(long movieId, double value) {
         FragmentManager manager = getView().getFragmManager();
 
         DialogRating dialogRating = DialogRating.newInstance((float) value);
@@ -125,7 +125,7 @@ public abstract class BaseFragmentPresenter<V extends FragmentView> extends Base
         dialogRating.show(manager, "DialogRating");
     }
 
-    protected void showDeleteRatingDialog(long movieId, boolean isRated) {
+    private void showDeleteRatingDialog(long movieId, boolean isRated) {
         if (isRated) {
             getRouter().showQuestionDialog(new QuestionDialog(), R.string.app_name,
                     getView().getAppResources().getString(R.string.dialog_delete_rating_message),

@@ -186,32 +186,10 @@ public abstract class BasePresenterImpl<V extends BaseView> implements BasePrese
         return execute(request, null, null, null);
     }
 
-    //
     private <T> void onExecuteSuccess(T t, Consumer<T> onSuccess) throws Exception {
         if (onSuccess != null)
             onSuccess.accept(t);
     }
-//
-//    protected void onExecutingError(Throwable throwable, Action1<Throwable> errorCallBack) {
-//
-//        if (!ErrorHandler.isSessionExpired(throwable)) {
-//            if (errorCallBack != null) {
-//                getRouter().hideLoadingDialog();
-//                if (throwable.getCause() instanceof UnknownHostException) {
-//                    getRouter().showErrorDialog(R.string.error_network, R.string.error_bad_network_connection, null);
-//                    Logger.e(throwable);
-//                } else {
-//                    errorCallBack.call(throwable);
-//                    Logger.e(throwable);
-//                }
-//            } else {
-//                getRouter().hideLoadingDialog();
-//                ErrorHandler.onError(getRouter(), throwable);
-//            }
-//        } else {
-//                ErrorHandler.onLoginError(getRouter(), throwable);
-//        }
-//    }
 
     private void onExecutingComplete(Action onComplete) throws Exception {
         if (onComplete == null) {
@@ -220,7 +198,6 @@ public abstract class BasePresenterImpl<V extends BaseView> implements BasePrese
             onComplete.run();
         }
     }
-
 
     @Override
     public void bindView(V _view) {

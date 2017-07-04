@@ -10,14 +10,6 @@ public class SpokenLanguage {
     @SerializedName("name")
     private String mName;
 
-    public String getIso6391() {
-        return mIso6391;
-    }
-
-    public void setIso6391(String iso6391) {
-        mIso6391 = iso6391;
-    }
-
     public String getName() {
         return mName;
     }

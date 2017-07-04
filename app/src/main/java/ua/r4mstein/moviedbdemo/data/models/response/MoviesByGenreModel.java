@@ -22,40 +22,16 @@ public class MoviesByGenreModel {
         return mId;
     }
 
-    public void setId(Long id) {
-        mId = id;
-    }
-
     public Long getPage() {
         return mPage;
-    }
-
-    public void setPage(Long page) {
-        mPage = page;
     }
 
     public List<Movie> getMovies() {
         return mMovies;
     }
 
-    public void setMovies(List<Movie> movies) {
-        mMovies = movies;
-    }
-
     public Long getTotalPages() {
         return mTotalPages;
-    }
-
-    public void setTotalPages(Long totalPages) {
-        mTotalPages = totalPages;
-    }
-
-    public Long getTotalResults() {
-        return mTotalResults;
-    }
-
-    public void setTotalResults(Long totalResults) {
-        mTotalResults = totalResults;
     }
 
 }

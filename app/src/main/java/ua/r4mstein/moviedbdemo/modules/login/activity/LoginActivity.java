@@ -1,7 +1,6 @@
 package ua.r4mstein.moviedbdemo.modules.login.activity;
 
 import android.os.Bundle;
-import android.support.v4.app.FragmentManager;
 import android.support.v7.widget.Toolbar;
 
 import ua.r4mstein.moviedbdemo.R;
@@ -39,11 +38,6 @@ public class LoginActivity extends BaseActivity<LoginPresenter> implements Login
     @Override
     protected void setupUI() {
         setSupportActionBar(mToolbar);
-    }
-
-    @Override
-    public FragmentManager getAppFragmentManager() {
-        return getSupportFragmentManager();
     }
 
     @Override

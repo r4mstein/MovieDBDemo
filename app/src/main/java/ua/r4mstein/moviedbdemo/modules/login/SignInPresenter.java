@@ -71,9 +71,7 @@ public class SignInPresenter extends BaseFragmentPresenter<SignInPresenter.SignI
                 userModel -> {
                     if (SharedPrefManager.getInstance().getUser() == null) SharedPrefManager.getInstance().saveUser(userModel);
                 },
-                throwable -> {
-                    Logger.d(throwable.getMessage());
-                });
+                throwable -> Logger.d(throwable.getMessage()));
     }
 
     private boolean isValidData(String userName, String pass) {

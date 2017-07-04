@@ -14,10 +14,6 @@ public class GenreMovieModel {
         return mGenres;
     }
 
-    public void setGenres(List<Genre> genres) {
-        mGenres = genres;
-    }
-
     public class Genre {
 
         @SerializedName("id")

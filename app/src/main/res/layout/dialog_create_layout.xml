@@ -68,24 +68,24 @@
         android:layout_below="@+id/til_description_container_DCL">
 
         <TextView
-            android:id="@+id/tvPositive_DCL"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:fontFamily="sans-serif-medium"
-            android:padding="@dimen/margin_16"
-            android:text="@string/button_ok"
-            android:textAllCaps="true"
-            android:textColor="@color/colorAccent"
-            android:textSize="@dimen/text_size_16"
-            android:textStyle="normal"/>
-
-        <TextView
             android:id="@+id/tvNegative_DCL"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:fontFamily="sans-serif-medium"
             android:padding="@dimen/margin_16"
             android:text="@string/button_cancel"
+            android:textAllCaps="true"
+            android:textColor="@color/colorAccent"
+            android:textSize="@dimen/text_size_16"
+            android:textStyle="normal"/>
+
+        <TextView
+            android:id="@+id/tvPositive_DCL"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="sans-serif-medium"
+            android:padding="@dimen/margin_16"
+            android:text="@string/button_ok"
             android:textAllCaps="true"
             android:textColor="@color/colorAccent"
             android:textSize="@dimen/text_size_16"

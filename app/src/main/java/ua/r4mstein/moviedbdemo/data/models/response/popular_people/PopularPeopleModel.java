@@ -20,32 +20,12 @@ public class PopularPeopleModel {
         return mPage;
     }
 
-    public void setPage(Long page) {
-        mPage = page;
-    }
-
     public List<PopularPeopleItem> getItems() {
         return mItems;
     }
 
-    public void setItems(List<PopularPeopleItem> items) {
-        mItems = items;
-    }
-
     public Long getTotalPages() {
         return mTotalPages;
-    }
-
-    public void setTotalPages(Long totalPages) {
-        mTotalPages = totalPages;
-    }
-
-    public Long getTotalResults() {
-        return mTotalResults;
-    }
-
-    public void setTotalResults(Long totalResults) {
-        mTotalResults = totalResults;
     }
 
 }

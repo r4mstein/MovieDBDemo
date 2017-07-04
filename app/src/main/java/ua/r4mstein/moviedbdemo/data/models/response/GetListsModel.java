@@ -20,32 +20,16 @@ public class GetListsModel {
         return mPage;
     }
 
-    public void setPage(Long page) {
-        mPage = page;
-    }
-
     public List<Result> getResults() {
         return mResults;
-    }
-
-    public void setResults(List<Result> results) {
-        mResults = results;
     }
 
     public Long getTotalPages() {
         return mTotalPages;
     }
 
-    public void setTotalPages(Long totalPages) {
-        mTotalPages = totalPages;
-    }
-
     public Long getTotalResults() {
         return mTotalResults;
-    }
-
-    public void setTotalResults(Long totalResults) {
-        mTotalResults = totalResults;
     }
 
     public class Result {
@@ -67,52 +51,12 @@ public class GetListsModel {
         @SerializedName("poster_path")
         private Object mPosterPath;
 
-        public String getDescription() {
-            return mDescription;
-        }
-
-        public void setDescription(String description) {
-            mDescription = description;
-        }
-
-        public Long getFavoriteCount() {
-            return mFavoriteCount;
-        }
-
-        public void setFavoriteCount(Long favoriteCount) {
-            mFavoriteCount = favoriteCount;
-        }
-
         public Long getId() {
             return mId;
         }
 
-        public void setId(Long id) {
-            mId = id;
-        }
-
-        public String getIso6391() {
-            return mIso6391;
-        }
-
-        public void setIso6391(String iso6391) {
-            mIso6391 = iso6391;
-        }
-
         public Long getItemCount() {
             return mItemCount;
-        }
-
-        public void setItemCount(Long itemCount) {
-            mItemCount = itemCount;
-        }
-
-        public String getListType() {
-            return mListType;
-        }
-
-        public void setListType(String listType) {
-            mListType = listType;
         }
 
         public String getName() {
@@ -121,14 +65,6 @@ public class GetListsModel {
 
         public void setName(String name) {
             mName = name;
-        }
-
-        public Object getPosterPath() {
-            return mPosterPath;
-        }
-
-        public void setPosterPath(Object posterPath) {
-            mPosterPath = posterPath;
         }
 
     }
